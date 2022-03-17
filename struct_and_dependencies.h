@@ -3,13 +3,14 @@
 #include <string.h>
 #include <string>
 #include <math.h>
+#include <sstream>
 
 using namespace std;
 
 struct Student
 {
     int num;
-    string id;
+    string student_id;
     string first_name;
     string last_name;
     bool gender;
