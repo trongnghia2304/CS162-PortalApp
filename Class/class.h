@@ -2,3 +2,4 @@
 #pragma once
 
 void checkMyClass(Class a);
+Class createClass(string C_id, string H_Tea, StudentNode* StuLis);
