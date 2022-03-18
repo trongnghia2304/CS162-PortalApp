@@ -18,6 +18,7 @@ struct Student
     string social_id;
     string password;
     string student_class;
+    MyCourse *my_course;
 };
 
 struct StudentNode
@@ -35,7 +36,7 @@ struct Class
 
 struct Session
 {
-    int day_of_the_week;
+    int day_of_the_week; //1-sun, 2-mon
     int session_no;
 };
 
@@ -56,4 +57,10 @@ struct CourseNode
     int year;
     Course course;
     CourseNode *next;
+};
+
+struct MyCourse
+{
+    CourseNode *course;
+    MyCourse *next;
 };
