@@ -3,3 +3,4 @@
 
 void checkMyClass(Class a);
 Class createClass(string C_id, string H_Tea);
+void AddStudenttoClass(Class &a, StudentNode* stu);
