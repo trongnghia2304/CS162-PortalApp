@@ -63,4 +63,5 @@ struct MyCourse
 {
     CourseNode *course;
     MyCourse *next;
+    MyCourse(CourseNode &a) : course(&a), next(nullptr) {};
 };

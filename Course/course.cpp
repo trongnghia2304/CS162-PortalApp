@@ -40,3 +40,31 @@ void checkMyCourse(Student me){
         cout << endl;
     }
 }
+
+void subscribeCourse(Student &me, CourseNode &a){
+    // subscribe in student's my_course
+    MyCourse *cur = me.my_course, *pre = new MyCourse(a);
+    if(cur){
+        while (cur->next)   cur = cur->next;
+        cur->next = pre;
+    }
+    else{
+        me.my_course = pre;
+    }
+    // add student to the course's list
+    appendNewStudentNode(&a.course.student_list, me);
+}
+
+void unsubscribeCourse(Student &me, CourseNode &a){
+    // unsubscribe in student's my_course
+    if (me.my_course->course == &a)    me.my_course->course = me.my_course->course->next;
+    else{
+        MyCourse *cur = me.my_course;
+        while (cur->next->course != &a) cur = cur->next;
+        MyCourse *a = cur->next;
+        cur = cur->next->next;
+        delete a;
+    }
+    // delete the student from the course list
+    removeStudentNode(&a.course.student_list, me.student_id);
+}
