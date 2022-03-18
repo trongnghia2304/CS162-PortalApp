@@ -9,3 +9,5 @@ void subscribeCourse(Student& me, CourseNode& a);
 void unsubscribeCourse(Student& me, CourseNode& a);
 
 void timeTable(Student me);
+
+void tuitionFee(Student me);
