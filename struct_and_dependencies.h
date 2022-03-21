@@ -40,6 +40,13 @@ struct Session
     int session_no;
 };
 
+struct Score
+{
+    int process;
+    int mid;
+    int fin;
+};
+
 struct Course
 {
     string course_id;
@@ -48,7 +55,9 @@ struct Course
     int num_credit;
     int max_students = 50;
     Session teaching_session[2];
+    Session exam_session[2];
     StudentNode *student_list;
+    Score score;
 };
 
 struct CourseNode

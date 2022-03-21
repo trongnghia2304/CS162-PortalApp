@@ -11,3 +11,7 @@ void unsubscribeCourse(Student& me, CourseNode& a);
 void timeTable(Student me);
 
 int tuitionFee(Student me);
+
+void viewScore(Student me);
+
+void viewExam(Student me);
