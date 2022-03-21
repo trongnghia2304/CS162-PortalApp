@@ -108,12 +108,15 @@ void timeTable(Student me){
         cout << endl;
     }
 }
-void tuitionFee(Student me)
+int tuitionFee(Student me)
 {
-    Student you = me;
-    while (you.my_course->course->next != nullptr) you.my_course = you.my_course->next;
-    int sem = you.my_course->course->semester_id;
-    int year = you.my_course->course->year;
+    cout << "Pick a year: ";
+    int year;
+    cin >> year;
+    cout << "Pick a semester: ";
+    int sem;
+    cin >> sem;
+
     int sum = 0;
     while (me.my_course->course->year != year && me.my_course->course->semester_id != sem) me.my_course = me.my_course->next;
     for (MyCourse* cur = me.my_course; cur && cur->course->semester_id == sem; cur = cur->next){
@@ -122,5 +125,5 @@ void tuitionFee(Student me)
 
     sum = sum * 500000;
 
-    printf("so tien phai dong HK%d la: %d VND", &sem, &sum);
+    return sum;
 }
