@@ -10,4 +10,4 @@ void unsubscribeCourse(Student& me, CourseNode& a);
 
 void timeTable(Student me);
 
-void tuitionFee(Student me);
+int tuitionFee(Student me);
