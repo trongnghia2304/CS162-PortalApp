@@ -24,3 +24,18 @@ void printStudent(Student p_student)
     cout << p_student.dob << endl;
     cout << p_student.social_id << endl;
 }
+
+void changePassword(Student me)
+{
+    string s1;
+
+    cout << "Type your old Password:\n";
+    getline(cin,s1,'\n');
+    if(s1 == me.password)
+    {
+        cout << "Type your new password:\n";
+        getline(cin,me.password,'\n');
+        cout << "Change password successfully!";
+    }
+    else cout << "Wrong old password!!";
+}
