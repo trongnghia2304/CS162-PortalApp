@@ -30,12 +30,20 @@ void changePassword(Student me)
     string s1;
 
     cout << "Type your old Password:\n";
-    getline(cin,s1,'\n');
+    getline(cin, s1, '\n');
     if(s1 == me.password)
     {
         cout << "Type your new password:\n";
-        getline(cin,me.password,'\n');
+        getline(cin, me.password, '\n');
         cout << "Change password successfully!";
     }
     else cout << "Wrong old password!!";
+    // When we upload to UI, we should implement "Return" button to cancel the changing.
+}
+void changeDisplayname(Student me)
+{
+    cout << "Your current name:\n" << me.display_name;
+    cout << "Type name you want to change into:\n";
+    getline(cin, me.display_name, '\n');
+    cout << "Change display name successfully!";
 }

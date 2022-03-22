@@ -19,6 +19,7 @@ struct Student
     string password;
     string student_class;
     MyCourse *my_course;
+    string display_name;
 };
 
 struct StudentNode
