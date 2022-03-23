@@ -7,7 +7,7 @@ struct Student
     string student_id;
     string first_name;
     string last_name;
-    bool gender;
+    bool gender; // 1: female, 0: male
     string dob;
     string social_id;
     string password;

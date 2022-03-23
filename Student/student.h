@@ -5,6 +5,9 @@ Student createStudent(int p_num, string p_student_id, string p_first_name, strin
 
 void printStudent(Student p_student);
 
-void changePassword(Student me);
+void changePassword(Student& me);
 
-void changeDisplayname(Student me);
+void changeDisplayname(Student& me);
+
+// change Student information
+void changeStudent(Student &me);

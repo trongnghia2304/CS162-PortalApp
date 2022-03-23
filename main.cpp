@@ -5,7 +5,9 @@ using namespace std;
 
 int main()
 {
-    cout << "Hello World";
+
+    
+    
     string path = "student_sample_data.csv";
     StudentNode *new_list = nullptr;
 
