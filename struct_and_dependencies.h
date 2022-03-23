@@ -35,6 +35,12 @@ struct Class
     StudentNode *student_list;
 };
 
+struct ClassNode
+{
+    Class my_class;
+    ClassNode* next;
+};
+
 struct Session
 {
     int day_of_the_week; //1-sun, 2-mon
@@ -74,4 +80,29 @@ struct MyCourse
     CourseNode *course;
     MyCourse *next;
     MyCourse(CourseNode &a) : course(&a), next(nullptr) {};
+};
+
+struct Semester
+{
+    string semester_id;
+    CourseNode *course_list;
+};
+
+struct SemesterNode
+{
+    Semester sem;
+    SemesterNode* next;
+};
+
+struct Year
+{
+    string year_id;
+    ClassNode* list_class;
+    SemesterNode *list_sem;
+};
+
+struct YearNode
+{
+    Year school_year;
+    YearNode* next;
 };
