@@ -1,10 +1,11 @@
 #include "StudentList/student_list.h"
-// #include "Student/student.h"
+#include "Student/student.h"
 
 using namespace std;
 
 int main()
 {
+    cout << "Hello World";
     string path = "student_sample_data.csv";
     StudentNode *new_list = nullptr;
 
@@ -16,5 +17,5 @@ int main()
     string output_path = "sample_student_output.csv";
     new_list->student.password = "TrTRTR";
     writeToFileStudentNode(output_path, new_list);
-    return 1;
+    return 0;
 }

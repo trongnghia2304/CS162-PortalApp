@@ -1,3 +1,4 @@
+#pragma once
 #include "../Student/student.h"
 
 // CRUD - Create/Read/Update/Delete student from List
