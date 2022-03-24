@@ -19,12 +19,12 @@ ClassNode* Create_List_Class(ClassNode* &Class_head,string class_name,string hea
 	return Class_head;
 }
 void InputClassFromFile(ifstream& ifs, ClassNode* &Class_head) {
-	ClassNode* tmp;
+	ClassNode* tmp=new ClassNode;
 	while (!ifs.eof()) {
 		getline(ifs, tmp->my_class.class_id);
 		getline(ifs, tmp->my_class.head_teacher);
 		Create_List_Class(Class_head, tmp->my_class.class_id, tmp->my_class.head_teacher);
-	}
+	}delete tmp;
 }
 void Add_Student_to_1_Class(Class &a, StudentNode* Student_head) {
 	a.student_list = NULL;
