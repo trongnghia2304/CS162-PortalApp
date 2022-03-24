@@ -1,13 +1,13 @@
-#include "StudentList/student_list.h"
-#include "Student/student.h"
+#include "StudentList/student_list.cpp"
+#include "Student/student.cpp"
 
 using namespace std;
 
 int main()
 {
 
-    
-    
+
+
     string path = "student_sample_data.csv";
     StudentNode *new_list = nullptr;
 
