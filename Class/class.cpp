@@ -51,6 +51,25 @@ void Add_Student_to_all_Class(ClassNode* Class_head, StudentNode* Student_head) 
 		pStudent = Student_head;
 	}
 }
+void View_Student_in_Class(ClassNode* Class_head) {
+	ClassNode* pClass = Class_head;
+	StudentNode* pStudent = pClass->my_class.student_list;
+	string class_name;
+	cout << "What class you want to view Student List ? ";
+	getline(cin, class_name);
+	while (pClass != NULL && pClass->next != NULL) {
+		if (pClass->my_class.class_id == class_name) {
+			printStudentNode(pClass->my_class.student_list);
+		}pClass = pClass->next;
+	}
+}
+void View_List_of_Class(ClassNode* Class_head) {
+	ClassNode* pClass = Class_head;
+	while (pClass != NULL) {
+		cout << pClass->my_class.class_id << " " << pClass->my_class.head_teacher;
+		pClass = pClass->next;
+	}
+}
 void deleteClass(ClassNode* head){
 	while(head){
 		ClassNode* cur = head;
