@@ -30,3 +30,14 @@ void AddStudenttoClass(Class &a, StudentNode* stu) {
 			}
 		}
 	}
+}
+
+void deleteClass(ClassNode* head){
+	while(head){
+		ClassNode* cur = head;
+		deleteStudentList(cur->my_class.student_list);
+		head = head->next;
+		delete cur;
+	}
+}
+

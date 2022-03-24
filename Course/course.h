@@ -15,3 +15,5 @@ int tuitionFee(Student me);
 void viewScore(Student me);
 
 void viewExam(Student me);
+
+void deleteCourse(CourseNode *&head);

@@ -183,3 +183,13 @@ void viewExam(Student me)
         cout << endl;
     }
 }
+
+void deleteCourse(CourseNode *&head)
+{
+    while (head){
+        CourseNode* cur = head;
+        deleteStudentList(cur->course.student_list);
+        head = head->next;
+        delete cur;
+    }
+}

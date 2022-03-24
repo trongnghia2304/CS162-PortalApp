@@ -13,3 +13,6 @@ int countStudentNode(StudentNode *p_head);
 
 // Used for checking outputs <----- can omit
 void printStudentNode(StudentNode *p_head);
+
+// delete student lít
+void deleteStudentList(StudentNode *&p_head);

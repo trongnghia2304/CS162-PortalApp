@@ -203,3 +203,11 @@ void printStudentNode(StudentNode *p_head)
         temp = temp->next;
     }
 }
+
+void deleteStudentList(StudentNode *&p_head){
+    while (p_head){
+        StudentNode* cur = p_head;
+        p_head = p_head->next;
+        delete cur;
+    }
+}
