@@ -1,5 +1,24 @@
-#pragma once
-#include "struct_and_dependencies(2).h"
+#include <iostream>
+#include <fstream>
+#include <string.h>
+#include <string>
+#include <math.h>
+#include <sstream>
+
+using namespace std;
+
+struct Student;
+struct StudentNode;
+struct Class;
+struct ClassNode;
+struct Score;
+struct Course;
+struct CourseNode;
+struct MyCourse;
+struct Semester;
+struct SemesterNode;
+struct Year;
+struct YearNode;
 
 struct Student
 {
@@ -7,13 +26,12 @@ struct Student
     string student_id;
     string first_name;
     string last_name;
-    bool gender; // 1: female, 0: male
+    bool gender;
     string dob;
     string social_id;
     string password;
     string student_class;
     MyCourse *my_course;
-    string display_name;
 };
 
 struct StudentNode
@@ -32,12 +50,12 @@ struct Class
 struct ClassNode
 {
     Class my_class;
-    ClassNode* next;
+    ClassNode *next;
 };
 
 struct Session
 {
-    int day_of_the_week; //1-sun, 2-mon
+    int day_of_the_week;
     int session_no;
 };
 
@@ -56,9 +74,14 @@ struct Course
     int num_credit;
     int max_students = 50;
     Session teaching_session[2];
-    Session exam_session[2];
-    StudentNode *student_list;
+};
+
+struct MyCourse
+{
     Score score;
+    CourseNode *course;
+    MyCourse *next;
+    MyCourse(CourseNode &a) : course(&a), next(nullptr){};
 };
 
 struct CourseNode
@@ -66,14 +89,8 @@ struct CourseNode
     int semester_id;
     int year;
     Course course;
+    StudentNode *student_list;
     CourseNode *next;
-};
-
-struct MyCourse
-{
-    CourseNode *course;
-    MyCourse *next;
-    MyCourse(CourseNode &a) : course(&a), next(nullptr) {};
 };
 
 struct Semester
@@ -85,18 +102,18 @@ struct Semester
 struct SemesterNode
 {
     Semester sem;
-    SemesterNode* next;
+    SemesterNode *next;
 };
 
 struct Year
 {
     string year_id;
-    ClassNode* list_class;
+    ClassNode *list_class;
     SemesterNode *list_sem;
 };
 
 struct YearNode
 {
     Year school_year;
-    YearNode* next;
+    YearNode *next;
 };

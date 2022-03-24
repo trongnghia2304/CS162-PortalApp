@@ -1,5 +1,20 @@
-#include "student_list.h"
+#include "header.h"
 
+//----------------------------- Student & StudentList --------------------------------------------
+//--------------------------------------------------------------------------------------------------
+Student createStudent(int p_num, string p_student_id, string p_first_name, string p_last_name, bool p_gender, string p_dob, string p_social_id)
+{
+    Student new_student;
+    new_student.num = p_num;
+    new_student.student_id.assign(p_student_id);
+    new_student.first_name.assign(p_first_name);
+    new_student.last_name.assign(p_last_name);
+    new_student.gender = p_gender;
+    new_student.dob.assign(p_dob);
+    new_student.social_id.assign(p_social_id);
+
+    return new_student;
+}
 StudentNode *initStudentNode(Student p_new_student)
 {
     StudentNode *new_student_node = new StudentNode;
@@ -7,7 +22,6 @@ StudentNode *initStudentNode(Student p_new_student)
     new_student_node->next = nullptr;
     return new_student_node;
 }
-
 StudentNode *searchStudentNode(StudentNode *p_head, string p_student_id)
 {
     if (!p_head)
@@ -18,34 +32,18 @@ StudentNode *searchStudentNode(StudentNode *p_head, string p_student_id)
     else
     {
         StudentNode *temp = p_head;
-        if (!temp->student.student_id.compare(p_student_id))
+        while (temp && temp->student.student_id != p_student_id)
         {
-            return temp;
+            temp = temp->next;
         }
-        else
-        {
-            while (temp)
-            {
-                if (!temp->student.student_id.compare(p_student_id))
-                {
-                    return temp;
-                }
-                else
-                {
-                    temp = temp->next;
-                }
-            }
-            return temp;
-        }
+        return temp;
     }
 }
-
 void appendNewStudentNode(StudentNode **p_head, Student p_new_student)
 {
     StudentNode *new_student_node = initStudentNode(p_new_student);
     if (!(*p_head))
     {
-        // cout << "Here...\n";
         (*p_head) = new_student_node;
         return;
     }
@@ -59,10 +57,8 @@ void appendNewStudentNode(StudentNode **p_head, Student p_new_student)
         }
         temp->next = new_student_node;
         return;
-        // printStudentNode(*p_head);
     }
 }
-
 void pushNewStudentNode(StudentNode **p_head, Student p_new_student)
 {
     StudentNode *new_student_node = initStudentNode(p_new_student);
@@ -72,21 +68,20 @@ void pushNewStudentNode(StudentNode **p_head, Student p_new_student)
         return;
     }
 
-    StudentNode *new_node = new_student_node;
-    new_node->next = *p_head;
-    *p_head = new_node;
+    new_student_node->next = *p_head;
+    *p_head = new_student_node;
 }
-
 void removeStudentNode(StudentNode **p_head, string p_student_id)
 {
-    if (!p_head)
+    StudentNode *founded_student = searchStudentNode(*p_head, p_student_id);
+    if (!p_head || !founded_student)
     {
         cout << "Empty student list...";
         return;
     }
 
     // If the required student is at the top of the list
-    if (!(*p_head)->student.student_id.compare(p_student_id))
+    if ((*p_head)->student.student_id == p_student_id)
     {
         StudentNode *temp = *p_head;
         *p_head = (*p_head)->next;
@@ -94,25 +89,14 @@ void removeStudentNode(StudentNode **p_head, string p_student_id)
         return;
     }
 
-    StudentNode *cur = (*p_head)->next;
-    StudentNode *prev = *p_head;
-    while (cur)
+    StudentNode *temp = *p_head;
+    while (temp->next != founded_student)
     {
-        if (!(cur->student.social_id.compare(p_student_id)))
-        {
-            StudentNode *temp = cur;
-            prev = cur->next;
-            cur = cur->next->next;
-            delete temp;
-        }
-        else
-        {
-            prev = cur;
-            cur = cur->next;
-        }
+        temp = temp->next;
     }
+    temp->next = founded_student->next;
+    delete founded_student;
 }
-
 void readFromFileStudentNode(string p_student_file_path, StudentNode **p_head)
 {
     ifstream openFile(p_student_file_path);
@@ -141,7 +125,6 @@ void readFromFileStudentNode(string p_student_file_path, StudentNode **p_head)
         return;
     }
 }
-
 void writeToFileStudentNode(string p_student_file_path, StudentNode *p_head)
 {
     ofstream openFile(p_student_file_path);
@@ -172,7 +155,6 @@ void writeToFileStudentNode(string p_student_file_path, StudentNode *p_head)
     openFile.close();
     return;
 }
-
 int countStudentNode(StudentNode *p_head)
 {
     if (!p_head)
@@ -186,7 +168,25 @@ int countStudentNode(StudentNode *p_head)
     }
     return count;
 }
-
+void deleteStudentList(StudentNode *&p_head)
+{
+    while (p_head)
+    {
+        StudentNode *cur = p_head;
+        p_head = p_head->next;
+        delete cur;
+    }
+}
+void printStudent(Student p_student)
+{
+    cout << p_student.num << endl;
+    cout << p_student.student_id << endl;
+    cout << p_student.first_name << endl;
+    cout << p_student.last_name << endl;
+    p_student.gender ? cout << "Female\n" : cout << "Male\n";
+    cout << p_student.dob << endl;
+    cout << p_student.social_id << endl;
+}
 void printStudentNode(StudentNode *p_head)
 {
     if (!p_head)
@@ -203,11 +203,4 @@ void printStudentNode(StudentNode *p_head)
         temp = temp->next;
     }
 }
-
-void deleteStudentList(StudentNode *&p_head){
-    while (p_head){
-        StudentNode* cur = p_head;
-        p_head = p_head->next;
-        delete cur;
-    }
-}
+//--------------------------------------------------------------------------------------------------

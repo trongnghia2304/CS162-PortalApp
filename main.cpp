@@ -1,23 +1,33 @@
-#include "StudentList/student_list.cpp"
-#include "Student/student.cpp"
+#include "student_studentList.cpp"
+#include "course_CourseList.cpp"
 
 using namespace std;
 
 int main()
 {
-
-
-
-    string path = "student_sample_data.csv";
+    // Testing student & student list functions
+    string student_input_path = "student_sample_data.csv";
+    string student_output_path = "sample_student_output.csv";
     StudentNode *new_list = nullptr;
 
-    readFromFileStudentNode(path, &new_list);
-    printStudentNode(new_list);
+    readFromFileStudentNode(student_input_path, &new_list);
+    if (new_list)
+    {
+        removeStudentNode(&new_list, "18125030");
+        new_list->student.password = "TrTRTR";
+        writeToFileStudentNode(student_output_path, new_list);
+    }
 
-    removeStudentNode(&new_list, "18125030");
+    // // Testing course and course list functions
+    string course_input_path = "sample_course_data.csv";
+    string course_output_path = "sample_course_output.csv";
+    CourseNode *new_course_list = nullptr;
+    readFromFileCourseNode(course_input_path, &new_course_list);
+    if (new_course_list)
+    {
+        removeCourseNode(&new_course_list, "PHY101");
+        writeToFileCourseNode(course_output_path, new_course_list);
+    }
 
-    string output_path = "sample_student_output.csv";
-    new_list->student.password = "TrTRTR";
-    writeToFileStudentNode(output_path, new_list);
-    return 0;
+    return 1;
 }
