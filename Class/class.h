@@ -9,3 +9,5 @@ void InputClassFromFile(ifstream& ifs, ClassNode* &Class_head);
 void Add_Student_to_1_Class(Class &a, StudentNode* Student_head);
 void Add_Student_to_all_Class(ClassNode* Class_head, StudentNode* Student_head);
 void deleteClass(ClassNode* head);
+void View_List_of_Class(ClassNode* Class_head);
+void View_Student_in_Class(ClassNode* Class_head);
