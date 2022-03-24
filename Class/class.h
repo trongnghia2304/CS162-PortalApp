@@ -3,8 +3,9 @@
 
 void checkMyClass(Class a);
 
-Class createClass(string C_id, string H_Tea);
+ClassNode* Create_List_Class(ClassNode* &Class_head,string class_name,string head_teacher);
+void InputClassFromFile(ifstream& ifs, ClassNode* &Class_head);
 
-void AddStudenttoClass(Class &a, StudentNode* stu);
-
+void Add_Student_to_1_Class(Class &a, StudentNode* Student_head);
+void Add_Student_to_all_Class(ClassNode* Class_head, StudentNode* Student_head);
 void deleteClass(ClassNode* head);
