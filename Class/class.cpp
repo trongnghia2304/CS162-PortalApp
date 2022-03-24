@@ -18,7 +18,7 @@ ClassNode* Create_List_Class(ClassNode* &Class_head,string class_name,string hea
 	}
 	return Class_head;
 }
-vvoid InputClassFromFile(ifstream& ifs, ClassNode* &Class_head) {
+void InputClassFromFile(ifstream& ifs, ClassNode* &Class_head) {
 	ClassNode* tmp;
 	while (!ifs.eof()) {
 		getline(ifs, tmp->my_class.class_id);
