@@ -18,28 +18,39 @@ ClassNode* Create_List_Class(ClassNode* &Class_head,string class_name,string hea
 	}
 	return Class_head;
 }
-void AddStudenttoClass(Class &a, StudentNode* stu) {
+vvoid InputClassFromFile(ifstream& ifs, ClassNode* &Class_head) {
+	ClassNode* tmp;
+	while (!ifs.eof()) {
+		getline(ifs, tmp->my_class.class_id);
+		getline(ifs, tmp->my_class.head_teacher);
+		Create_List_Class(Class_head, tmp->my_class.class_id, tmp->my_class.head_teacher);
+	}
+}
+void Add_Student_to_1_Class(Class &a, StudentNode* Student_head) {
 	a.student_list = NULL;
-	StudentNode*tmp,* copy;
-	while (stu->next != NULL)
-	{
-		if (stu->student.student_class == a.class_id)
-		{
-			copy = a.student_list;
-		tmp = initStudentNode(stu->student);
-			
-			if (copy == NULL) {
-				a.student_list = copy;
+	StudentNode* pStudent = Student_head,*pClass=a.student_list;
+	while (pStudent != NULL && pStudent->next != NULL) {
+		if (pStudent->student.student_class == a.class_id) {
+			if (pClass == NULL) {
+				a.student_list = initStudentNode(pStudent->student);
 			}
 			else {
-				while (copy->next != NULL)
-					copy = copy->next;
-				copy->next = tmp;
-			}
+				while (pClass->next != NULL)
+					pClass = pClass->next;
+				pClass->next = initStudentNode(pStudent->student);
+			}pStudent = pStudent->next;
 		}
 	}
 }
-
+void Add_Student_to_all_Class(ClassNode* Class_head, StudentNode* Student_head) {
+	ClassNode* pClass = Class_head;
+	StudentNode* pStudent = Student_head;
+	while (pClass != NULL && pClass->next != NULL) {
+		Add_Student_to_1_Class(pClass->my_class, pStudent);
+		pClass = pClass->next;
+		pStudent = Student_head;
+	}
+}
 void deleteClass(ClassNode* head){
 	while(head){
 		ClassNode* cur = head;
