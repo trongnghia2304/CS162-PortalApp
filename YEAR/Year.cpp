@@ -1,9 +1,10 @@
 #include "Year.h"
-Year createYear(ClassNode* ClassList,SemesterNode *SemList) {
-	Year new_year;
-	cout << "Please enter the name of Year : ";
-	getline(cin, new_year.year_id);
-	new_year.list_class = ClassList;
-	new_year.list_sem = SemList;
-	return new_year;
+YearNode* createYear() {
+	YearNode* pYear = new YearNode;
+	cout << " Please enter name of the year (XXXX-YYYY) :";
+	getline(cin, pYear->school_year.year_id);
+	pYear->school_year.list_class = NULL;
+	pYear->school_year.list_sem = NULL;
+	pYear->next = NULL;
+	return pYear;
 }
