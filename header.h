@@ -66,7 +66,6 @@ void printStudent(Student p_student);
 //--------------------------------------- Views  ---------------------------------------------------
 //--------------------------------------------------------------------------------------------------
 void changePassword(Student &me);
-void changeDisplayname(Student &me);
 void changeStudent(Student &me);
 void checkMyCourse(Student me);
 void subscribeCourse(Student &me, CourseNode &a);
@@ -74,6 +73,5 @@ void unsubscribeCourse(Student &me, CourseNode &a);
 void timeTable(Student me);
 int tuitionFee(Student me);
 void viewScore(Student me);
-void viewExam(Student me);
 void viewListOfClass(ClassNode *Class_head);
 //--------------------------------------------------------------------------------------------------
