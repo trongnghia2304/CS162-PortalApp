@@ -1,34 +1,32 @@
+#include "Header.h"
 #include "Platform/Platform.hpp"
 
 int main()
 {
 	util::Platform platform;
-
 #if defined(_DEBUG)
-	std::cout << "Hello World!" << std::endl;
 #endif
 
-	sf::RenderWindow window;
+	RenderWindow window;
+	Image icon;
+	icon.loadFromFile("content/icon.png");
 	// in Windows at least, this must be called before creating the window
-	float screenScalingFactor = platform.getScreenScalingFactor(window.getSystemHandle());
+	//float screenScalingFactor = platform.getScreenScalingFactor(window.getSystemHandle());
 	// Use the screenScalingFactor
-	window.create(sf::VideoMode(200.0f * screenScalingFactor, 200.0f * screenScalingFactor), "SFML works!");
-	platform.setIcon(window.getSystemHandle());
+	window.create(VideoMode(1000.0f, 750.5f), "CS162-Project", Style::Close);
+	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-	sf::CircleShape shape(window.getSize().x / 2);
-	shape.setFillColor(sf::Color::White);
+	Texture shapeTexture;
+	shapeTexture.loadFromFile("content/First.png");
 
-	sf::Texture shapeTexture;
-	shapeTexture.loadFromFile("content/sfml.png");
-	shape.setTexture(&shapeTexture);
-
-	sf::Event event;
+	Sprite shape(shapeTexture);
+	Event event;
 
 	while (window.isOpen())
 	{
 		while (window.pollEvent(event))
 		{
-			if (event.type == sf::Event::Closed)
+			if (event.type == Event::Closed)
 				window.close();
 		}
 
