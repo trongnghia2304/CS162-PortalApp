@@ -1,3 +1,162 @@
+#include "views.h"
+
+Object createObject(string s, int x, int y)
+{
+	Object me;
+	me.txt.loadFromFile(s);
+	me.draw.setTexture(me.txt);
+	me.draw.setPosition(x, y);
+	me.bound = me.draw.getGlobalBounds();
+	return me;
+}
+
+Object createObject(string s)
+{
+	Object me;
+	me.txt.loadFromFile(s);
+	me.draw.setTexture(me.txt);
+	me.bound = me.draw.getGlobalBounds();
+	return me;
+}
+
+bool isHere(FloatRect& bound, Vector2f& mouse)
+{
+	return bound.contains(mouse);
+}
+
+void Scene1(RenderWindow& window, int& page)
+{
+	Texture first, student, staff, staff1, student1;
+	first.loadFromFile("content/First.png");
+	student.loadFromFile("content/Student.png");
+	student1.loadFromFile("content/Student1.png");
+	staff.loadFromFile("content/Staff.png");
+	staff1.loadFromFile("content/Staff1.png");
+
+	Sprite screen(first);
+	Object o1 = createObject("content/Staff1.png", 180.0f, 300.0f);
+	Object a1 = createObject("content/Staff2.png", 180.0f, 300.0f);
+	Object o2 = createObject("content/Student1.png", 540.0f, 300.0f);
+	Object a2 = createObject("content/Student2.png", 540.0f, 300.0f);
+
+	Event event;
+
+	while (window.isOpen() && page == 1)
+	{
+		Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+		while (window.pollEvent(event))
+		{
+			switch (event.type)
+			{
+				case Event::Closed: {
+					window.close();
+					break;
+				}
+				case Event::MouseButtonReleased: {
+					if (event.mouseButton.button == Mouse::Left)
+					{
+						if (isHere(o1.bound, mouse))
+						{
+							cout << "I'm a staff\n";
+							page = 2;
+						}
+						else if (isHere(o2.bound, mouse))
+						{
+							cout << "I'm a student\n";
+							page = 2;
+						}
+					}
+					break;
+				}
+				default:
+					break;
+			}
+		}
+
+		window.clear();
+		window.draw(screen);
+		if (isHere(o1.bound, mouse))
+		{
+			window.draw(o2.draw);
+			window.draw(a1.draw);
+		}
+		else if (isHere(o2.bound, mouse))
+		{
+			window.draw(o1.draw);
+			window.draw(a2.draw);
+		}
+		else
+		{
+			window.draw(o1.draw);
+			window.draw(o2.draw);
+		}
+		window.display();
+	}
+}
+
+void logIn(RenderWindow& window, int& page)
+{
+	Event event;
+	bool see = false;
+	Object screen = createObject("content/Log in.png");
+	Object l1 = createObject("content/Login1.png", 400.0f, 515.0f);
+	Object l2 = createObject("content/Login.png", 400.0f, 515.0f);
+	Object eye = createObject("content/eye.png", 640.0f, 450.0f);
+	Object close = createObject("content/closedeye.png", 640.0f, 450.0f);
+	while (window.isOpen() && page == 2)
+	{
+		Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+		while (window.pollEvent(event))
+		{
+			switch (event.type)
+			{
+				case Event::Closed: {
+					window.close();
+					break;
+				}
+				case Event::MouseButtonReleased: {
+					if (event.mouseButton.button == Mouse::Left)
+					{
+						if (isHere(l1.bound, mouse))
+						{
+						}
+						else if (isHere(eye.bound, mouse))
+						{
+							see = !see;
+						}
+					}
+
+					break;
+				}
+				default:
+					break;
+			}
+		}
+
+		window.clear();
+		window.draw(screen.draw);
+
+		if (isHere(l1.bound, mouse))
+			window.draw(l2.draw);
+		else
+			window.draw(l1.draw);
+
+		if (see)
+		{
+			window.draw(eye.draw);
+		}
+		else
+		{
+			window.draw(close.draw);
+		}
+		window.display();
+	}
+}
+
+// void loadAllFiles()
+// {
+// }
+
 // #include "header.h"
 
 // //--------------------------------------- Views ----------------------------------------------------
