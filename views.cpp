@@ -176,4 +176,34 @@ void viewScore(Student me)
     }
     cout << endl;
 }
+void changePassword(Student me)
+{
+    string s1;
+
+    cout << "Type your old Password:\n";
+    getline(cin,s1,'\n');
+    if(s1 == me.password)
+    {
+        cout << "Type your new password:\n";
+        getline(cin,me.password,'\n');
+        cout << "Change password successfully!";
+    }
+    else cout << "Wrong old password!!";
+}
+bool checkLogin(StudentNode *p_head, string username, string password)
+{
+    StudentNode *founded_student = searchStudentNode(pHead, username);
+    if(founded_student == nullptr)
+    {
+        cout << "Wrong username";
+        return false;
+    }
+    if(founded_student.student.password != password)
+    {
+        cout << "Wrong password";
+        return false;
+    }
+    return true;
+
+}
 //--------------------------------------------------------------------------------------------------

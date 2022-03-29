@@ -74,4 +74,5 @@ void timeTable(Student me);
 int tuitionFee(Student me);
 void viewScore(Student me);
 void viewListOfClass(ClassNode *Class_head);
+bool checkLogin(StudentNode *p_head, string username, string password);
 //--------------------------------------------------------------------------------------------------
