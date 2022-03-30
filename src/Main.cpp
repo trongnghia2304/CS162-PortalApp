@@ -7,11 +7,36 @@ int main()
 	RenderWindow window;
 	Image icon;
 	icon.loadFromFile("content/icon.png");
-	window.create(VideoMode(1000.0f, 750.5f), "CS162-Project", Style::Close);
+	float scale = 1.5f;
+	window.create(VideoMode(1000.0f * scale, 750.0f * scale), "CS162-Project", Style::Close);
 	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 	int page = 1;
+	bool role;
+	while (page > 0 && window.isOpen())
+	{
+		switch (page)
+		{
+			case 1: {
+				Scene1(window, page, role, scale);
+				break;
+			}
+			case 2: {
+				logIn(window, page, role, scale);
+				break;
+			}
+			case 3: {
+				studentHome(window, page, scale);
+				break;
+			}
+			case 4: {
+				staffHome(window, page, scale);
+				break;
+			}
+			default: {
+				break;
+			}
+		}
+	}
 
-	Scene1(window, page);
-	logIn(window, page);
 	return 0;
 }
