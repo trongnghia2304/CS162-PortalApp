@@ -17,8 +17,8 @@ void removeYearNode(YearNode*& p_head, string p_Year_id);
 Class createClass(string p_class_id, string p_head_teacher);
 ClassNode *initClassNode(Class p_new_class);
 ClassNode *searchClassNode(ClassNode *p_head, string p_class_id);
-void appendNewClassNode(ClassNode **p_head, Class p_new_class);
-void pushNewClassNode(ClassNode **p_head, Class p_new_class);
+void appendNewClassNode(ClassNode *&p_head, Class p_new_class);
+void pushNewClassNode(ClassNode *&p_head, Class p_new_class);
 void removeClassNode(ClassNode **p_head, string p_class_id);
 //--------------------------------------------------------------------------------------------------
 
