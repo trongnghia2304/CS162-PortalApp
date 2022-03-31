@@ -88,14 +88,15 @@ void removeClassNode(ClassNode **p_head, string p_class_id)
 void addStudentToClass(ClassNode*&p_head_class, StudentNode*p_head_student) {
 	ClassNode *tmp_class = p_head_class;
 	StudentNode* tmp_student = p_head_student;
-	while (tmp_class!=NULL&&tmp_class->next!= NULL) {
-		while (tmp_student != NULL && tmp_student->next != NULL) {
+	while (tmp_class!=NULL) {
+		while (tmp_student != NULL) {
 			if (tmp_student->student.student_class == tmp_class->my_class.class_id) {
 				appendNewStudentNode(tmp_class->my_class.student_list, tmp_student->student);
 			}
 			tmp_student = tmp_student->next;
-		}tmp_class = tmp_class->next;
+		}
 		tmp_student = p_head_student;
+		tmp_class = tmp_class->next;
 	}
 }
 //--------------------------------------------------------------------------------------------------
