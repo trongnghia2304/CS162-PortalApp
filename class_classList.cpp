@@ -85,7 +85,7 @@ void removeClassNode(ClassNode **p_head, string p_class_id)
     temp->next = founded_class->next;
     delete founded_class;
 }
-void addStudenttoClass(ClassNode*&p_head_class, StudentNode*p_head_student) {
+void addStudentToClass(ClassNode*&p_head_class, StudentNode*p_head_student) {
 	ClassNode *tmp_class = p_head_class;
 	StudentNode* tmp_student = p_head_student;
 	while (tmp_class!=NULL&&tmp_class->next!= NULL) {
