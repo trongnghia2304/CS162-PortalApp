@@ -187,11 +187,12 @@ void logIn(RenderWindow& window, int& page, bool role, const float& scale)
 					break;
 				}
 				case Event::TextEntered: {
-					if (username.check && (username.s.size() < 10 || event.text.unicode == 8))
+					if (username.check && (username.s.size() < 15 || event.text.unicode == 8))
 					{
-						if (event.text.unicode == 8 && !username.s.empty())
+						if (event.text.unicode == 8)
 						{
-							username.s.pop_back();
+							if (!username.s.empty())
+								username.s.pop_back();
 						}
 						else
 						{
@@ -202,10 +203,13 @@ void logIn(RenderWindow& window, int& page, bool role, const float& scale)
 
 					if (pw.check && (pw.s.size() < 10 || event.text.unicode == 8))
 					{
-						if (event.text.unicode == 8 && !username.s.empty())
+						if (event.text.unicode == 8)
 						{
-							pw.s.pop_back();
-							pw2.s.pop_back();
+							if (!pw.s.empty())
+							{
+								pw.s.pop_back();
+								pw2.s.pop_back();
+							}
 						}
 						else
 						{
