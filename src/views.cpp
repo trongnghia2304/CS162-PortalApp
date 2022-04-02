@@ -324,11 +324,11 @@ void staffHome(RenderWindow& window, int& page, const float& scale)
 	k--;
 	Event event;
 	Object screen = createObject("content/Staff.png");
-	Object *a[3], *b[3];
-	for (int i = 0; i < 3; i++)
+	Object *a[4], *b[4];
+	for (int i = 0; i < 4; i++)
 	{
-		a[i] = createObjectTest("content/Asset " + to_string(i + 45) + ".png", (165.0f + 240.0f * i) * scale, 330.0f * scale);
-		b[i] = createObjectTest("content/Asset " + to_string(i + 42) + ".png", (165.0f + 240.0f * i) * scale, 330.0f * scale);
+		a[i] = createObjectTest("content/Asset " + to_string(i + 45) + ".png", (145.0f + 180.0f * i) * scale, 360.0f * scale);
+		b[i] = createObjectTest("content/Asset " + to_string(i + 41) + ".png", (145.0f + 180.0f * i) * scale, 360.0f * scale);
 	}
 	while (window.isOpen() && page == 4)
 	{
@@ -358,7 +358,7 @@ void staffHome(RenderWindow& window, int& page, const float& scale)
 
 			window.clear();
 			window.draw(screen.draw);
-			for (int j = 0; j < 3; j++)
+			for (int j = 0; j < 4; j++)
 			{
 				if (isHere(a[j]->bound, mouse))
 					window.draw(b[j]->draw);
@@ -368,7 +368,7 @@ void staffHome(RenderWindow& window, int& page, const float& scale)
 			window.display();
 		}
 	}
-	for (int j = 0; j < 3; j++)
+	for (int j = 0; j < 4; j++)
 	{
 		delete (a[j]);
 		delete (b[j]);
