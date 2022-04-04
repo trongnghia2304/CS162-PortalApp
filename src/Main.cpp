@@ -10,7 +10,7 @@ int main()
 	float scale = 1.5f;
 	window.create(VideoMode(1000.0f * scale, 750.0f * scale), "CS162-Project", Style::Close);
 	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-	int page = 1;
+	int page = 5;
 	bool role;
 	while (page > 0 && window.isOpen())
 	{
@@ -31,6 +31,9 @@ int main()
 			case 4: {
 				staffHome(window, page, scale);
 				break;
+			}
+			case 5: {
+				profile(window, page, scale);
 			}
 			default: {
 				break;

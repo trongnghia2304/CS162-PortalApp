@@ -59,6 +59,55 @@ Info createInfo(string s, string info, float x, float y, float size)
 	return a;
 }
 
+Info* createInfoTest(string s, string info, float x, float y, float size)
+{
+	Info* a = new Info;
+	a->font.loadFromFile(s);
+	a->text.setFont(a->font);
+	a->text.setCharacterSize(size);
+	a->text.setPosition(x, y);
+	a->text.setFillColor(Color(46, 68, 112, 255));
+	a->text.setString(info);
+	a->bound = a->text.getGlobalBounds();
+	return a;
+}
+
+void drawWhich(RenderWindow& window, Object a, Object b, Vector2f& mouse)
+{
+	if (isHere(a.bound, mouse))
+		window.draw(a.draw);
+	else
+		window.draw(b.draw);
+}
+
+void drawWhich(RenderWindow& window, Object* a, Object* b, Vector2f& mouse)
+{
+	if (isHere(a->bound, mouse))
+		window.draw(a->draw);
+	else
+		window.draw(b->draw);
+}
+
+void switchPage(FloatRect& bound, Vector2f& mouse, int k, int& page)
+{
+	if (isHere(bound, mouse))
+		page = k;
+}
+
+void changePos(Object* a, Object* b, float x, float y)
+{
+	a->draw.setPosition(x, y);
+	a->bound = a->draw.getGlobalBounds();
+	b->draw.setPosition(x, y);
+	b->bound = b->draw.getGlobalBounds();
+}
+
+void changePos(Object* a, float x, float y)
+{
+	a->draw.setPosition(x, y);
+	a->bound = a->draw.getGlobalBounds();
+}
+
 void Scene1(RenderWindow& window, int& page, bool& role, const float& scale)
 {
 	Object screen = createObject("content/First.png");
@@ -303,10 +352,7 @@ void studentHome(RenderWindow& window, int& page, const float& scale)
 			window.draw(screen.draw);
 			for (int j = 0; j < 6; j++)
 			{
-				if (isHere(a[j]->bound, mouse))
-					window.draw(b[j]->draw);
-				else
-					window.draw(a[j]->draw);
+				drawWhich(window, b[j], a[j], mouse);
 			}
 			window.display();
 		}
@@ -342,13 +388,15 @@ void staffHome(RenderWindow& window, int& page, const float& scale)
 					break;
 				}
 				case Event::MouseButtonReleased: {
-					for (int j = 0; j < 3; j++)
-					{
-						if (isHere(a[j]->bound, mouse))
-						{
-							// staff functions
-						}
-					}
+					switchPage(a[0]->bound, mouse, 5, page);
+					// for (int j = 0; j < 3; j++)
+					// {
+					// 	if (isHere(a[j]->bound, mouse))
+					// 	{
+					// 		// staff functions
+					// 	}
+					// }
+
 					break;
 				}
 				default: {
@@ -360,10 +408,7 @@ void staffHome(RenderWindow& window, int& page, const float& scale)
 			window.draw(screen.draw);
 			for (int j = 0; j < 4; j++)
 			{
-				if (isHere(a[j]->bound, mouse))
-					window.draw(b[j]->draw);
-				else
-					window.draw(a[j]->draw);
+				drawWhich(window, b[j], a[j], mouse);
 			}
 			window.display();
 		}
@@ -375,6 +420,101 @@ void staffHome(RenderWindow& window, int& page, const float& scale)
 	}
 }
 
+void profile(RenderWindow& window, int& page, const float& scale)
+{
+	Object screen = createObject("content/General/MyProfile.png");
+	Object change = createObject("content/General/change.png", 315.0f * scale, 385.0f * scale);
+	Object enter = createObject("content/General/enter.png", 315.0f * scale, 385.0f * scale);
+	Object *a[6], *b[6];
+	for (int i = 0; i < 6; i++)
+	{
+		a[i] = createObjectTest("content/General/a" + to_string(i + 1) + ".png", 0 * scale, 0 * scale);
+		b[i] = createObjectTest("content/General/b" + to_string(i + 1) + ".png", 0 * scale, 0 * scale);
+	}
+	changePos(a[0], b[0], 440.0f * scale, 484.0f * scale);
+	changePos(a[2], b[2], 375.0f * scale, 469.0f * scale);
+	changePos(a[1], b[1], 506.0f * scale, 469.0f * scale);
+	changePos(a[3], b[3], 480.0f * scale, 522.0f * scale);
+	changePos(a[4], b[4], 750.0f * scale, 580.0f * scale);
+	changePos(a[5], 322.0f * scale, 477.0f * scale);
+	changePos(b[5], 427.0f * scale, 477.0f * scale);
+	bool check1 = false, check2 = false;
+	int nah = 0;
+	Event event;
+
+	while (window.isOpen() && page == 5)
+	{
+		Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+		while (window.pollEvent(event))
+		{
+			switch (event.type)
+			{
+				case Event::Closed: {
+					window.close();
+					break;
+				}
+				case Event::MouseButtonReleased: {
+					if (event.mouseButton.button == Mouse::Left)
+					{
+						if (!check1 && isHere(a[3]->bound, mouse))
+							check1 = true;
+						else if (!check2 && isHere(a[4]->bound, mouse))
+							check2 = true;
+
+						if (check2 && isHere(a[1]->bound, mouse))
+							nah = -1;
+						else if (check2 && isHere(a[2]->bound, mouse))
+							nah = 1;
+					}
+					break;
+				}
+				default:
+					break;
+			}
+		}
+
+		window.clear();
+		window.draw(screen.draw);
+		if (check1 || check2)
+		{
+			if (check2)
+			{
+				if (!nah)
+				{
+					window.draw(change.draw);
+					drawWhich(window, b[1], a[1], mouse);
+					drawWhich(window, b[2], a[2], mouse);
+				}
+				else
+				{
+					if (nah == -1)
+					{
+						nah = 0;
+						check2 = false;
+					}
+					else
+					{
+						window.draw(enter.draw);
+						drawWhich(window, b[0], a[0], mouse);
+					}
+				}
+			}
+			window.draw(a[3]->draw);
+			window.draw(a[4]->draw);
+		}
+		else
+		{
+			drawWhich(window, b[3], a[3], mouse);
+			drawWhich(window, b[4], a[4], mouse);
+		}
+		window.display();
+	}
+	for (int j = 0; j < 5; j++)
+	{
+		delete (a[j]);
+		delete (b[j]);
+	}
+}
 // void loadAllFiles()
 // {
 // }
