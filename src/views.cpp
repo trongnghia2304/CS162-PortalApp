@@ -522,6 +522,7 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 								{
 									nah++;
 									checkChange = true;
+									// change password function
 								}
 								if (nah == 1 && isHere(pw.bound, mouse))
 									pw.check = true;
@@ -538,10 +539,7 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 					case Event::TextEntered: {
 						if (nah == 1)
 						{
-							if (isHere(pw.bound, mouse))
-								cout << "i'm here";
 							texting(pw, event.text.unicode, 10);
-							cout << pw.s;
 						}
 						break;
 					}
