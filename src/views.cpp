@@ -215,8 +215,8 @@ void logIn(RenderWindow& window, int& page, bool role, const float& scale)
 	Event event;
 	bool see = false, entered = false, change = false;
 	Object screen = createObject("content/Log in.png");
-	Object l1 = createObject("content/Login1.png", 400.0f * scale, 515.0f * scale);
-	Object l2 = createObject("content/Login.png", 400.0f * scale, 515.0f * scale);
+	Object l1 = createObject("content/Login1.png", 400.0f * scale, 516.0f * scale);
+	Object l2 = createObject("content/Login.png", 400.0f * scale, 516.0f * scale);
 	Object eye = createObject("content/eye.png", 640.0f * scale, 450.0f * scale);
 	Object close = createObject("content/closedeye.png", 640.0f * scale, 450.0f * scale);
 	Info username = createInfo("content/Oswald-Light.ttf", "sample_text", 430.0f * scale, 380.0f * scale, 26.25f * scale);
@@ -275,19 +275,6 @@ void logIn(RenderWindow& window, int& page, bool role, const float& scale)
 					break;
 				}
 				case Event::TextEntered: {
-					// if (username.check && (username.s.size() < 15 || unicode == 8))
-					// {
-					// 	if (unicode == 8)
-					// 	{
-					// 		if (!username.s.empty())
-					// 			username.s.pop_back();
-					// 	}
-					// 	else
-					// 	{
-					// 		username.s += unicode;
-					// 	}
-					// 	username.text.setString(username.s);
-					// }
 					texting(username, event.text.unicode, 15);
 
 					if (pw.check && (pw.s.size() < 10 || event.text.unicode == 8))
@@ -413,8 +400,8 @@ void staffHome(RenderWindow& window, int& page, const float& scale)
 	Object *a[4], *b[4];
 	for (int i = 0; i < 4; i++)
 	{
-		a[i] = createObjectTest("content/Asset " + to_string(i + 45) + ".png", (145.0f + 180.0f * i) * scale, 360.0f * scale);
-		b[i] = createObjectTest("content/Asset " + to_string(i + 41) + ".png", (145.0f + 180.0f * i) * scale, 360.0f * scale);
+		a[i] = createObjectTest("content/Asset " + to_string(i + 45) + ".png", (140.0f + 180.0f * i) * scale, 360.0f * scale);
+		b[i] = createObjectTest("content/Asset " + to_string(i + 41) + ".png", (140.0f + 180.0f * i) * scale, 360.0f * scale);
 	}
 	while (window.isOpen() && page == 4)
 	{
@@ -464,9 +451,9 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 {
 
 	Object screen = createObject("content/General/MyProfile.png");
-	Object change = createObject("content/General/change.png", 315.0f * scale, 385.0f * scale);
-	Object change2 = createObject("content/General/change2.png", 315.0f * scale, 385.0f * scale);
-	Object enter = createObject("content/General/enter.png", 315.0f * scale, 385.0f * scale);
+	Object change = createObject("content/General/change.png", 316.0f * scale, 386.0f * scale);
+	Object change2 = createObject("content/General/change2.png", 316.0f * scale, 386.0f * scale);
+	Object enter = createObject("content/General/enter.png", 316.0f * scale, 386.0f * scale);
 	Object *a[7], *b[7];
 	for (int i = 0; i < 7; i++)
 	{
@@ -475,12 +462,12 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 	}
 	changePos(a[0], b[0], 440.0f * scale, 484.0f * scale);
 	changePos(a[6], b[6], 440.0f * scale, 484.0f * scale);
-	changePos(a[2], b[2], 375.0f * scale, 469.0f * scale);
-	changePos(a[1], b[1], 506.0f * scale, 469.0f * scale);
+	changePos(a[2], b[2], 376.0f * scale, 470.0f * scale);
+	changePos(a[1], b[1], 506.0f * scale, 470.0f * scale);
 	changePos(a[3], b[3], 480.0f * scale, 522.0f * scale);
 	changePos(a[4], b[4], 750.0f * scale, 580.0f * scale);
 	changePos(a[5], 322.0f * scale, 477.5f * scale);
-	changePos(b[5], 427.0f * scale, 477.5f * scale);
+	changePos(b[5], 426.0f * scale, 477.5f * scale);
 
 	string text[6];
 	text[0] = student->student.student_id;
@@ -496,9 +483,9 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 	changePos(inf[4], 318.0f * scale, (303.0f + 56.0 * 5) * scale);
 	changePos(inf[5], 593.0f * scale, (303.0f + 56.0 * 5) * scale);
 	changePos(inf[3], 318.0f * scale, (303.0f + 56.0 * 4) * scale);
-	Info pw = createInfo("content/Oswald-Light.ttf", "Enter your new password here", 430.0f * scale, 447.0f * scale, 26.25f * scale);
+	Info pw = createInfo("content/Oswald-Light.ttf", "Enter your new password here", 400.0f * scale, 455.0f * scale, 15.0f * scale);
 	bool check1 = false, check2 = false, checkChange = false, gender = student->student.gender;
-	int nah = 0, count = 0;
+	int nah = 0;
 	Event event;
 
 	while (window.isOpen() && page == 5)
@@ -522,21 +509,24 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 
 						if (check2)
 						{
-							if (isHere(a[1]->bound, mouse))
-								nah = 1;
-							else if (isHere(a[2]->bound, mouse))
-								nah = -1;
-
-							if (nah == 1)
+							if (nah == 0)
+							{
+								if (isHere(a[1]->bound, mouse))
+									nah = 1;
+								else if (isHere(a[2]->bound, mouse))
+									nah = -1;
+							}
+							else if (nah > 0)
 							{
 								if (isHere(a[0]->bound, mouse))
 								{
-									count++;
+									nah++;
 									checkChange = true;
 								}
-								if (count == 2)
+								if (nah == 1 && isHere(pw.bound, mouse))
+									pw.check = true;
+								else if (nah > 2)
 								{
-									count = 0;
 									nah = 0;
 									checkChange = false;
 									check2 = false;
@@ -546,8 +536,12 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 					}
 					break;
 					case Event::TextEntered: {
-						if (checkChange)
+						if (nah == 1)
 						{
+							if (isHere(pw.bound, mouse))
+								cout << "i'm here";
+							texting(pw, event.text.unicode, 10);
+							cout << pw.s;
 						}
 						break;
 					}
@@ -561,10 +555,6 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 		window.draw(screen.draw);
 		for (int i = 0; i < 6; i++)
 			window.draw(inf[i]->text);
-		// if (gender)
-		// 	window.draw(b[5]->draw);
-		// else
-		// 	window.draw(a[]->draw);
 		window.draw((gender ? a[5]->draw : b[5]->draw));
 		if (check1 || check2)
 		{
@@ -593,6 +583,7 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 						else
 						{
 							window.draw(enter.draw);
+							window.draw(pw.text);
 							drawWhich(window, b[0], a[0], mouse);
 						}
 					}
