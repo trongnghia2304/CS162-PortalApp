@@ -4,12 +4,12 @@
 // -- TO DO --
 //--------------------------------- Year & YearList ----------------------------------------------
 //--------------------------------------------------------------------------------------------------
-Year createYear(string p_Year_id, string p_head_teacher);
-YearNode* initYearNode(Year p_new_Year);
-YearNode* searchYearNode(YearNode* p_head, string p_Year_id);
-void appendNewYearNode(YearNode** p_head, Year p_new_Year);
-void pushNewYearNode(YearNode** p_head, Year p_new_Year);
-void removeYearNode(YearNode** p_head, string p_Year_id);
+Year createYear(string p_year_id);
+YearNode* initYearNode(Year p_new_year);
+YearNode* appendNewYearNode(YearNode*& p_head, Year p_new_year);
+void pushNewYearNode(YearNode*& p_head, Year p_new_year);
+YearNode* searchYearNode(YearNode* p_head, string find_year_id);
+void removeYearNode(YearNode*& p_head, string p_Year_id);
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------- Class & ClassList ----------------------------------------------
@@ -17,8 +17,8 @@ void removeYearNode(YearNode** p_head, string p_Year_id);
 Class createClass(string p_class_id, string p_head_teacher);
 ClassNode* initClassNode(Class p_new_class);
 ClassNode* searchClassNode(ClassNode* p_head, string p_class_id);
-void appendNewClassNode(ClassNode** p_head, Class p_new_class);
-void pushNewClassNode(ClassNode** p_head, Class p_new_class);
+void appendNewClassNode(ClassNode*& p_head, Class p_new_class);
+void pushNewClassNode(ClassNode*& p_head, Class p_new_class);
 void removeClassNode(ClassNode** p_head, string p_class_id);
 //--------------------------------------------------------------------------------------------------
 
@@ -75,4 +75,5 @@ void timeTable(Student me);
 int tuitionFee(Student me);
 void viewScore(Student me);
 void viewListOfClass(ClassNode* Class_head);
+bool checkLogin(StudentNode* p_head, string username, string password);
 //--------------------------------------------------------------------------------------------------
