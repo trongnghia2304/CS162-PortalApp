@@ -41,7 +41,7 @@ void pushNewClassNode(ClassNode*& p_head, Class p_new_class)
 	new_class_node->next = p_head;
 	p_head = new_class_node;
 }
-void appendNewClassNode(ClassNode* p_head, Class p_new_class)
+void appendNewClassNode(ClassNode*& p_head, Class p_new_class)
 {
 	ClassNode* new_class_node = initClassNode(p_new_class);
 	if (p_head == NULL)

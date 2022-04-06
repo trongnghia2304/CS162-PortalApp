@@ -449,33 +449,18 @@ void staffHome(RenderWindow& window, int& page, const float& scale)
 
 void profile(RenderWindow& window, int& page, const float& scale, StudentNode* student)
 {
-
-	Object screen = createObject("content/General/MyProfile.png");
-	Object change = createObject("content/General/change.png", 316.0f * scale, 386.0f * scale);
-	Object change2 = createObject("content/General/change2.png", 316.0f * scale, 386.0f * scale);
-	Object enter = createObject("content/General/enter.png", 316.0f * scale, 386.0f * scale);
-	Object *a[7], *b[7];
-	for (int i = 0; i < 7; i++)
-	{
-		a[i] = createObjectTest("content/General/a" + to_string(i + 1) + ".png", 0 * scale, 0 * scale);
-		b[i] = createObjectTest("content/General/b" + to_string(i + 1) + ".png", 0 * scale, 0 * scale);
-	}
-	changePos(a[0], b[0], 440.0f * scale, 484.0f * scale);
-	changePos(a[6], b[6], 440.0f * scale, 484.0f * scale);
-	changePos(a[2], b[2], 376.0f * scale, 470.0f * scale);
-	changePos(a[1], b[1], 506.0f * scale, 470.0f * scale);
-	changePos(a[3], b[3], 480.0f * scale, 522.0f * scale);
-	changePos(a[4], b[4], 750.0f * scale, 580.0f * scale);
-	changePos(a[5], 322.0f * scale, 477.5f * scale);
-	changePos(b[5], 426.0f * scale, 477.5f * scale);
-
-	string text[6];
+	string text[7];
 	text[0] = student->student.student_id;
 	text[1] = student->student.first_name;
 	text[2] = student->student.last_name;
 	text[3] = student->student.student_class;
 	text[4] = student->student.dob;
-	text[5] = student->student.password;
+	text[6] = student->student.password;
+	text[5] = "";
+	for (unsigned int i = 0; i < text[6].size(); i++)
+	{
+		text[5] += "*";
+	}
 
 	Info* inf[6];
 	for (int i = 0; i < 6; i++)
@@ -483,9 +468,34 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 	changePos(inf[4], 318.0f * scale, (303.0f + 56.0 * 5) * scale);
 	changePos(inf[5], 593.0f * scale, (303.0f + 56.0 * 5) * scale);
 	changePos(inf[3], 318.0f * scale, (303.0f + 56.0 * 4) * scale);
+
+	Object screen = createObject("content/General/MyProfile.png");
+	Object change = createObject("content/General/change.png", 316.0f * scale, 386.0f * scale);
+	Object change2 = createObject("content/General/change2.png", 316.0f * scale, 386.0f * scale);
+	Object enter = createObject("content/General/enter.png", 316.0f * scale, 386.0f * scale);
+	Object invalid = createObject("content/General/invalid.png", 316.0f * scale, 386.0f * scale);
+	Object *a[7], *b[7];
+	for (int i = 0; i < 7; i++)
+	{
+		a[i] = createObjectTest("content/General/a" + to_string(i + 1) + ".png", 0 * scale, 0 * scale);
+		b[i] = createObjectTest("content/General/b" + to_string(i + 1) + ".png", 0 * scale, 0 * scale);
+	}
+	changePos(a[0], b[0], 440.0f * scale, 484.0f * scale);
+	// return button
+	changePos(a[6], b[6], 440.0f * scale, 484.0f * scale);
+	changePos(a[2], b[2], 376.0f * scale, 470.0f * scale);
+	changePos(a[1], b[1], 506.0f * scale, 470.0f * scale);
+	changePos(a[3], b[3], 480.0f * scale, 522.0f * scale);
+	changePos(a[4], b[4], 750.0f * scale, 580.0f * scale);
+	changePos(a[5], 322.0f * scale, 477.5f * scale);
+	changePos(b[5], 426.0f * scale, 477.5f * scale);
 	Info pw = createInfo("content/Oswald-Light.ttf", "Enter your new password here", 400.0f * scale, 455.0f * scale, 15.0f * scale);
+	Info pwOld = createInfo("content/Oswald-Light.ttf", "Enter your old password here", 400.0f * scale, 415.0f * scale, 15.0f * scale);
 	bool check1 = false, check2 = false, checkChange = false, gender = student->student.gender;
+	// switch subpage in "change password" (continue(1), return(-1), normal(0))
 	int nah = 0;
+	// flag to check whether the password is changed (yes(1), not yet(0), nah(-1))
+	int changed = 0;
 	Event event;
 
 	while (window.isOpen() && page == 5)
@@ -511,8 +521,12 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 						{
 							if (nah == 0)
 							{
-								if (isHere(a[1]->bound, mouse))
+								if (isHere(a[1]->bound, mouse) || (isHere(a[6]->bound, mouse) && changed == -1))
+								{
 									nah = 1;
+									pw.text.setString("Enter your new password here");
+									pwOld.text.setString("Enter your old password here");
+								}
 								else if (isHere(a[2]->bound, mouse))
 									nah = -1;
 							}
@@ -520,12 +534,31 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 							{
 								if (isHere(a[0]->bound, mouse))
 								{
-									nah++;
-									checkChange = true;
-									// change password function
+
+									if (changePassword(student->student, pwOld.s, pw.s))
+									{
+										nah++;
+										checkChange = true;
+										changed = 0;
+									}
+									else
+									{
+										changed = -1;
+									}
 								}
-								if (nah == 1 && isHere(pw.bound, mouse))
-									pw.check = true;
+								if (nah == 1)
+								{
+									if (isHere(pw.bound, mouse))
+									{
+										pw.check = true;
+										pwOld.check = false;
+									}
+									if (isHere(pwOld.bound, mouse))
+									{
+										pw.check = false;
+										pwOld.check = true;
+									}
+								}
 								else if (nah > 2)
 								{
 									nah = 0;
@@ -540,6 +573,7 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 						if (nah == 1)
 						{
 							texting(pw, event.text.unicode, 10);
+							texting(pwOld, event.text.unicode, 10);
 						}
 						break;
 					}
@@ -575,14 +609,23 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 					{
 						if (nah == -1)
 						{
-							nah = 0;
 							check2 = false;
 						}
 						else
 						{
-							window.draw(enter.draw);
-							window.draw(pw.text);
-							drawWhich(window, b[0], a[0], mouse);
+							if (changed == -1)
+							{
+								cout << nah;
+								window.draw(invalid.draw);
+								drawWhich(window, b[6], a[6], mouse);
+							}
+							else
+							{
+								window.draw(enter.draw);
+								window.draw(pwOld.text);
+								window.draw(pw.text);
+								drawWhich(window, b[0], a[0], mouse);
+							}
 						}
 					}
 				}
@@ -605,11 +648,6 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 	for (int i = 0; i < 6; i++)
 		delete (inf[i]);
 }
-// void loadAllFiles()
-// {
-// }
-
-// #include "header.h"
 
 // //--------------------------------------- Views ----------------------------------------------------
 // //--------------------------------------------------------------------------------------------------
@@ -786,5 +824,31 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 //         cout << cur->course->course.course_id << "  " << cur->course->course.course_name << "  " << cur->course->course.score.process << "  " << cur->course->course.score.mid << "  " << cur->course->course.score.fin;
 //     }
 //     cout << endl;
+// }
+bool changePassword(Student& me, const string& oldPw, const string& newPw)
+{
+	if (oldPw == me.password)
+	{
+		me.password = newPw;
+		return true;
+	}
+	else
+		return false;
+}
+// bool checkLogin(StudentNode *p_head, string username, string password)
+// {
+//     StudentNode *founded_student = searchStudentNode(pHead, username);
+//     if(founded_student == nullptr)
+//     {
+//         cout << "Wrong username";
+//         return false;
+//     }
+//     if(founded_student.student.password != password)
+//     {
+//         cout << "Wrong password";
+//         return false;
+//     }
+//     return true;
+
 // }
 // //--------------------------------------------------------------------------------------------------

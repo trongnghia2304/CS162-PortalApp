@@ -6,6 +6,7 @@ int main()
 #endif
 	//------------------ demo data-----------------------------
 	Student meme = createStudent(1, "21125011", "Nghia", "Nguyen Trong", 0, "12/12/2003", "123273862");
+	meme.password = "demo";
 	StudentNode* me = nullptr;
 	appendNewStudentNode(&me, meme);
 
