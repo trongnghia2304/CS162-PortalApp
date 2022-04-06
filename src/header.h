@@ -20,6 +20,7 @@ ClassNode* searchClassNode(ClassNode* p_head, string p_class_id);
 void appendNewClassNode(ClassNode*& p_head, Class p_new_class);
 void pushNewClassNode(ClassNode*& p_head, Class p_new_class);
 void removeClassNode(ClassNode** p_head, string p_class_id);
+void addStudentToClass(ClassNode*& p_head_class, StudentNode* p_head_student);
 //--------------------------------------------------------------------------------------------------
 
 //------------------------------- Course & CourseList ----------------------------------------------
