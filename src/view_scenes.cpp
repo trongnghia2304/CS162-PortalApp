@@ -1,6 +1,6 @@
 #include "views.h"
 
-void Scene1(RenderWindow& window, int& page, bool& role, const float& scale)
+void Scene1(RenderWindow& window, int& page, bool& is_staff, const float& scale)
 {
 	Object screen = createObject("content/First.png");
 	Object o1 = createObject("content/Staff1.png", 180.0f * scale, 300.0f * scale);
@@ -26,12 +26,12 @@ void Scene1(RenderWindow& window, int& page, bool& role, const float& scale)
 					{
 						if (isHere(o1.bound, mouse))
 						{
-							role = true;
+							is_staff = true;
 							page = 2;
 						}
 						else if (isHere(o2.bound, mouse))
 						{
-							role = false;
+							is_staff = false;
 							page = 2;
 						}
 					}
@@ -63,7 +63,7 @@ void Scene1(RenderWindow& window, int& page, bool& role, const float& scale)
 	}
 }
 
-void logIn(RenderWindow& window, int& page, bool role, const float& scale)
+void logIn(RenderWindow& window, int& page, bool is_staff, const float& scale)
 {
 	Event event;
 	bool see = false, entered = false, change = false;
@@ -177,8 +177,8 @@ void logIn(RenderWindow& window, int& page, bool role, const float& scale)
 		{
 			// check if the password/username is correct
 			// in this case, it it correct
-			page = (role ? 4 : 3);
-			// if (role)
+			page = (is_staff ? 4 : 3);
+			// if (is_staff)
 			// 	cout << "staff";
 			// in this case, it is incorrect
 			//window.draw(wrong.text);

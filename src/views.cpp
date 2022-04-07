@@ -148,6 +148,17 @@ void texting(Info*& text, Uint32 unicode, unsigned int limit)
 	}
 }
 
+bool changePassword(Student& me, const string& oldPw, const string& newPw)
+{
+	if (oldPw == me.password)
+	{
+		me.password = newPw;
+		return true;
+	}
+	else
+		return false;
+}
+
 // //--------------------------------------- Views ----------------------------------------------------
 // //--------------------------------------------------------------------------------------------------
 // void viewListOfClass(ClassNode *Class_head)
@@ -324,16 +335,7 @@ void texting(Info*& text, Uint32 unicode, unsigned int limit)
 //     }
 //     cout << endl;
 // }
-bool changePassword(Student& me, const string& oldPw, const string& newPw)
-{
-	if (oldPw == me.password)
-	{
-		me.password = newPw;
-		return true;
-	}
-	else
-		return false;
-}
+
 // bool checkLogin(StudentNode *p_head, string username, string password)
 // {
 //     StudentNode *founded_student = searchStudentNode(pHead, username);
