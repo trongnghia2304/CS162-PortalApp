@@ -103,4 +103,13 @@ void addStudentToClass(ClassNode*& p_head_class, StudentNode* p_head_student)
 		tmp_class = tmp_class->next;
 	}
 }
+void deleteClassNode(ClassNode*& p_head)
+{
+	while (p_head)
+	{
+		ClassNode* cur = p_head;
+		p_head = p_head->next;
+		deleteStudentList(cur->my_class.student_list);
+	}
+}
 //--------------------------------------------------------------------------------------------------

@@ -10,6 +10,7 @@ YearNode* appendNewYearNode(YearNode*& p_head, Year p_new_year);
 void pushNewYearNode(YearNode*& p_head, Year p_new_year);
 YearNode* searchYearNode(YearNode* p_head, string find_year_id);
 void removeYearNode(YearNode*& p_head, string p_Year_id);
+void deleteYearNode(YearNode*& p_head);
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------- Class & ClassList ----------------------------------------------
@@ -21,6 +22,7 @@ void appendNewClassNode(ClassNode*& p_head, Class p_new_class);
 void pushNewClassNode(ClassNode*& p_head, Class p_new_class);
 void removeClassNode(ClassNode** p_head, string p_class_id);
 void addStudentToClass(ClassNode*& p_head_class, StudentNode* p_head_student);
+void deleteClassNode(ClassNode*& p_head);
 //--------------------------------------------------------------------------------------------------
 
 //------------------------------- Course & CourseList ----------------------------------------------
@@ -47,6 +49,7 @@ SemesterNode* searchSemesterNode(SemesterNode* p_head, string p_semester_id);
 void appendNewSemesterNode(SemesterNode** p_head, Semester p_new_semester);
 void pushNewSemesterNode(SemesterNode** p_head, Semester p_new_semester);
 void removeSemesterNode(SemesterNode** p_head, string p_semester_id);
+void deleteSemesterNode(SemesterNode*& p_head);
 //--------------------------------------------------------------------------------------------------
 
 //----------------------------- Student & StudentList --------------------------------------------

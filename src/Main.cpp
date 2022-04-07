@@ -5,10 +5,14 @@ int main()
 #if defined(_DEBUG)
 #endif
 	//------------------ demo data-----------------------------
-	Student meme = createStudent(1, "21125011", "Nghia", "Nguyen Trong", 0, "12/12/2003", "123273862");
-	meme.password = "demo";
-	StudentNode* me = nullptr;
-	appendNewStudentNode(&me, meme);
+	// Student meme = createStudent(1, "21125011", "Nghia", "Nguyen Trong", 0, "12/12/2003", "123273862");
+	// meme.password = "demo";
+	// meme.student_class = "21CTT1 - APCS";
+	// StudentNode* me = nullptr;
+	// appendNewStudentNode(&me, meme);
+
+	string class_input_path = "all_classes.csv";
+	ClassNode* all_classes = nullptr;
 
 	// Testing student & student list functions
 	// string student_input_path = "student_sample_data.csv";
@@ -42,17 +46,19 @@ int main()
 	window.create(VideoMode(1000.0f * scale, 750.0f * scale), "CS162-Project", Style::Close);
 	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 	int page = 5;
-	bool role;
+
+	// staff(1), student(0)
+	bool is_staff;
 	while (page > 0 && window.isOpen())
 	{
 		switch (page)
 		{
 			case 1: {
-				Scene1(window, page, role, scale);
+				Scene1(window, page, is_staff, scale);
 				break;
 			}
 			case 2: {
-				logIn(window, page, role, scale);
+				logIn(window, page, is_staff, scale);
 				break;
 			}
 			case 3: {

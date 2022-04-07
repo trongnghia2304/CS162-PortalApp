@@ -73,3 +73,15 @@ void removeYearNode(YearNode*& p_head, string p_Year_id)
 		delete founded_year;
 	}
 }
+
+void deleteYearNode(YearNode*& p_head)
+{
+	while (p_head)
+	{
+		YearNode* cur = p_head;
+		p_head = p_head->next;
+		deleteSemesterNode(cur->school_year.list_sem);
+		deleteClassNode(cur->school_year.list_class);
+		delete cur;
+	}
+}
