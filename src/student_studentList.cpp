@@ -2,7 +2,7 @@
 
 //----------------------------- Student & StudentList --------------------------------------------
 //--------------------------------------------------------------------------------------------------
-Student createStudent(int p_num, string p_student_id, string p_first_name, string p_last_name, bool p_gender, string p_dob, string p_social_id)
+Student createStudent(int p_num, string p_student_id, string p_first_name, string p_last_name, bool p_gender, string p_dob, string p_social_id, string p_password, string p_class)
 {
 	Student new_student;
 	new_student.num = p_num;
@@ -12,6 +12,8 @@ Student createStudent(int p_num, string p_student_id, string p_first_name, strin
 	new_student.gender = p_gender;
 	new_student.dob.assign(p_dob);
 	new_student.social_id.assign(p_social_id);
+	new_student.password.assign(p_password);
+	new_student.student_class.assign(p_class);
 
 	return new_student;
 }
@@ -116,9 +118,12 @@ void readFromFileStudentNode(string p_student_file_path, StudentNode** p_head)
 			{
 				getline(ss, word[i], ',');
 			}
-
+			int id, gender;
+			istringstream(word[0]) >> id;
+			istringstream(word[4]) >> gender;
 			// Create new student data and append to current list
-			Student new_student = createStudent(stoi(word[0]), word[1], word[2], word[3], (stoi(word[4]) ? true : false), word[5], word[6]);
+			// Student new_student = createStudent(stoi(word[0]), word[1], word[2], word[3], (stoi(word[4]) ? false : true), word[5], word[6], word[7], word[8]);
+			Student new_student = createStudent(id, word[1], word[2], word[3], gender, word[5], word[6], word[7], word[8]);
 			appendNewStudentNode(p_head, new_student);
 		}
 		openFile.close();
@@ -143,6 +148,7 @@ void writeToFileStudentNode(string p_student_file_path, StudentNode* p_head)
 			openFile << temp->student.student_id << ",";
 			openFile << temp->student.first_name << ",";
 			openFile << temp->student.last_name << ",";
+			openFile << temp->student.gender << ",";
 			openFile << temp->student.dob << ",";
 			openFile << temp->student.social_id << ",";
 			openFile << temp->student.password << ",";
@@ -203,4 +209,52 @@ void printStudentNode(StudentNode* p_head)
 		temp = temp->next;
 	}
 }
+void readFromFileStudentNode(ifstream& openFile, StudentNode** p_head)
+{
+	if (openFile)
+	{
+		string line, word[9];
+		while (getline(openFile, line) && line[0] != '*')
+		{
+			stringstream ss(line);
+			for (int i = 0; i < 9; i++)
+			{
+				getline(ss, word[i], ',');
+			}
+
+			// Create new student data and append to current list
+			// Student new_student = createStudent(stoi(word[0]), word[1], word[2], word[3], (stoi(word[4]) ? false : true), word[5], word[6], word[7], word[8]);
+			int id, gender;
+			istringstream(word[0]) >> id;
+			istringstream(word[4]) >> gender;
+			// Student new_student = createStudent(id, word[1], word[2], word[3], (gender ? false : true), word[5], word[6], word[7], word[8]);
+			Student new_student = createStudent(id, word[1], word[2], word[3], gender, word[5], word[6], word[7], word[8]);
+			appendNewStudentNode(p_head, new_student);
+		}
+	}
+	return;
+}
+void writeToFileStudentNode(ofstream& openFile, StudentNode* p_head)
+{
+	if (openFile)
+	{
+		StudentNode* temp = p_head;
+		while (temp)
+		{
+			openFile << temp->student.num << ",";
+			openFile << temp->student.student_id << ",";
+			openFile << temp->student.first_name << ",";
+			openFile << temp->student.last_name << ",";
+			openFile << temp->student.gender << ",";
+			openFile << temp->student.dob << ",";
+			openFile << temp->student.social_id << ",";
+			openFile << temp->student.password << ",";
+			openFile << temp->student.student_class;
+			openFile << endl;
+			temp = temp->next;
+		}
+		return;
+	}
+}
+
 //--------------------------------------------------------------------------------------------------

@@ -46,7 +46,7 @@ struct Class
 {
 	string class_id;
 	string head_teacher;
-	StudentNode* student_list;
+	StudentNode* student_list = nullptr;
 };
 
 struct ClassNode
