@@ -154,7 +154,6 @@ void writeToFileStudentNode(string p_student_file_path, StudentNode* p_head)
 			openFile << temp->student.password << ",";
 			openFile << temp->student.student_class;
 			openFile << endl;
-
 			temp = temp->next;
 		}
 	}

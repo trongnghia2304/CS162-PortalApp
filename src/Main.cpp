@@ -11,15 +11,21 @@ int main()
 	// StudentNode* me = nullptr;
 	// appendNewStudentNode(&me, meme);
 
-	string class_input_path = "all_classes.csv";
+	string class_input_path = "./csv/class_input.csv";
+	string class_output_path = "./csv/class_output.csv";
+
 	ClassNode* all_classes = nullptr;
+	// readFromFileClassNode(class_input_path, all_classes);
+	readFromFileClassNode(class_input_path, all_classes);
+
+	string staff_input_path = "./csv/staff_input.csv";
+	string staff_output_path = "./csv/staff_output.csv";
+	StudentNode* all_staffs = nullptr;
+
+	readFromFileStudentNode(staff_input_path, &all_staffs);
 
 	// Testing student & student list functions
-	// string student_input_path = "student_sample_data.csv";
-	// string student_output_path = "sample_student_output.csv";
-	// StudentNode* new_list = nullptr;
 
-	// readFromFileStudentNode(student_input_path, &new_list);
 	// if (new_list)
 	// {
 	// 	removeStudentNode(&new_list, "18125030");
@@ -45,10 +51,11 @@ int main()
 	float scale = 1.5f;
 	window.create(VideoMode(1000.0f * scale, 750.0f * scale), "CS162-Project", Style::Close);
 	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-	int page = 5;
+	int page = 1;
 
-	// staff(1), student(0)
+	StudentNode* user;
 	bool is_staff;
+
 	while (page > 0 && window.isOpen())
 	{
 		switch (page)
@@ -58,7 +65,7 @@ int main()
 				break;
 			}
 			case 2: {
-				logIn(window, page, is_staff, scale);
+				logIn(window, page, is_staff, scale, all_classes, all_staffs, user);
 				break;
 			}
 			case 3: {
@@ -70,7 +77,7 @@ int main()
 				break;
 			}
 			case 5: {
-				profile(window, page, scale, me);
+				profile(window, page, scale, user, is_staff);
 			}
 			default: {
 				break;
@@ -78,6 +85,14 @@ int main()
 		}
 	}
 
-	deleteStudentList(me);
+	// save all data
+	writeToFileClassNode(class_output_path, all_classes);
+	writeToFileStudentNode(staff_output_path, all_staffs);
+
+	// delete all SLL
+	deleteClassNode(all_classes);
+	deleteStudentList(all_staffs);
+
+	// deleteStudentList(me);
 	return 0;
 }
