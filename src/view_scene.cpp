@@ -1,6 +1,6 @@
 #include "views.h"
 
-void Scene1(RenderWindow& window, int& page, bool& is_staff, const float& scale)
+void Scene1(RenderWindow& window, int& page, bool& role, const float& scale)
 {
 	Object screen = createObject("content/First.png");
 	Object o1 = createObject("content/Staff1.png", 180.0f * scale, 300.0f * scale);
@@ -26,12 +26,12 @@ void Scene1(RenderWindow& window, int& page, bool& is_staff, const float& scale)
 					{
 						if (isHere(o1.bound, mouse))
 						{
-							is_staff = true;
+							role = true;
 							page = 2;
 						}
 						else if (isHere(o2.bound, mouse))
 						{
-							is_staff = false;
+							role = false;
 							page = 2;
 						}
 					}
