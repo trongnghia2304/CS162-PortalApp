@@ -47,5 +47,3 @@ void changePos(Object* a, float x, float y);
 void changePos(Info* a, float x, float y);
 void texting(Info& text, Uint32 unicode, unsigned int limit);
 void texting(Info*& text, Uint32 unicode, unsigned int limit);
-// bool empty(sf::String s);
-// bool pop_back(sf::String s);

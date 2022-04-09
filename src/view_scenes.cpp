@@ -1,6 +1,6 @@
 #include "views.h"
 
-void Scene1(RenderWindow& window, int& page, bool& is_staff, const float& scale)
+void Scene1(RenderWindow& window, int& page, bool& role, const float& scale)
 {
 	Object screen = createObject("content/First.png");
 	Object o1 = createObject("content/Staff1.png", 180.0f * scale, 300.0f * scale);
@@ -26,12 +26,12 @@ void Scene1(RenderWindow& window, int& page, bool& is_staff, const float& scale)
 					{
 						if (isHere(o1.bound, mouse))
 						{
-							is_staff = true;
+							role = true;
 							page = 2;
 						}
 						else if (isHere(o2.bound, mouse))
 						{
-							is_staff = false;
+							role = false;
 							page = 2;
 						}
 					}
@@ -63,7 +63,7 @@ void Scene1(RenderWindow& window, int& page, bool& is_staff, const float& scale)
 	}
 }
 
-void logIn(RenderWindow& window, int& page, bool is_staff, const float& scale, ClassNode*& class_list, StudentNode*& staff_list, StudentNode*& user)
+void logIn(RenderWindow& window, int& page, bool role, const float& scale)
 {
 	Event event;
 	bool see = false, entered = false, change = false, wrong_password = false;
@@ -185,34 +185,13 @@ void logIn(RenderWindow& window, int& page, bool is_staff, const float& scale, C
 
 		if (change && !wrong_password)
 		{
-			if (is_staff)
-			{
-				user = searchStudentNode(staff_list, username.s);
-				if (user && user->student.password == pw.s)
-				{
-					page = 4;
-					wrong_password = false;
-				}
-				else
-					wrong_password = true;
-			}
-			// search class
-			else
-			{
-				ClassNode* check_class = class_list;
-				while (!user && check_class)
-				{
-					user = searchStudentNode(class_list->my_class.student_list, username.s);
-					check_class = check_class->next;
-				}
-				if (user && user->student.password == pw.s)
-				{
-					wrong_password = false;
-					page = 3;
-				}
-				else
-					wrong_password = true;
-			}
+			// check if the password/username is correct
+			// in this case, it it correct
+			page = (role ? 4 : 3);
+			// if (role)
+			// 	cout << "staff";
+			// in this case, it is incorrect
+			//window.draw(wrong.text);
 		}
 		else if (wrong_password)
 		{
