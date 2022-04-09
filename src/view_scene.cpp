@@ -1,6 +1,6 @@
 #include "views.h"
 
-void Scene1(RenderWindow& window, int& page, bool& role, const float& scale)
+void Scene1(RenderWindow& window, int& page, bool& is_staff, const float& scale)
 {
 	Object screen = createObject("content/First.png");
 	Object o1 = createObject("content/Staff1.png", 180.0f * scale, 300.0f * scale);
@@ -26,12 +26,12 @@ void Scene1(RenderWindow& window, int& page, bool& role, const float& scale)
 					{
 						if (isHere(o1.bound, mouse))
 						{
-							role = true;
+							is_staff = true;
 							page = 2;
 						}
 						else if (isHere(o2.bound, mouse))
 						{
-							role = false;
+							is_staff = false;
 							page = 2;
 						}
 					}
@@ -197,7 +197,10 @@ void logIn(RenderWindow& window, int& page, bool is_staff, const float& scale, C
 					wrong_password = true;
 			}
 			else
-				return;
+			{
+				check_class = class_list;
+				user = searchStudentNode(check_class->my_class.student_list, username.s);
+			}
 
 			if (user && user->student.password == pw.s)
 			{
@@ -207,14 +210,14 @@ void logIn(RenderWindow& window, int& page, bool is_staff, const float& scale, C
 			else
 				wrong_password = true;
 		}
+		else if (wrong_password)
+		{
+			change = false;
+			window.draw(wrong.text);
+		}
+		drawWhich(window, out_here, out, mouse);
+		window.display();
 	}
-	else if (wrong_password)
-	{
-		change = false;
-		window.draw(wrong.text);
-	}
-	drawWhich(window, out_here, out, mouse);
-	window.display();
 }
 void studentHome(RenderWindow& window, int& page, const float& scale)
 {

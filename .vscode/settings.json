@@ -25,18 +25,7 @@
 		"*.json": "jsonc",
 		"*.stats": "cpp",
 		"*.desktop": "properties",
-		".clang-format": "yaml",
-		"iostream": "cpp",
-		"array": "cpp",
-		"bitset": "cpp",
-		"string_view": "cpp",
-		"initializer_list": "cpp",
-		"regex": "cpp",
-		"utility": "cpp",
-		"new": "cpp",
-		"iosfwd": "cpp",
-		"sstream": "cpp",
-		"random": "cpp"
+		".clang-format": "yaml"
 	},
 	"terminal.integrated.defaultProfile.windows": "Git Bash",
 	"terminal.integrated.env.windows": {
@@ -50,6 +39,5 @@
 	},
 	"[applescript]": {
 		"files.encoding": "utf8"
-	},
-	"C_Cpp.errorSquiggles": "Disabled"
+	}
 }
