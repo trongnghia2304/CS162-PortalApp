@@ -78,6 +78,7 @@ int main()
 			}
 			case 5: {
 				profile(window, page, scale, user, is_staff);
+				break;
 			}
 			default: {
 				break;

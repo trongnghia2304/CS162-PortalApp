@@ -63,7 +63,7 @@ void Scene1(RenderWindow& window, int& page, bool& is_staff, const float& scale)
 	}
 }
 
-void logIn(RenderWindow& window, int& page, bool is_staff, const float& scale, ClassNode*& class_list, StudentNode*& staff_list, StudentNode*& user)
+void logIn(RenderWindow& window, int& page, bool is_staff, const float& scale, ClassNode* class_list, StudentNode* staff_list, StudentNode*& user)
 {
 	Event event;
 	bool see = false, entered = false, change = false, wrong_password = false;
@@ -79,7 +79,7 @@ void logIn(RenderWindow& window, int& page, bool is_staff, const float& scale, C
 	Info pw2 = createInfo("content/Oswald-Light.ttf", "********", 430.0f * scale, 450.0f * scale, 26.25f * scale);
 	Info wrong = createInfo("content/Oswald-Light.ttf", "Wrong username/password, please try again!", 355.0f * scale, 497.5f * scale, 20.0f * scale);
 	wrong.text.setFillColor(Color(118, 36, 2, 255));
-
+	ClassNode* check_class = nullptr;
 	while (window.isOpen() && page == 2)
 	{
 		Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
@@ -196,34 +196,26 @@ void logIn(RenderWindow& window, int& page, bool is_staff, const float& scale, C
 				else
 					wrong_password = true;
 			}
-			// search class
 			else
-			{
-				ClassNode* check_class = class_list;
-				while (!user && check_class)
-				{
-					user = searchStudentNode(class_list->my_class.student_list, username.s);
-					check_class = check_class->next;
-				}
-				if (user && user->student.password == pw.s)
-				{
-					wrong_password = false;
-					page = 3;
-				}
-				else
-					wrong_password = true;
-			}
-		}
-		else if (wrong_password)
-		{
-			change = false;
-			window.draw(wrong.text);
-		}
-		drawWhich(window, out_here, out, mouse);
-		window.display();
-	}
-}
+				return;
 
+			if (user && user->student.password == pw.s)
+			{
+				wrong_password = false;
+				page = 3;
+			}
+			else
+				wrong_password = true;
+		}
+	}
+	else if (wrong_password)
+	{
+		change = false;
+		window.draw(wrong.text);
+	}
+	drawWhich(window, out_here, out, mouse);
+	window.display();
+}
 void studentHome(RenderWindow& window, int& page, const float& scale)
 {
 	Event event;
