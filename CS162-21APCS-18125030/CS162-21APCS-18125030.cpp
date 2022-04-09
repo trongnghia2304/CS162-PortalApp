@@ -80,6 +80,7 @@ int main()
 		}
 		case 6: {
 			view_class(window, page, scale, all_classes, user);
+			break;
 		}
 		default: {
 			break;
