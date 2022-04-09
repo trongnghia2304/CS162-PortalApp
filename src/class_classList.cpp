@@ -148,4 +148,39 @@ void writeToFileClassNode(string p_class_file_path, ClassNode* p_head)
 	}
 	return;
 }
+void readFromFileClassNode1(string p_class_file_path, ClassNode*& p_head)
+{
+	ifstream openFile(p_class_file_path);
+	if (openFile)
+	{
+		string class_id, teacher_name;
+		while (getline(openFile, class_id))
+		{
+			getline(openFile, teacher_name);
+			Class new_class = createClass(class_id, teacher_name);
+			readFromFileStudentNode1(openFile, &new_class.student_list);
+			appendNewClassNode(p_head, new_class);
+		}
+		openFile.close();
+	}
+	return;
+}
+void writeToFileClassNode1(string p_class_file_path, ClassNode* p_head)
+{
+	ofstream openFile(p_class_file_path);
+	if (openFile)
+	{
+		ClassNode* temp = p_head;
+		while (temp)
+		{
+			openFile << temp->my_class.class_id << endl;
+			openFile << temp->my_class.head_teacher << endl;
+			writeToFileStudentNode(openFile, temp->my_class.student_list);
+			temp = temp->next;
+			openFile << "*" << endl;
+		}
+		openFile.close();
+	}
+	return;
+}
 //--------------------------------------------------------------------------------------------------

@@ -25,6 +25,9 @@ void addStudentToClass(ClassNode*& p_head_class, StudentNode* p_head_student);
 void deleteClassNode(ClassNode*& p_head);
 void readFromFileClassNode(string p_class_file_path, ClassNode*& p_head);
 void writeToFileClassNode(string p_class_file_path, ClassNode* p_head);
+void readFromFileClassNode1(string p_class_file_path, ClassNode*& p_head);
+void writeToFileClassNode1(string p_class_file_path, ClassNode* p_head);
+
 //--------------------------------------------------------------------------------------------------
 
 //------------------------------- Course & CourseList ----------------------------------------------
@@ -64,8 +67,10 @@ void pushNewStudentNode(StudentNode** p_head, Student p_new_student);
 void removeStudentNode(StudentNode** p_head, string p_student_id);
 void readFromFileStudentNode(string p_student_file_path, StudentNode** p_head);
 void readFromFileStudentNode(ifstream& openFile, StudentNode** p_head);
+void readFromFileStudentNode1(ifstream& openFile, StudentNode** p_head);
 void writeToFileStudentNode(string p_student_file_path, StudentNode* p_head);
 void writeToFileStudentNode(ofstream& openFile, StudentNode* p_head);
+void writeToFileStudentNode1(ofstream& openFile, StudentNode* p_head);
 int countStudentNode(StudentNode* p_head);
 void deleteStudentList(StudentNode*& p_head);
 void printStudent(Student p_student);

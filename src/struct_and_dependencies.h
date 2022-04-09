@@ -33,6 +33,7 @@ struct Student
 	string social_id;
 	string password;
 	string student_class;
+	int subject_amount = 0;
 	MyCourse* my_course;
 };
 
@@ -63,9 +64,10 @@ struct Session
 
 struct Score
 {
-	int process;
-	int mid;
-	int fin;
+	float process;
+	float mid;
+	float fin;
+	float overall;
 };
 
 struct Course
@@ -81,10 +83,12 @@ struct Course
 struct MyCourse
 {
 	Score score;
+	string subject_code;
 	CourseNode* course;
 	MyCourse* next;
 	MyCourse(CourseNode& a) :
 		course(&a),
+		subject_code(""),
 		next(nullptr) {};
 };
 

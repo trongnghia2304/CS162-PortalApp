@@ -255,5 +255,83 @@ void writeToFileStudentNode(ofstream& openFile, StudentNode* p_head)
 		return;
 	}
 }
+void readFromFileStudentNode1(ifstream& openFile, StudentNode** p_head)
+{
+	if (openFile)
+	{
+		string line, word[10];
+		while (getline(openFile, line) && line[0] != '*')
+		{
+		    if(line[0] == '>') continue;
+			stringstream ss(line);
+			for (int i = 0; i < 10; i++)
+			{
+				getline(ss, word[i], ',');
+			}
+			// Create new student data and append to current list
+
+			int id, gender;
+			istringstream(word[0]) >> id;
+			istringstream(word[4]) >> gender;
+
+			Student new_student = createStudent(id, word[1], word[2], word[3], gender, word[5], word[6], word[7], word[8]);
+			new_student.subject_amount = stoi(word[9]);
+
+            MyCourse *cur;
+			for(int i = 1; i <= new_student.subject_amount; i++)
+            {
+                MyCourse *temp = new MyCourse;
+                if(i == 1)
+                {
+                    new_student.my_course = temp;
+                    cur = temp;
+                }
+                else
+                {
+                    cur->next = temp;
+                    cur = cur->next;
+                }
+                getline(openFile, line);
+                stringstream ss(line);
+                for(int i = 0; i < 5; i++)
+                {
+                    getline(ss, word[i], ',');
+                }
+                cur->subject_code = word[0];
+                istringstream(word[1]) >> cur->score.process;
+                istringstream(word[2]) >> cur->score.mid;
+                istringstream(word[3]) >> cur->score.fin;
+                istringstream(word[4]) >> cur->score.overall;
+
+            }
+			appendNewStudentNode(p_head, new_student);
+		}
+	}
+	return;
+}
+void writeToFileStudentNode1(ofstream& openFile, StudentNode* p_head)
+{
+	if (openFile)
+	{
+		StudentNode* temp = p_head;
+		while (temp)
+		{
+			openFile << temp->student.num << ",";
+			openFile << temp->student.student_id << ",";
+			openFile << temp->student.first_name << ",";
+			openFile << temp->student.last_name << ",";
+			openFile << temp->student.gender << ",";
+			openFile << temp->student.dob << ",";
+			openFile << temp->student.social_id << ",";
+			openFile << temp->student.password << ",";
+			openFile << temp->student.student_class;
+			openFile << endl;
+			openFile << ">";
+			openFile << endl;
+			temp = temp->next;
+		}
+		return;
+	}
+}
 
 //--------------------------------------------------------------------------------------------------
