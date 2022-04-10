@@ -1,6 +1,6 @@
 #include "views.h"
 
-void Scene1(RenderWindow& window, int& page, bool& is_staff, const float& scale)
+void Scene1(RenderWindow &window, int &page, bool &is_staff, const float &scale)
 {
 	Object screen = createObject("content/First.png");
 	Object o1 = createObject("content/Staff1.png", 180.0f * scale, 300.0f * scale);
@@ -17,11 +17,13 @@ void Scene1(RenderWindow& window, int& page, bool& is_staff, const float& scale)
 		{
 			switch (event.type)
 			{
-			case Event::Closed: {
+			case Event::Closed:
+			{
 				window.close();
 				break;
 			}
-			case Event::MouseButtonReleased: {
+			case Event::MouseButtonReleased:
+			{
 				if (event.mouseButton.button == Mouse::Left)
 				{
 					if (isHere(o1.bound, mouse))
@@ -63,7 +65,7 @@ void Scene1(RenderWindow& window, int& page, bool& is_staff, const float& scale)
 	}
 }
 
-void logIn(RenderWindow& window, int& page, bool is_staff, const float& scale, ClassNode* class_list, StudentNode* staff_list, StudentNode*& user)
+void logIn(RenderWindow &window, int &page, bool is_staff, const float &scale, ClassNode *class_list, StudentNode *staff_list, StudentNode *&user)
 {
 	Event event;
 	bool see = false, entered = false, change = false, wrong_password = false;
@@ -79,7 +81,7 @@ void logIn(RenderWindow& window, int& page, bool is_staff, const float& scale, C
 	Info pw2 = createInfo("content/Oswald-Light.ttf", "********", 430.0f * scale, 450.0f * scale, 26.25f * scale);
 	Info wrong = createInfo("content/Oswald-Light.ttf", "Wrong username/password, please try again!", 355.0f * scale, 497.5f * scale, 20.0f * scale);
 	wrong.text.setFillColor(Color(118, 36, 2, 255));
-	ClassNode* check_class = nullptr;
+	ClassNode *check_class = nullptr;
 	while (window.isOpen() && page == 2)
 	{
 		Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
@@ -87,11 +89,13 @@ void logIn(RenderWindow& window, int& page, bool is_staff, const float& scale, C
 		{
 			switch (event.type)
 			{
-			case Event::Closed: {
+			case Event::Closed:
+			{
 				window.close();
 				break;
 			}
-			case Event::MouseButtonReleased: {
+			case Event::MouseButtonReleased:
+			{
 				if (event.mouseButton.button == Mouse::Left)
 				{
 					switchPage(out.bound, mouse, 1, page);
@@ -124,7 +128,8 @@ void logIn(RenderWindow& window, int& page, bool is_staff, const float& scale, C
 
 				break;
 			}
-			case Event::TextEntered: {
+			case Event::TextEntered:
+			{
 				texting(username, event.text.unicode, 15);
 
 				if (pw.check && (pw.s.size() < 10 || event.text.unicode == 8))
@@ -211,11 +216,11 @@ void logIn(RenderWindow& window, int& page, bool is_staff, const float& scale, C
 		window.display();
 	}
 }
-void studentHome(RenderWindow& window, int& page, const float& scale)
+void studentHome(RenderWindow &window, int &page, const float &scale)
 {
 	Event event;
 	Object screen = createObject("content/Student.png");
-	Object* b[6], * a[6];
+	Object *b[6], *a[6];
 	Object out = createObject("content/logout.png", 866.0f * scale, 106.0f * scale);
 	Object out_here = createObject("content/logout1.png", 866.0f * scale, 106.0f * scale);
 
@@ -236,11 +241,13 @@ void studentHome(RenderWindow& window, int& page, const float& scale)
 		{
 			switch (event.type)
 			{
-			case Event::Closed: {
+			case Event::Closed:
+			{
 				window.close();
 				break;
 			}
-			case Event::MouseButtonReleased: {
+			case Event::MouseButtonReleased:
+			{
 				if (event.mouseButton.button == Mouse::Left)
 				{
 					switchPage(out.bound, mouse, 1, page);
@@ -255,7 +262,8 @@ void studentHome(RenderWindow& window, int& page, const float& scale)
 				}
 				break;
 			}
-			default: {
+			default:
+			{
 				break;
 			}
 			}
@@ -277,14 +285,14 @@ void studentHome(RenderWindow& window, int& page, const float& scale)
 	}
 }
 
-void staffHome(RenderWindow& window, int& page, const float& scale)
+void staffHome(RenderWindow &window, int &page, const float &scale)
 {
 	Object out = createObject("content/logout.png", 866.0f * scale, 106.0f * scale);
 	Object out_here = createObject("content/logout1.png", 866.0f * scale, 106.0f * scale);
 
 	Event event;
 	Object screen = createObject("content/Staff.png");
-	Object* a[4], * b[4];
+	Object *a[4], *b[4];
 	for (int i = 0; i < 4; i++)
 	{
 		a[i] = createObjectTest("content/Asset " + to_string(i + 45) + ".png", (140.0f + 180.0f * i) * scale, 360.0f * scale);
@@ -297,11 +305,13 @@ void staffHome(RenderWindow& window, int& page, const float& scale)
 		{
 			switch (event.type)
 			{
-			case Event::Closed: {
+			case Event::Closed:
+			{
 				window.close();
 				break;
 			}
-			case Event::MouseButtonReleased: {
+			case Event::MouseButtonReleased:
+			{
 				if (isHere(out.bound, mouse))
 				{
 					page = 1;
@@ -318,7 +328,8 @@ void staffHome(RenderWindow& window, int& page, const float& scale)
 
 				break;
 			}
-			default: {
+			default:
+			{
 				break;
 			}
 			}
@@ -340,7 +351,7 @@ void staffHome(RenderWindow& window, int& page, const float& scale)
 	}
 }
 
-void profile(RenderWindow& window, int& page, const float& scale, StudentNode* student, bool is_staff)
+void profile(RenderWindow &window, int &page, const float &scale, StudentNode *student, bool is_staff)
 {
 	string text[7];
 	text[0] = student->student.student_id;
@@ -355,7 +366,7 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 		text[5] += "*";
 	}
 
-	Info* inf[6];
+	Info *inf[6];
 	for (int i = 0; i < 6; i++)
 		inf[i] = createInfoTest("content/Oswald-Light.ttf", text[i], 318.0f * scale, (303.0f + 56.0f * i) * scale, 20 * scale);
 	changePos(inf[4], 318.0f * scale, (303.0f + 56.0 * 5) * scale);
@@ -370,7 +381,7 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 	Object invalid = createObject("content/General/invalid.png", 316.0f * scale, 386.0f * scale);
 	Object out = createObject("content/logout.png", 866.0f * scale, 106.0f * scale);
 	Object out_here = createObject("content/logout1.png", 866.0f * scale, 106.0f * scale);
-	Object* a[7], * b[7];
+	Object *a[7], *b[7];
 	for (int i = 0; i < 7; i++)
 	{
 		a[i] = createObjectTest("content/General/a" + to_string(i + 1) + ".png", 0 * scale, 0 * scale);
@@ -405,11 +416,13 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 		{
 			switch (event.type)
 			{
-			case Event::Closed: {
+			case Event::Closed:
+			{
 				window.close();
 				break;
 			}
-			case Event::MouseButtonReleased: {
+			case Event::MouseButtonReleased:
+			{
 				if (event.mouseButton.button == Mouse::Left)
 				{
 					switchPage(out.bound, mouse, 1, page);
@@ -426,7 +439,8 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 					{
 						switch (password_status)
 						{
-						case 1: {
+						case 1:
+						{
 							if (isHere(a[0]->bound, mouse))
 							{
 								password_status++;
@@ -451,7 +465,8 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 							}
 							break;
 						}
-						case 2: {
+						case 2:
+						{
 							if (isHere(a[6]->bound, mouse))
 							{
 								if (change_success)
@@ -471,7 +486,8 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 							}
 							break;
 						}
-						default: {
+						default:
+						{
 							if (isHere(a[1]->bound, mouse))
 							{
 								password_status = 1;
@@ -491,8 +507,9 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 					}
 				}
 			}
-										   break;
-			case Event::TextEntered: {
+			break;
+			case Event::TextEntered:
+			{
 				if (password_status == 1)
 				{
 					texting(pw, event.text.unicode, 10);
@@ -500,7 +517,8 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 				}
 				break;
 			}
-			default: {
+			default:
+			{
 				break;
 			}
 			}
@@ -519,14 +537,16 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 			{
 				switch (password_status)
 				{
-				case 1: {
+				case 1:
+				{
 					window.draw(enter.draw);
 					window.draw(pw_old.text);
 					window.draw(pw.text);
 					drawWhich(window, b[0], a[0], mouse);
 					break;
 				}
-				case 2: {
+				case 2:
+				{
 					if (change_success)
 					{
 						window.draw(success.draw);
@@ -539,7 +559,8 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 					}
 					break;
 				}
-				default: {
+				default:
+				{
 					window.draw(change.draw);
 					drawWhich(window, b[1], a[1], mouse);
 					drawWhich(window, b[2], a[2], mouse);
@@ -566,7 +587,7 @@ void profile(RenderWindow& window, int& page, const float& scale, StudentNode* s
 		delete (inf[i]);
 }
 
-void view_class(RenderWindow& window, int& page, const float& scale, ClassNode* class_list, StudentNode* user)
+void view_class(RenderWindow &window, int &page, const float &scale, ClassNode *class_list, StudentNode *user, const bool &is_staff)
 {
 	Event event;
 	Object screen = createObject("content/Student/my_class.png");
@@ -576,15 +597,17 @@ void view_class(RenderWindow& window, int& page, const float& scale, ClassNode* 
 	Object back_here = createObject("content/return1.png", 80.0f * scale, 106.0f * scale);
 	Object add_student = createObject("content/Student/add.png", 682.0f * scale, 273.0f * scale);
 	Object add_student_here = createObject("content/Student/add1.png", 682.0f * scale, 273.0f * scale);
-	Object left = createObject("content/Staff/Class/Asset 57.png", 493.0f * scale, 542.0f * scale);
-	Object left_here = createObject("content/Staff/Class/Asset 55.png", 493.0f * scale, 542.0f * scale);
-	Object right = createObject("content/Staff/Class/Asset 56.png", 493.0f * scale, 542.0f * scale);
-	Object right_here = createObject("content/Staff/Class/Asset 54.png", 510.0f * scale, 542.0f * scale);
-	ClassNode* my_class = searchClassNode(class_list, user->student.student_class);
+	Object left = createObject("content/Staff/Class/Asset 57.png", 492.0f * scale, 644.0f * scale);
+	Object left_valid = createObject("content/Staff/Class/Asset 55.png", 492.0f * scale, 644.0f * scale);
+	Object left_here = createObject("content/Staff/Class/Asset 91.png", 492.0f * scale, 644.0f * scale);
+	Object right = createObject("content/Staff/Class/Asset 56.png", 510.0f * scale, 644.0f * scale);
+	Object right_here = createObject("content/Staff/Class/Asset 90.png", 510.0f * scale, 644.0f * scale);
+	Object right_valid = createObject("content/Staff/Class/Asset 54.png", 510.0f * scale, 644.0f * scale);
+	ClassNode *my_class = searchClassNode(class_list, user->student.student_class);
 	Info sub_header = createInfo("content/VNI-Vari.TTF", "Class - " + my_class->my_class.head_teacher, 160.0f * scale, 158.0f * scale, 28.0f * scale);
 	sub_header.text.setFillColor(Color(101, 159, 235));
 	Info header = createInfo("content/VNI-Vari.TTF", my_class->my_class.class_id, 160.0f * scale, 200.0f * scale, 43.0f * scale);
-	Info* inf[8][6];
+	Info *inf[8][6];
 	for (int i = 0; i < 8; i++)
 	{
 		inf[i][0] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 184.0f * scale, (370.0f + 30.0f * i) * scale, 17.5 * scale);
@@ -598,7 +621,7 @@ void view_class(RenderWindow& window, int& page, const float& scale, ClassNode* 
 	}
 	int count = 0, change = 0;
 	bool trigger_page = true;
-	for (StudentNode* cur = my_class->my_class.student_list; cur; cur = cur->next)
+	for (StudentNode *cur = my_class->my_class.student_list; cur; cur = cur->next)
 	{
 		count++;
 	}
@@ -611,16 +634,19 @@ void view_class(RenderWindow& window, int& page, const float& scale, ClassNode* 
 		{
 			switch (event.type)
 			{
-			case Event::Closed: {
+			case Event::Closed:
+			{
 				window.close();
 				break;
 			}
-			case Event::MouseButtonReleased: {
+			case Event::MouseButtonReleased:
+			{
 				if (event.mouseButton.button == Mouse::Left)
 				{
 					switchPage(out.bound, mouse, 1, page);
+					// is_staff: true -> switch to the class
 					switchPage(back.bound, mouse, 5, page);
-					if (isHere(add_student.bound, mouse))
+					if (isHere(add_student.bound, mouse) && is_staff)
 					{
 						// add new student to the class
 					}
@@ -644,7 +670,8 @@ void view_class(RenderWindow& window, int& page, const float& scale, ClassNode* 
 
 		window.clear();
 		window.draw(screen.draw);
-		drawWhich(window, add_student_here, add_student, mouse);
+		if (is_staff)
+			drawWhich(window, add_student_here, add_student, mouse);
 		drawWhich(window, out_here, out, mouse);
 		drawWhich(window, back_here, back, mouse);
 		window.draw(header.text);
@@ -658,22 +685,22 @@ void view_class(RenderWindow& window, int& page, const float& scale, ClassNode* 
 		else if (change == 0)
 		{
 			window.draw(left.draw);
-			drawWhich(window, right_here, right, mouse);
+			drawWhich(window, right_here, right_valid, mouse);
 		}
 		else if (count >= count - 8)
 		{
 			window.draw(right.draw);
-			drawWhich(window, left_here, left, mouse);
+			drawWhich(window, left_here, left_valid, mouse);
 		}
 		else
 		{
-			drawWhich(window, right_here, right, mouse);
-			drawWhich(window, left_here, left, mouse);
+			drawWhich(window, right_here, right_valid, mouse);
+			drawWhich(window, left_here, left_valid, mouse);
 		}
 		if (trigger_page)
 		{
-			StudentNode* cur = my_class->my_class.student_list;
-			for (int i = 0; i < change * 8; i++)
+			StudentNode *cur = my_class->my_class.student_list;
+			for (int i = 0; i < change; i++)
 			{
 				cur = cur->next;
 			}

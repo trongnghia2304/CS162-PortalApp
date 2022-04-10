@@ -161,6 +161,66 @@
     <ClInclude Include="struct_and_dependencies.h" />
     <ClInclude Include="views.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="csv\class_input.csv" />
+    <None Include="csv\class_output.csv" />
+    <None Include="csv\Course_Example.csv" />
+    <None Include="csv\sample_student_output.csv" />
+    <None Include="csv\staff_input.csv" />
+    <None Include="csv\staff_output.csv" />
+    <None Include="csv\Student_Example.csv" />
+    <None Include="csv\student_input copy.csv" />
+    <None Include="csv\student_output.csv" />
+    <None Include="csv\student_sample_data.csv" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="content\Asset 27.png" />
+    <Image Include="content\Asset 28.png" />
+    <Image Include="content\Asset 29.png" />
+    <Image Include="content\Asset 30.png" />
+    <Image Include="content\Asset 31.png" />
+    <Image Include="content\Asset 32.png" />
+    <Image Include="content\Asset 33.png" />
+    <Image Include="content\Asset 34.png" />
+    <Image Include="content\Asset 35.png" />
+    <Image Include="content\Asset 36.png" />
+    <Image Include="content\Asset 37.png" />
+    <Image Include="content\Asset 38.png" />
+    <Image Include="content\Asset 41.png" />
+    <Image Include="content\Asset 42.png" />
+    <Image Include="content\Asset 43.png" />
+    <Image Include="content\Asset 44.png" />
+    <Image Include="content\Asset 45.png" />
+    <Image Include="content\Asset 46.png" />
+    <Image Include="content\Asset 47.png" />
+    <Image Include="content\Asset 48.png" />
+    <Image Include="content\closedeye.png" />
+    <Image Include="content\eye.png" />
+    <Image Include="content\First.png" />
+    <Image Include="content\icon.png" />
+    <Image Include="content\Log in.png" />
+    <Image Include="content\Login.png" />
+    <Image Include="content\Login1.png" />
+    <Image Include="content\logout.png" />
+    <Image Include="content\logout1.png" />
+    <Image Include="content\return.png" />
+    <Image Include="content\return1.png" />
+    <Image Include="content\Staff.png" />
+    <Image Include="content\Staff1.png" />
+    <Image Include="content\Staff2.png" />
+    <Image Include="content\Student.png" />
+    <Image Include="content\Student1.png" />
+    <Image Include="content\Student2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="content\Oswald-Bold.ttf" />
+    <Font Include="content\Oswald-ExtraLight.ttf" />
+    <Font Include="content\Oswald-Light.ttf" />
+    <Font Include="content\Oswald-Medium.ttf" />
+    <Font Include="content\Oswald-Regular.ttf" />
+    <Font Include="content\Oswald-SemiBold.ttf" />
+    <Font Include="content\VNI-Vari.TTF" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

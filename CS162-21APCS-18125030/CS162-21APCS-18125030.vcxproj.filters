@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\content">
+      <UniqueIdentifier>{b83b6893-024d-4495-a535-db2c03782d6e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CS162-21APCS-18125030.cpp">
@@ -50,5 +53,173 @@
     <ClInclude Include="views.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="csv\class_input.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="csv\class_output.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="csv\Course_Example.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="csv\sample_student_output.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="csv\staff_input.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="csv\staff_output.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="csv\Student_Example.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="csv\student_input copy.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="csv\student_output.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="csv\student_sample_data.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="content\Asset 27.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Asset 28.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Asset 29.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Asset 30.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Asset 31.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Asset 32.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Asset 33.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Asset 34.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Asset 35.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Asset 36.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Asset 37.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Asset 38.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Asset 41.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Asset 42.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Asset 43.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Asset 44.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Asset 45.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Asset 46.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Asset 47.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Asset 48.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\closedeye.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\eye.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\First.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\icon.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Log in.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Login.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Login1.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\logout.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\logout1.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\return.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\return1.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Staff.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Staff1.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Staff2.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Student.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Student1.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+    <Image Include="content\Student2.png">
+      <Filter>Resource Files\content</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="content\Oswald-Bold.ttf">
+      <Filter>Resource Files\content</Filter>
+    </Font>
+    <Font Include="content\Oswald-ExtraLight.ttf">
+      <Filter>Resource Files\content</Filter>
+    </Font>
+    <Font Include="content\Oswald-Light.ttf">
+      <Filter>Resource Files\content</Filter>
+    </Font>
+    <Font Include="content\Oswald-Medium.ttf">
+      <Filter>Resource Files\content</Filter>
+    </Font>
+    <Font Include="content\Oswald-Regular.ttf">
+      <Filter>Resource Files\content</Filter>
+    </Font>
+    <Font Include="content\Oswald-SemiBold.ttf">
+      <Filter>Resource Files\content</Filter>
+    </Font>
+    <Font Include="content\VNI-Vari.TTF">
+      <Filter>Resource Files\content</Filter>
+    </Font>
   </ItemGroup>
 </Project>

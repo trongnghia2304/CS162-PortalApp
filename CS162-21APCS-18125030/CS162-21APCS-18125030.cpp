@@ -22,6 +22,12 @@ int main()
 
 	readFromFileStudentNode(staff_input_path, &all_staffs);
 
+
+	string school_input_path = "./csv/schoolyear_input";
+	string school_output_path = "./csv/schoolyear_input";
+
+	YearNode* school = nullptr;
+	readFromFileYearNode(school_input_path, &school);
 	// Testing student & student list functions
 
 	// if (new_list)
@@ -79,7 +85,7 @@ int main()
 			break;
 		}
 		case 6: {
-			view_class(window, page, scale, all_classes, user);
+			view_class(window, page, scale, all_classes, user, is_staff);
 			break;
 		}
 		default: {

@@ -33,7 +33,7 @@ void logIn(RenderWindow& window, int& page, bool role, const float& scale, Class
 void studentHome(RenderWindow& window, int& page, const float& scale);
 void staffHome(RenderWindow& window, int& page, const float& scale);
 void profile(RenderWindow& window, int& page, const float& scale, StudentNode* student, bool is_staff);
-void view_class(RenderWindow& window, int& page, const float& scale, ClassNode* class_list, StudentNode* user);
+void view_class(RenderWindow& window, int& page, const float& scale, ClassNode* class_list, StudentNode* user, const bool& is_staff);
 //-----------------Other features--------------------------
 
 bool isHere(FloatRect& bound, Vector2f& mouse);
