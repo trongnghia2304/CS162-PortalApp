@@ -74,6 +74,30 @@ void appendNewCourseNode(CourseNode **p_head, Course p_new_course)
         return;
     }
 }
+void appendNewCourseNode(CourseNode **p_head, Course p_new_course, const string &sem, const string &year)
+{
+    CourseNode *new_course_node = initCourseNode(p_new_course);
+    new_course_node->year_id = year;
+    new_course_node->semester_id = sem;
+    if (!(*p_head))
+    {
+        (*p_head) = new_course_node;
+        new_course_node->year_id = year;
+        new_course_node->semester_id = sem;
+    }
+
+    else
+    {
+        CourseNode *temp = *p_head;
+        while (temp->next)
+        {
+            temp = temp->next;
+        }
+        temp->next = new_course_node;
+    }
+    return;
+}
+
 void pushNewCourseNode(CourseNode **p_head, Course p_new_course)
 {
     CourseNode *new_course_node = initCourseNode(p_new_course);
@@ -213,4 +237,52 @@ void printCourseNode(CourseNode *p_head)
         temp = temp->next;
     }
 }
+
+void readFromFileCourseNode(ifstream &openFile, CourseNode **p_head)
+{
+    if (openFile)
+    {
+        string line, word[11];
+        while (getline(openFile, line) && line[0] != '*')
+        {
+            stringstream ss(line);
+            for (int i = 0; i < 11; i++)
+            {
+                getline(ss, word[i], ',');
+            }
+
+            // Create new course data and append to current list
+            Course new_course = createCourse(word[0], word[1], word[2], stoi(word[3]), (word[4].empty() ? false : stoi(word[4])), stoi(word[5]), stoi(word[6]), stoi(word[7]), stoi(word[8]));
+            appendNewCourseNode(p_head, new_course, word[9], word[10]);
+        }
+    }
+    return;
+}
+void writeToFileCourseNode(ofstream &openFile, CourseNode *p_head)
+{
+    if (openFile)
+    {
+        CourseNode *temp = p_head;
+        while (temp)
+        {
+            openFile << temp->course.course_id << ",";
+            openFile << temp->course.course_name << ",";
+            openFile << temp->course.teacher_name << ",";
+            openFile << temp->course.num_credit << ",";
+            openFile << temp->course.max_students << ",";
+            openFile << temp->course.teaching_session[0].day_of_the_week << ",";
+            openFile << temp->course.teaching_session[0].session_no << ",";
+            openFile << temp->course.teaching_session[1].day_of_the_week << ",";
+            openFile << temp->course.teaching_session[1].session_no << ",";
+            openFile << temp->semester_id << ",";
+            openFile << temp->year_id;
+            openFile << endl;
+
+            temp = temp->next;
+        }
+        openFile << "*" << endl;
+    }
+    return;
+}
+
 //--------------------------------------------------------------------------------------------------

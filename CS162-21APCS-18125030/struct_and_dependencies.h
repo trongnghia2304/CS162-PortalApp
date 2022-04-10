@@ -59,8 +59,8 @@ struct ClassNode
 
 struct Session
 {
-	int day_of_the_week;
-	int session_no;
+	int day_of_the_week; // MON / TUE / WED / THU / FRI / SAT
+	int session_no; // S1 (07:30), S2 (09:30), S3(13:30) and S4 (15:30)
 };
 
 struct Score
@@ -95,8 +95,8 @@ struct MyCourse
 
 struct CourseNode
 {
-	int semester_id;
-	int year;
+	string semester_id;
+	string year_id;
 	Course course;
 	StudentNode* student_list;
 	CourseNode* next;
@@ -105,7 +105,7 @@ struct CourseNode
 struct Semester
 {
 	string semester_id;
-	CourseNode* course_list;
+	CourseNode* course_list = nullptr;
 };
 
 struct SemesterNode
@@ -118,7 +118,7 @@ struct Year
 {
 	string year_id;
 	ClassNode* list_class;
-	SemesterNode* list_sem;
+	SemesterNode* list_sem = nullptr;
 };
 
 struct YearNode

@@ -6,11 +6,13 @@
 //--------------------------------------------------------------------------------------------------
 Year createYear(string p_year_id);
 YearNode* initYearNode(Year p_new_year);
-YearNode* appendNewYearNode(YearNode*& p_head, Year p_new_year);
+void appendNewYearNode(YearNode** p_head, Year p_new_year);
 void pushNewYearNode(YearNode*& p_head, Year p_new_year);
 YearNode* searchYearNode(YearNode* p_head, string find_year_id);
 void removeYearNode(YearNode*& p_head, string p_Year_id);
 void deleteYearNode(YearNode*& p_head);
+void readFromFileYearNode(string p_year_file_path, YearNode** p_head);
+void writeToFileYearNode(string p_year_file_path, YearNode* p_head);
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------- Class & ClassList ----------------------------------------------
@@ -37,10 +39,13 @@ void printCourse(Course p_course);
 CourseNode* initCourseNode(Course p_new_course);
 CourseNode* searchCourseNode(CourseNode* p_head, string p_id);
 void appendNewCourseNode(CourseNode** p_head, Course p_new_course);
+void appendNewCourseNode(CourseNode** p_head, Course p_new_course, const string& sem, const string& year);
 void pushNewCourseNode(CourseNode** p_head, Course p_new_course);
 void removeCourseNode(CourseNode** p_head, string p_course_id);
 void readFromFileCourseNode(string p_course_file_path, CourseNode** p_head);
 void writeToFileCourseNode(string p_course_file_path, CourseNode* p_head);
+void readFromFileCourseNode(ifstream& openFile, CourseNode** p_head);
+void writeToFileCourseNode(ofstream& openFile, CourseNode* p_head);
 void updateCourseInfo(CourseNode** p_head, string p_course_id, string p_course_name, string p_teacher_name);
 void deleteCourseNode(CourseNode*& head);
 void printCourseNode(CourseNode* p_head); // Used for checking outputs <----- can omit
@@ -53,6 +58,8 @@ SemesterNode* initSemesterNode(Semester p_new_semester);
 SemesterNode* searchSemesterNode(SemesterNode* p_head, string p_semester_id);
 void appendNewSemesterNode(SemesterNode** p_head, Semester p_new_semester);
 void pushNewSemesterNode(SemesterNode** p_head, Semester p_new_semester);
+void readFromFileSemesterNode(ifstream& openFile, SemesterNode** p_head);
+void writeToFileSemesterNode(ofstream& openFile, SemesterNode* p_head);
 void removeSemesterNode(SemesterNode** p_head, string p_semester_id);
 void deleteSemesterNode(SemesterNode*& p_head);
 //--------------------------------------------------------------------------------------------------

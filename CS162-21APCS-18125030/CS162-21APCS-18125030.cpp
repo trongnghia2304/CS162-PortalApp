@@ -23,11 +23,12 @@ int main()
 	readFromFileStudentNode(staff_input_path, &all_staffs);
 
 
-	string school_input_path = "./csv/schoolyear_input";
-	string school_output_path = "./csv/schoolyear_input";
+	string school_input_path = "./csv/schoolyear_input.csv";
+	string school_output_path = "./csv/schoolyear_output.csv";
 
 	YearNode* school = nullptr;
 	readFromFileYearNode(school_input_path, &school);
+	writeToFileYearNode(school_output_path, school);
 	// Testing student & student list functions
 
 	// if (new_list)
