@@ -1,54 +1,186 @@
 2019-2020
 Semester 1
-CS161,Introduction to Computer Science 1,Dinh Ba Tien,4,50,3,1,7,1,Semester 1,2019-2020
-MTH250,Calculus 2,Nguyen Huu Anh,4,50,3,2,5,2,Semester 1,2019-2020
-PH211,General Physics I,Nguyen Thi Thu,4,50,4,3,5,3,Semester 1,2019-2020
-BAA00003,Marxist-Leninist Philosophy,Nguyen Quang Huy,2,90,3,3,3,4,Semester 1,2019-2020
-CM101,Communication Management,Duong Nguyen Vu,2,90,4,1,4,2,Semester 1,2019-2020
+CS161,Introduction to Computer Science 1,Dinh Ba Tien,4,3,3,1,7,1,Semester 1,2019-2020
+1,18125000,Anh,Nguyen Thi,1,3/4/2000,123719372,,18CTT1
+2,18125034,Bao,Nguyen Quoc,0,12/4/2000,142112,,18CTT1
+3,18125012,Chau,Ngo Bao,0,18/5/2000,1421241412,,18CTT1
 *
+MTH23,Calculus 2,Nguyen Huu Anh,4,3,3,2,5,2,Semester 1,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
+*
+PH211,General Physics I,Nguyen Thi Thu,4,3,4,3,5,3,Semester 1,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
+*
+BAA00003,Marxist-Leninist Philosophy,Nguyen Quang Huy,2,3,3,3,3,4,Semester 1,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
+*
+CM101,Communication Management,Duong Nguyen Vu,2,3,4,1,4,2,Semester 1,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
+*
+&
 Semester 2
-CS162,Introduction to Computer Science 2,Dinh Ba Tien,4,50,3,1,7,1,Semester 2,2019-2020
-MTH251,Calculus 2,Nguyen Huu Anh,4,50,3,2,5,2,Semester 2,2019-2020
-PH212,General Physics II,Nguyen Huu Nha,4,50,4,3,5,3,Semester 2,2019-2020
-BAA00004,Introduction to Laws,Nguyen Ngoc Phuong Hong,2,90,3,3,3,4,Semester 2,2019-2020
-BAA00102,Marxist-Leninist Political Economics,Nguyen Tuan Phuong,2,90,4,1,4,2,Semester 2,2019-2020
+CS162,Introduction to Computer Science 2,Dinh Ba Tien,4,3,3,1,7,1,Semester 2,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
 *
+MTH251,Calculus 2,Nguyen Huu Anh,4,3,3,2,5,2,Semester 2,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
+*
+PH212,General Physics II,Nguyen Huu Nha,4,3,4,3,5,3,Semester 2,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
+*
+BAA00004,Introduction to Laws,Nguyen Ngoc Phuong Hong,2,3,3,3,3,4,Semester 2,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
+*
+BAA00102,Marxist-Leninist Political Economics,Nguyen Tuan Phuong,2,3,4,1,4,2,Semester 2,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
+*
+&
 Semester 3
-AR350, Summer at School, Nguyen Van A,4,50,4,3,5,3,Semester 3,2019-2020
+AR33, Summer at School, Nguyen Van A,4,3,4,3,5,3,Semester 3,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
 *
+&
 2020-2021
 Semester 1
-CS161,Introduction to Computer Science 1,Dinh Ba Tien,4,50,3,1,7,1,Semester 1,2020-2021
-MTH250,Calculus 2,Nguyen Huu Anh,4,50,3,2,5,2,Semester 1,2020-2021
-PH211,General Physics I,Nguyen Thi Thu,4,50,4,3,5,3,Semester 1,2020-2021
-BAA00003,Marxist-Leninist Philosophy,Nguyen Quang Huy,2,90,3,3,3,4,Semester 1,2020-2021
-CM101,Communication Management,Duong Nguyen Vu,2,90,4,1,4,2,Semester 1,2020-2021
+CS161,Introduction to Computer Science 1,Dinh Ba Tien,4,3,3,1,7,1,Semester 1,2019-2020
+1,18125000,Anh,Nguyen Thi,1,3/4/2000,123719372,,18CTT1
+2,18125034,Bao,Nguyen Quoc,0,12/4/2000,142112,,18CTT1
+3,18125012,Chau,Ngo Bao,0,18/5/2000,1421241412,,18CTT1
 *
+MTH23,Calculus 2,Nguyen Huu Anh,4,3,3,2,5,2,Semester 1,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
+*
+PH211,General Physics I,Nguyen Thi Thu,4,3,4,3,5,3,Semester 1,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
+*
+BAA00003,Marxist-Leninist Philosophy,Nguyen Quang Huy,2,3,3,3,3,4,Semester 1,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
+*
+CM101,Communication Management,Duong Nguyen Vu,2,3,4,1,4,2,Semester 1,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
+*
+&
 Semester 2
-CS162,Introduction to Computer Science 2,Dinh Ba Tien,4,50,3,1,7,1,Semester 2,2020-2021
-MTH251,Calculus 2,Nguyen Huu Anh,4,50,3,2,5,2,Semester 2,2020-2021
-PH212,General Physics II,Nguyen Huu Nha,4,50,4,3,5,3,Semester 2,2020-2021
-BAA00004,Introduction to Laws,Nguyen Ngoc Phuong Hong,2,90,3,3,3,4,Semester 2,2020-2021
-BAA00102,Marxist-Leninist Political Economics,Nguyen Tuan Phuong,2,90,4,1,4,2,Semester 2,2020-2021
+CS162,Introduction to Computer Science 2,Dinh Ba Tien,4,3,3,1,7,1,Semester 2,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
 *
+MTH251,Calculus 2,Nguyen Huu Anh,4,3,3,2,5,2,Semester 2,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
+*
+PH212,General Physics II,Nguyen Huu Nha,4,3,4,3,5,3,Semester 2,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
+*
+BAA00004,Introduction to Laws,Nguyen Ngoc Phuong Hong,2,3,3,3,3,4,Semester 2,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
+*
+BAA00102,Marxist-Leninist Political Economics,Nguyen Tuan Phuong,2,3,4,1,4,2,Semester 2,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
+*
+&
 Semester 3
-AR350, Summer at School, Nguyen Van A,4,50,4,3,5,3,Semester 3,2020-2021
+AR33, Summer at School, Nguyen Van A,4,3,4,3,5,3,Semester 3,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
 *
+&
 2021-2022
 Semester 1
-CS161,Introduction to Computer Science 1,Dinh Ba Tien,4,50,3,1,7,1,Semester 1,2021-2022
-MTH250,Calculus 2,Nguyen Huu Anh,4,50,3,2,5,2,Semester 1,2021-2022
-PH211,General Physics I,Nguyen Thi Thu,4,50,4,3,5,3,Semester 1,2021-2022
-BAA00003,Marxist-Leninist Philosophy,Nguyen Quang Huy,2,90,3,3,3,4,Semester 1,2021-2022
-CM101,Communication Management,Duong Nguyen Vu,2,90,4,1,4,2,Semester 1,2021-2022
+CS161,Introduction to Computer Science 1,Dinh Ba Tien,4,3,3,1,7,1,Semester 1,2019-2020
+1,18125000,Anh,Nguyen Thi,1,3/4/2000,123719372,,18CTT1
+2,18125034,Bao,Nguyen Quoc,0,12/4/2000,142112,,18CTT1
+3,18125012,Chau,Ngo Bao,0,18/5/2000,1421241412,,18CTT1
 *
+MTH23,Calculus 2,Nguyen Huu Anh,4,3,3,2,5,2,Semester 1,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
+*
+PH211,General Physics I,Nguyen Thi Thu,4,3,4,3,5,3,Semester 1,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
+*
+BAA00003,Marxist-Leninist Philosophy,Nguyen Quang Huy,2,3,3,3,3,4,Semester 1,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
+*
+CM101,Communication Management,Duong Nguyen Vu,2,3,4,1,4,2,Semester 1,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
+*
+&
 Semester 2
-CS162,Introduction to Computer Science 2,Dinh Ba Tien,4,50,3,1,7,1,Semester 2,2021-2022
-MTH251,Calculus 2,Nguyen Huu Anh,4,50,3,2,5,2,Semester 2,2021-2022
-PH212,General Physics II,Nguyen Huu Nha,4,50,4,3,5,3,Semester 2,2021-2022
-BAA00004,Introduction to Laws,Nguyen Ngoc Phuong Hong,2,90,3,3,3,4,Semester 2,2021-2022
-BAA00102,Marxist-Leninist Political Economics,Nguyen Tuan Phuong,2,90,4,1,4,2,Semester 2,2021-2022
+CS162,Introduction to Computer Science 2,Dinh Ba Tien,4,3,3,1,7,1,Semester 2,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
 *
+MTH251,Calculus 2,Nguyen Huu Anh,4,3,3,2,5,2,Semester 2,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
+*
+PH212,General Physics II,Nguyen Huu Nha,4,3,4,3,5,3,Semester 2,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
+*
+BAA00004,Introduction to Laws,Nguyen Ngoc Phuong Hong,2,3,3,3,3,4,Semester 2,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
+*
+BAA00102,Marxist-Leninist Political Economics,Nguyen Tuan Phuong,2,3,4,1,4,2,Semester 2,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
+*
+&
 Semester 3
-AR350, Summer at School, Nguyen Van A,4,50,4,3,5,3,Semester 3,2021-2022
+AR33, Summer at School, Nguyen Van A,4,3,4,3,5,3,Semester 3,2019-2020
+1,18125045,Dung,Nguyen Tien,0,26/1/2000,124142421,,18CTT1
+2,18125078,En,Tran Huong,1,23/7/2000,352334435,,18CTT1
+3,18125099,Giang,Nguyen Thu,1,13/3/2000,35323443,,18CTT1
 *
+&
