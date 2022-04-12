@@ -29,6 +29,13 @@ int main()
 	YearNode* school = nullptr;
 	readFromFileYearNode(school_input_path, &school);
 	writeToFileYearNode(school_output_path, school);
+
+	string student_input_path = "./csv/student_input copy.csv";
+	string student_output_path = "./csv/student_output copy.csv";
+	ClassNode* all_classes1 = nullptr;
+
+	readFromFileClassNode1(student_input_path, all_classes1);
+
 	// Testing student & student list functions
 
 	// if (new_list)
@@ -98,10 +105,13 @@ int main()
 	// save all data
 	writeToFileClassNode(class_output_path, all_classes);
 	writeToFileStudentNode(staff_output_path, all_staffs);
+	writeToFileClassNode1(student_output_path, all_classes1);
 
 	// delete all SLL
 	deleteClassNode(all_classes);
 	deleteStudentList(all_staffs);
+	deleteClassNode(all_classes1);
+
 
 	// deleteStudentList(me);
 	return 0;
