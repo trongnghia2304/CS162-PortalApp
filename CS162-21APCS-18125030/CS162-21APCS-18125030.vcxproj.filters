@@ -61,28 +61,13 @@
     <None Include="csv\class_output.csv">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="csv\Course_Example.csv">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="csv\sample_student_output.csv">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="csv\staff_input.csv">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="csv\staff_output.csv">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="csv\Student_Example.csv">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="csv\student_input copy.csv">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="csv\student_output.csv">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="csv\student_sample_data.csv">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="csv\schoolyear_input.csv">

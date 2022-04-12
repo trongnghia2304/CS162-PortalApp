@@ -88,13 +88,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>SFML_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\nghia\Downloads\SFML\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SFML-2.5.1-vc15\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\nghia\Downloads\SFML\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\SFML-2.5.1-vc15\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-s-d.lib;sfml-audio-s-d.lib;sfml-network-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;opengl32-d.lib;freetype-d.lib;winmm-d.lib;gdi32-d.lib;flac-d.lib;vorbisenc-d.lib;vorbisfile-d.lib;vorbis-d.lib;ogg-d.lib;ws2_32-d.lib;user32-d.lib;Advapi32-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -106,16 +106,17 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>SFML_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\nghia\Downloads\SFML\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SFML-2.5.1-vc15\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalHeaderUnitDependencies> </AdditionalHeaderUnitDependencies>
+      <AdditionalHeaderUnitDependencies>
+      </AdditionalHeaderUnitDependencies>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\nghia\Downloads\SFML\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\SFML-2.5.1-vc15\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-s.lib;sfml-audio-s.lib;sfml-network-s.lib;sfml-window-s.lib;sfml-system-s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;ws2_32.lib;user32.lib;Advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -171,16 +172,11 @@
   <ItemGroup>
     <None Include="csv\class_input.csv" />
     <None Include="csv\class_output.csv" />
-    <None Include="csv\Course_Example.csv" />
-    <None Include="csv\sample_student_output.csv" />
     <None Include="csv\schoolyear_input.csv" />
     <None Include="csv\schoolyear_output.csv" />
     <None Include="csv\staff_input.csv" />
     <None Include="csv\staff_output.csv" />
-    <None Include="csv\Student_Example.csv" />
     <None Include="csv\student_input copy.csv" />
-    <None Include="csv\student_output.csv" />
-    <None Include="csv\student_sample_data.csv" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="content\Asset 27.png" />
