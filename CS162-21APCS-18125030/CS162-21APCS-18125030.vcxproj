@@ -173,6 +173,8 @@
     <None Include="csv\class_output.csv" />
     <None Include="csv\Course_Example.csv" />
     <None Include="csv\sample_student_output.csv" />
+    <None Include="csv\schoolyear_input.csv" />
+    <None Include="csv\schoolyear_output.csv" />
     <None Include="csv\staff_input.csv" />
     <None Include="csv\staff_output.csv" />
     <None Include="csv\Student_Example.csv" />

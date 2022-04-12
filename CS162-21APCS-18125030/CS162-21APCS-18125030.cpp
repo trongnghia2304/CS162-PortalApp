@@ -12,21 +12,20 @@ int main()
 	string class_input_path = "./csv/class_input.csv";
 	string class_output_path = "./csv/class_output.csv";
 
-	ClassNode* all_classes = nullptr;
+	ClassNode *all_classes = nullptr;
 	// readFromFileClassNode(class_input_path, all_classes);
 	readFromFileClassNode(class_input_path, all_classes);
 
 	string staff_input_path = "./csv/staff_input.csv";
 	string staff_output_path = "./csv/staff_output.csv";
-	StudentNode* all_staffs = nullptr;
+	StudentNode *all_staffs = nullptr;
 
 	readFromFileStudentNode(staff_input_path, &all_staffs);
-
 
 	string school_input_path = "./csv/schoolyear_input.csv";
 	string school_output_path = "./csv/schoolyear_output.csv";
 
-	YearNode* school = nullptr;
+	YearNode *school = nullptr;
 	readFromFileYearNode(school_input_path, &school);
 	writeToFileYearNode(school_output_path, school);
 
@@ -65,38 +64,54 @@ int main()
 	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 	int page = 1;
 
-	StudentNode* user = NULL;
+	StudentNode *user = NULL;
 	bool is_staff;
 
 	while (page > 0 && window.isOpen())
 	{
 		switch (page)
 		{
-		case 1: {
+		case 1:
+		{
 			Scene1(window, page, is_staff, scale);
 			break;
 		}
-		case 2: {
+		case 2:
+		{
 			logIn(window, page, is_staff, scale, all_classes, all_staffs, user);
 			break;
 		}
-		case 3: {
+		case 3:
+		{
 			studentHome(window, page, scale);
 			break;
 		}
-		case 4: {
+		case 4:
+		{
 			staffHome(window, page, scale);
 			break;
 		}
-		case 5: {
+		case 5:
+		{
 			profile(window, page, scale, user, is_staff);
 			break;
 		}
-		case 6: {
+		case 6:
+		{
 			view_class(window, page, scale, all_classes, user, is_staff);
 			break;
 		}
-		default: {
+		case 7:
+		{
+			view_course(window, page, scale, school->school_year.list_sem->sem.course_list, is_staff);
+			break;
+		}
+		case 8:
+		{
+			break;
+		}
+		default:
+		{
 			break;
 		}
 		}

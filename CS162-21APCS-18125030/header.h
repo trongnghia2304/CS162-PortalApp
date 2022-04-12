@@ -39,7 +39,7 @@ void printCourse(Course p_course);
 CourseNode* initCourseNode(Course p_new_course);
 CourseNode* searchCourseNode(CourseNode* p_head, string p_id);
 void appendNewCourseNode(CourseNode** p_head, Course p_new_course);
-void appendNewCourseNode(CourseNode** p_head, Course p_new_course, const string& sem, const string& year);
+void appendNewCourseNode(CourseNode** p_head, Course p_new_course, const string& sem, const string& year, StudentNode* students);
 void pushNewCourseNode(CourseNode** p_head, Course p_new_course);
 void removeCourseNode(CourseNode** p_head, string p_course_id);
 void readFromFileCourseNode(string p_course_file_path, CourseNode** p_head);

@@ -10,9 +10,9 @@ Object createObject(string s, float x, float y)
 	return me;
 }
 
-Object* createObjectTest(string s, float x, float y)
+Object *createObjectTest(string s, float x, float y)
 {
-	Object* me = new Object;
+	Object *me = new Object;
 	me->txt.loadFromFile(s);
 	me->draw.setTexture(me->txt);
 	me->draw.setPosition(x, y);
@@ -29,7 +29,16 @@ Object createObject(string s)
 	return me;
 }
 
-bool isHere(FloatRect& bound, Vector2f& mouse)
+Object *createObjectTest(string s)
+{
+	Object *me = new Object;
+	me->txt.loadFromFile(s);
+	me->draw.setTexture(me->txt);
+	me->bound = me->draw.getGlobalBounds();
+	return me;
+}
+
+bool isHere(FloatRect &bound, Vector2f &mouse)
 {
 	return bound.contains(mouse);
 }
@@ -59,9 +68,9 @@ Info createInfo(string s, string info, float x, float y, float size)
 	return a;
 }
 
-Info* createInfoTest(string s, string info, float x, float y, float size)
+Info *createInfoTest(string s, string info, float x, float y, float size)
 {
-	Info* a = new Info;
+	Info *a = new Info;
 	a->font.loadFromFile(s);
 	a->text.setFont(a->font);
 	a->text.setCharacterSize(size);
@@ -72,29 +81,39 @@ Info* createInfoTest(string s, string info, float x, float y, float size)
 	return a;
 }
 
-void drawWhich(RenderWindow& window, Object a, Object b, Vector2f& mouse)
+bool drawWhich(RenderWindow &window, Object a, Object b, Vector2f &mouse)
 {
 	if (isHere(a.bound, mouse))
+	{
 		window.draw(a.draw);
-	else
-		window.draw(b.draw);
+		return true;
+	}
+	window.draw(b.draw);
+	return false;
 }
 
-void drawWhich(RenderWindow& window, Object* a, Object* b, Vector2f& mouse)
+bool drawWhich(RenderWindow &window, Object *a, Object *b, Vector2f &mouse)
 {
 	if (isHere(a->bound, mouse))
+	{
 		window.draw(a->draw);
-	else
-		window.draw(b->draw);
+		return true;
+	}
+	window.draw(b->draw);
+	return false;
 }
 
-void switchPage(FloatRect& bound, Vector2f& mouse, int k, int& page)
+bool switchPage(FloatRect &bound, Vector2f &mouse, int k, int &page)
 {
 	if (isHere(bound, mouse))
+	{
 		page = k;
+		return true;
+	}
+	return false;
 }
 
-void changePos(Object* a, Object* b, float x, float y)
+void changePos(Object *a, Object *b, float x, float y)
 {
 	a->draw.setPosition(x, y);
 	a->bound = a->draw.getGlobalBounds();
@@ -102,19 +121,19 @@ void changePos(Object* a, Object* b, float x, float y)
 	b->bound = b->draw.getGlobalBounds();
 }
 
-void changePos(Object* a, float x, float y)
+void changePos(Object *a, float x, float y)
 {
 	a->draw.setPosition(x, y);
 	a->bound = a->draw.getGlobalBounds();
 }
 
-void changePos(Info* a, float x, float y)
+void changePos(Info *a, float x, float y)
 {
 	a->text.setPosition(x, y);
 	a->bound = a->text.getGlobalBounds();
 }
 
-void texting(Info& text, Uint32 unicode, unsigned int limit)
+void texting(Info &text, Uint32 unicode, unsigned int limit)
 {
 	if (text.check && (text.s.size() < limit || unicode == 8))
 	{
@@ -131,7 +150,7 @@ void texting(Info& text, Uint32 unicode, unsigned int limit)
 	}
 }
 
-void texting(Info*& text, Uint32 unicode, unsigned int limit)
+void texting(Info *&text, Uint32 unicode, unsigned int limit)
 {
 	if (text->check && (text->s.size() < limit || unicode == 8))
 	{
@@ -148,7 +167,7 @@ void texting(Info*& text, Uint32 unicode, unsigned int limit)
 	}
 }
 
-bool changePassword(Student& me, const string& oldPw, const string& newPw)
+bool changePassword(Student &me, const string &oldPw, const string &newPw)
 {
 	if (oldPw == me.password)
 	{
