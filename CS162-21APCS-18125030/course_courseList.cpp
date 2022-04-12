@@ -41,7 +41,6 @@ CourseNode *searchCourseNode(CourseNode *p_head, string p_course_id)
 {
     if (!p_head)
     {
-        cout << "Empty course list...";
         return nullptr;
     }
     else
@@ -54,6 +53,7 @@ CourseNode *searchCourseNode(CourseNode *p_head, string p_course_id)
         return temp;
     }
 }
+
 void appendNewCourseNode(CourseNode **p_head, Course p_new_course)
 {
     CourseNode *new_course_node = initCourseNode(p_new_course);
@@ -74,7 +74,7 @@ void appendNewCourseNode(CourseNode **p_head, Course p_new_course)
         return;
     }
 }
-void appendNewCourseNode(CourseNode **p_head, Course p_new_course, const string &sem, const string &year, StudentNode* students)
+void appendNewCourseNode(CourseNode **p_head, Course p_new_course, const string &sem, const string &year, StudentNode *students)
 {
     CourseNode *new_course_node = initCourseNode(p_new_course);
     new_course_node->year_id = year;
@@ -254,7 +254,7 @@ void readFromFileCourseNode(ifstream &openFile, CourseNode **p_head)
 
             // Create new course data and append to current list
             Course new_course = createCourse(word[0], word[1], word[2], stoi(word[3]), (word[4].empty() ? false : stoi(word[4])), stoi(word[5]), stoi(word[6]), stoi(word[7]), stoi(word[8]));
-            StudentNode* course_student = nullptr;
+            StudentNode *course_student = nullptr;
             readFromFileStudentNode(openFile, &course_student);
             appendNewCourseNode(p_head, new_course, word[9], word[10], course_student);
         }
@@ -280,7 +280,7 @@ void writeToFileCourseNode(ofstream &openFile, CourseNode *p_head)
             openFile << temp->semester_id << ",";
             openFile << temp->year_id;
             openFile << endl;
-            writeToFileStudentNode(openFile,temp->student_list);
+            writeToFileStudentNode(openFile, temp->student_list);
             openFile << "*" << endl;
             temp = temp->next;
         }

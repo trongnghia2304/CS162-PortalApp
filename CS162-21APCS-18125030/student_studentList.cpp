@@ -17,14 +17,14 @@ Student createStudent(int p_num, string p_student_id, string p_first_name, strin
 
 	return new_student;
 }
-StudentNode* initStudentNode(Student p_new_student)
+StudentNode *initStudentNode(Student p_new_student)
 {
-	StudentNode* new_student_node = new StudentNode;
+	StudentNode *new_student_node = new StudentNode;
 	new_student_node->student = p_new_student;
 	new_student_node->next = nullptr;
 	return new_student_node;
 }
-StudentNode* searchStudentNode(StudentNode* p_head, string p_student_id)
+StudentNode *searchStudentNode(StudentNode *p_head, string p_student_id)
 {
 	if (!p_head)
 	{
@@ -33,7 +33,7 @@ StudentNode* searchStudentNode(StudentNode* p_head, string p_student_id)
 	}
 	else
 	{
-		StudentNode* temp = p_head;
+		StudentNode *temp = p_head;
 		while (temp && temp->student.student_id != p_student_id)
 		{
 			temp = temp->next;
@@ -41,9 +41,9 @@ StudentNode* searchStudentNode(StudentNode* p_head, string p_student_id)
 		return temp;
 	}
 }
-void appendNewStudentNode(StudentNode** p_head, Student p_new_student)
+void appendNewStudentNode(StudentNode **p_head, Student p_new_student)
 {
-	StudentNode* new_student_node = initStudentNode(p_new_student);
+	StudentNode *new_student_node = initStudentNode(p_new_student);
 	if (!(*p_head))
 	{
 		(*p_head) = new_student_node;
@@ -52,7 +52,7 @@ void appendNewStudentNode(StudentNode** p_head, Student p_new_student)
 
 	else
 	{
-		StudentNode* temp = *p_head;
+		StudentNode *temp = *p_head;
 		while (temp->next)
 		{
 			temp = temp->next;
@@ -61,9 +61,9 @@ void appendNewStudentNode(StudentNode** p_head, Student p_new_student)
 		return;
 	}
 }
-void pushNewStudentNode(StudentNode** p_head, Student p_new_student)
+void pushNewStudentNode(StudentNode **p_head, Student p_new_student)
 {
-	StudentNode* new_student_node = initStudentNode(p_new_student);
+	StudentNode *new_student_node = initStudentNode(p_new_student);
 	if (!(*p_head))
 	{
 		*p_head = new_student_node;
@@ -73,9 +73,9 @@ void pushNewStudentNode(StudentNode** p_head, Student p_new_student)
 	new_student_node->next = *p_head;
 	*p_head = new_student_node;
 }
-void removeStudentNode(StudentNode** p_head, string p_student_id)
+void removeStudentNode(StudentNode **p_head, string p_student_id)
 {
-	StudentNode* founded_student = searchStudentNode(*p_head, p_student_id);
+	StudentNode *founded_student = searchStudentNode(*p_head, p_student_id);
 	if (!p_head || !founded_student)
 	{
 		cout << "Empty student list...";
@@ -85,13 +85,13 @@ void removeStudentNode(StudentNode** p_head, string p_student_id)
 	// If the required student is at the top of the list
 	if ((*p_head)->student.student_id == p_student_id)
 	{
-		StudentNode* temp = *p_head;
+		StudentNode *temp = *p_head;
 		*p_head = (*p_head)->next;
 		delete temp;
 		return;
 	}
 
-	StudentNode* temp = *p_head;
+	StudentNode *temp = *p_head;
 	while (temp->next != founded_student)
 	{
 		temp = temp->next;
@@ -99,7 +99,7 @@ void removeStudentNode(StudentNode** p_head, string p_student_id)
 	temp->next = founded_student->next;
 	delete founded_student;
 }
-void readFromFileStudentNode(string p_student_file_path, StudentNode** p_head)
+void readFromFileStudentNode(string p_student_file_path, StudentNode **p_head)
 {
 	ifstream openFile(p_student_file_path);
 	if (!openFile)
@@ -130,7 +130,7 @@ void readFromFileStudentNode(string p_student_file_path, StudentNode** p_head)
 		return;
 	}
 }
-void writeToFileStudentNode(string p_student_file_path, StudentNode* p_head)
+void writeToFileStudentNode(string p_student_file_path, StudentNode *p_head)
 {
 	ofstream openFile(p_student_file_path);
 	if (!openFile)
@@ -141,7 +141,7 @@ void writeToFileStudentNode(string p_student_file_path, StudentNode* p_head)
 
 	else
 	{
-		StudentNode* temp = p_head;
+		StudentNode *temp = p_head;
 		while (temp)
 		{
 			openFile << temp->student.num << ",";
@@ -160,12 +160,12 @@ void writeToFileStudentNode(string p_student_file_path, StudentNode* p_head)
 	openFile.close();
 	return;
 }
-int countStudentNode(StudentNode* p_head)
+int countStudentNode(StudentNode *p_head)
 {
 	if (!p_head)
 		return 0;
 	int count = 0;
-	StudentNode* temp = p_head;
+	StudentNode *temp = p_head;
 	while (temp)
 	{
 		count++;
@@ -173,11 +173,11 @@ int countStudentNode(StudentNode* p_head)
 	}
 	return count;
 }
-void deleteStudentList(StudentNode*& p_head)
+void deleteStudentList(StudentNode *&p_head)
 {
 	while (p_head)
 	{
-		StudentNode* cur = p_head;
+		StudentNode *cur = p_head;
 		p_head = p_head->next;
 		delete cur;
 	}
@@ -192,7 +192,7 @@ void printStudent(Student p_student)
 	cout << p_student.dob << endl;
 	cout << p_student.social_id << endl;
 }
-void printStudentNode(StudentNode* p_head)
+void printStudentNode(StudentNode *p_head)
 {
 	if (!p_head)
 	{
@@ -200,7 +200,7 @@ void printStudentNode(StudentNode* p_head)
 		return;
 	}
 
-	StudentNode* temp = p_head;
+	StudentNode *temp = p_head;
 	while (temp)
 	{
 		printStudent(temp->student);
@@ -208,7 +208,7 @@ void printStudentNode(StudentNode* p_head)
 		temp = temp->next;
 	}
 }
-void readFromFileStudentNode(ifstream& openFile, StudentNode** p_head)
+void readFromFileStudentNode(ifstream &openFile, StudentNode **p_head)
 {
 	if (openFile)
 	{
@@ -233,11 +233,11 @@ void readFromFileStudentNode(ifstream& openFile, StudentNode** p_head)
 	}
 	return;
 }
-void writeToFileStudentNode(ofstream& openFile, StudentNode* p_head)
+void writeToFileStudentNode(ofstream &openFile, StudentNode *p_head)
 {
 	if (openFile)
 	{
-		StudentNode* temp = p_head;
+		StudentNode *temp = p_head;
 		while (temp)
 		{
 			openFile << temp->student.num << ",";
@@ -255,16 +255,15 @@ void writeToFileStudentNode(ofstream& openFile, StudentNode* p_head)
 		return;
 	}
 }
-void readFromFileStudentNode1(ifstream& openFile, StudentNode** p_head)
+void readFromFileStudentNode1(ifstream &openFile, StudentNode **p_head)
 {
 	if (openFile)
 	{
-		string line, word[10];
+		string line, word[9];
 		while (getline(openFile, line) && line[0] != '*')
 		{
-		    if(line[0] == '>') continue;
 			stringstream ss(line);
-			for (int i = 0; i < 10; i++)
+			for (int i = 0; i < 9; i++)
 			{
 				getline(ss, word[i], ',');
 			}
@@ -275,45 +274,44 @@ void readFromFileStudentNode1(ifstream& openFile, StudentNode** p_head)
 			istringstream(word[4]) >> gender;
 
 			Student new_student = createStudent(id, word[1], word[2], word[3], gender, word[5], word[6], word[7], word[8]);
-			new_student.subject_amount = stoi(word[9]);
-
-            MyCourse *cur = NULL;
-			for(int i = 1; i <= new_student.subject_amount; i++)
-            {
-                MyCourse *temp = new MyCourse;
-                if(i == 1)
-                {
-                    new_student.my_course = temp;
-                    cur = temp;
-                }
-                else
-                {
-                    cur->next = temp;
-                    cur = cur->next;
-                }
-                getline(openFile, line);
-                stringstream ss(line);
-                for(int i = 0; i < 5; i++)
-                {
-                    getline(ss, word[i], ',');
-                }
-                cur->subject_code = word[0];
-                istringstream(word[1]) >> cur->score.process;
-                istringstream(word[2]) >> cur->score.mid;
-                istringstream(word[3]) >> cur->score.fin;
-                istringstream(word[4]) >> cur->score.overall;
-
-            }
+			MyCourse *cur = nullptr;
+			while (getline(openFile, line) && line[0] != '>')
+			{
+				MyCourse *temp = new MyCourse;
+				if (!cur)
+				{
+					new_student.my_course = temp;
+					cur = temp;
+				}
+				else
+				{
+					cur->next = temp;
+					cur = cur->next;
+				}
+				cur->next = nullptr;
+				stringstream ss(line);
+				for (int i = 0; i < 7; i++)
+				{
+					getline(ss, word[i], ',');
+				}
+				cur->subject_code = word[0];
+				cur->year = word[1];
+				cur->sem = word[2];
+				istringstream(word[3]) >> cur->score.process;
+				istringstream(word[4]) >> cur->score.mid;
+				istringstream(word[5]) >> cur->score.fin;
+				istringstream(word[6]) >> cur->score.overall;
+			}
 			appendNewStudentNode(p_head, new_student);
 		}
 	}
 	return;
 }
-void writeToFileStudentNode1(ofstream& openFile, StudentNode* p_head)
+void writeToFileStudentNode1(ofstream &openFile, StudentNode *p_head)
 {
 	if (openFile)
 	{
-		StudentNode* temp = p_head;
+		StudentNode *temp = p_head;
 		while (temp)
 		{
 			openFile << temp->student.num << ",";
@@ -324,23 +322,56 @@ void writeToFileStudentNode1(ofstream& openFile, StudentNode* p_head)
 			openFile << temp->student.dob << ",";
 			openFile << temp->student.social_id << ",";
 			openFile << temp->student.password << ",";
-			openFile << temp->student.student_class << ",";
-			openFile << temp->student.subject_amount << endl;
-			MyCourse* cur = temp->student.my_course;
-			for (int i = 1; i <= temp->student.subject_amount; i++)
+			openFile << temp->student.student_class << "\n";
+			MyCourse *cur = temp->student.my_course;
+			while (cur)
 			{
 				openFile << cur->subject_code << ",";
+				openFile << cur->year << ",";
+				openFile << cur->sem << ",";
 				openFile << cur->score.process << ",";
 				openFile << cur->score.mid << ",";
 				openFile << cur->score.fin << ",";
 				openFile << cur->score.overall << endl;
-				cur = cur -> next;
+				cur = cur->next;
 			}
-			openFile << ">";
-			openFile << endl;
+			openFile << ">" << endl;
 			temp = temp->next;
 		}
 		return;
+	}
+}
+
+bool findMyCourse(StudentNode *p_student, CourseNode *p_head)
+{
+	MyCourse *cur = p_student->student.my_course;
+	if (cur) {
+		while (!cur->course)
+			cur = cur->next;
+		while (cur && p_head)
+		{
+			while (cur->subject_code != p_head->course.course_id && p_head)
+				p_head = p_head->next;
+			cur->course = p_head;
+			cur = cur->next;
+		}
+	}
+	if (cur) return false;
+	else return true;
+}
+
+void findAllMyCourses(StudentNode *p_student, YearNode *year)
+{
+	YearNode *cur_year = year;
+	while (cur_year)
+	{
+		SemesterNode *cur_sem = cur_year->school_year.list_sem;
+		while (cur_sem)
+		{
+			if (findMyCourse(p_student, cur_sem->sem.course_list)) return;
+			cur_sem = cur_sem->next;
+		}
+		cur_year = cur_year->next;
 	}
 }
 

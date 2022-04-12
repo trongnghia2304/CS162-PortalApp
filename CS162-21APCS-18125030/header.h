@@ -82,6 +82,8 @@ int countStudentNode(StudentNode* p_head);
 void deleteStudentList(StudentNode*& p_head);
 void printStudent(Student p_student);
 void printStudentNode(StudentNode* p_head);
+bool findMyCourse(StudentNode* p_student, CourseNode* p_head);
+void findAllMyCourses(StudentNode* p_student, YearNode* year);
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------------- Views  ---------------------------------------------------

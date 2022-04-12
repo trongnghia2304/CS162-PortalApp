@@ -34,7 +34,6 @@ struct Student
 	string social_id;
 	string password;
 	string student_class;
-	int subject_amount = 0;
 	MyCourse* my_course;
 };
 
@@ -85,7 +84,9 @@ struct MyCourse
 {
 	Score score;
 	string subject_code;
-	CourseNode* course;
+	string sem;
+	string year;
+	CourseNode* course = nullptr;
 	MyCourse* next;
 };
 

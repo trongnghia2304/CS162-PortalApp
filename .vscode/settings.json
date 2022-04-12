@@ -6,6 +6,7 @@
         "xstring": "cpp",
         "fstream": "cpp",
         "iterator": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "xlocale": "cpp"
     }
 }

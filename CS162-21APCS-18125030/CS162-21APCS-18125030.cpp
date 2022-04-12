@@ -27,11 +27,10 @@ int main()
 
 	YearNode *school = nullptr;
 	readFromFileYearNode(school_input_path, &school);
-	writeToFileYearNode(school_output_path, school);
 
-	string student_input_path = "./csv/student_input copy.csv";
-	string student_output_path = "./csv/student_output copy.csv";
-	ClassNode* all_classes1 = nullptr;
+	string student_input_path = "./csv/student_input.csv";
+	string student_output_path = "./csv/student_output.csv";
+	ClassNode *all_classes1 = nullptr;
 
 	readFromFileClassNode1(student_input_path, all_classes1);
 
@@ -78,7 +77,7 @@ int main()
 		}
 		case 2:
 		{
-			logIn(window, page, is_staff, scale, all_classes, all_staffs, user);
+			logIn(window, page, is_staff, scale, all_classes1, all_staffs, user);
 			break;
 		}
 		case 3:
@@ -98,12 +97,18 @@ int main()
 		}
 		case 6:
 		{
-			view_class(window, page, scale, all_classes, user, is_staff);
+			view_class(window, page, scale, all_classes1, user, is_staff);
 			break;
 		}
 		case 7:
 		{
-			view_course(window, page, scale, school->school_year.list_sem->sem.course_list, is_staff);
+			if (is_staff)
+				view_course(window, page, scale, school->school_year.list_sem->sem.course_list);
+			else
+			{
+				//findAllMyCourses(user, school);
+			}
+			// view_course(window, page, scale, school->school_year.list_sem->sem.course_list, user);
 			break;
 		}
 		case 8:
@@ -120,13 +125,13 @@ int main()
 	// save all data
 	writeToFileClassNode(class_output_path, all_classes);
 	writeToFileStudentNode(staff_output_path, all_staffs);
+	writeToFileYearNode(school_output_path, school);
 	writeToFileClassNode1(student_output_path, all_classes1);
 
 	// delete all SLL
 	deleteClassNode(all_classes);
 	deleteStudentList(all_staffs);
 	deleteClassNode(all_classes1);
-
 
 	// deleteStudentList(me);
 	return 0;
