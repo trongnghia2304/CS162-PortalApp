@@ -362,10 +362,10 @@ void profile(RenderWindow &window, int &page, const float &scale, StudentNode *s
 
 	Info *inf[6];
 	for (int i = 0; i < 6; i++)
-		inf[i] = createInfoTest("content/Oswald-Light.ttf", text[i], 318.0f * scale, (303.0f + 56.0f * i) * scale, 20 * scale);
-	changePos(inf[4], 318.0f * scale, (303.0f + 56.0 * 5) * scale);
-	changePos(inf[5], 593.0f * scale, (303.0f + 56.0 * 5) * scale);
-	changePos(inf[3], 318.0f * scale, (303.0f + 56.0 * 4) * scale);
+		inf[i] = createInfoTest("content/Oswald-Light.ttf", text[i], 318.0f * scale, (303.0f + 56.0f * i) * scale, 20.0f * scale);
+	changePos(inf[4], 318.0f * scale, (303.0f + 56.0f * 5) * scale);
+	changePos(inf[5], 593.0f * scale, (303.0f + 56.0f * 5) * scale);
+	changePos(inf[3], 318.0f * scale, (303.0f + 56.0f * 4) * scale);
 	Object back = createObject("content/return.png", 80.0f * scale, 106.0f * scale);
 	Object back_here = createObject("content/return1.png", 80.0f * scale, 106.0f * scale);
 	Object screen = createObject("content/General/MyProfile.png");
@@ -735,7 +735,13 @@ void view_class(RenderWindow &window, int &page, const float &scale, ClassNode *
 void view_course(RenderWindow &window, int &page, const float &scale, CourseNode *my_course, const bool &is_staff)
 {
 	Event event;
-	Object screen = createObject("content/Student/my_courses.png");
+	Object* screen;
+	if (!is_staff) {
+		screen = createObjectTest("content/Student/my_course.png");
+	}
+	else {
+		screen = createObjectTest("content/Student/my_course.png");
+	}
 	Object out = createObject("content/logout.png", 866.0f * scale, 106.0f * scale);
 	Object out_here = createObject("content/logout1.png", 866.0f * scale, 106.0f * scale);
 	Object back = createObject("content/return.png", 80.0f * scale, 106.0f * scale);
@@ -749,10 +755,12 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 	Object right_here = createObject("content/Staff/Class/Asset 90.png", 510.0f * scale, 644.0f * scale);
 	Object right_valid = createObject("content/Staff/Class/Asset 54.png", 510.0f * scale, 644.0f * scale);
 	Info *inf[6][4];
-	Object *square[6];
+	Object *square[6], *square_here[6];
+	CourseNode* course[6];
 	for (int i = 0; i < 3; i++)
 	{
 		square[i] = createObjectTest("content/Student/course.png", (172.0f + 220.0f * i) * scale, 322.0f * scale);
+		square_here[i] = createObjectTest("content/Student/course_here.png", (172.0f + 220.0f * i) * scale, 322.0f * scale);
 		inf[i][0] = createInfoTest("content/Oswald-Medium.ttf", "demo_text", (243.0f + 220.0f * i) * scale, 330.0f * scale, 25.0f * scale);
 		inf[i][1] = createInfoTest("content/Oswald-Medium.ttf", "demo_text", (185.0f + 220.0f * i) * scale, 378.0f * scale, 12.5f * scale);
 		inf[i][2] = createInfoTest("content/Oswald-Medium.ttf", "demo_text", (185.0f + 220.0f * i) * scale, 400.0f * scale, 12.5f * scale);
@@ -760,7 +768,9 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 	}
 	for (int i = 3; i < 6; i++)
 	{
+		course[i] = nullptr;
 		square[i] = createObjectTest("content/Student/course.png", (172.0f + 220.0f * (i - 3)) * scale, 480.0f * scale);
+		square_here[i] = createObjectTest("content/Student/course_here.png", (172.0f + 220.0f * (i - 3)) * scale, 480.0f * scale);
 		inf[i][0] = createInfoTest("content/Oswald-Medium.ttf", "demo_text", (243.0f + 220.0f * (i - 3)) * scale, 485.0f * scale, 25.0f * scale);
 		inf[i][1] = createInfoTest("content/Oswald-Medium.ttf", "demo_text", (185.0f + 220.0f * (i - 3)) * scale, 532.0f * scale, 12.5f * scale);
 		inf[i][2] = createInfoTest("content/Oswald-Medium.ttf", "demo_text", (185.0f + 220.0f * (i - 3)) * scale, 554.0f * scale, 12.5f * scale);
@@ -795,7 +805,7 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 					switchPage(back.bound, mouse, 3, page);
 					if (isHere(add_course.bound, mouse) && is_staff)
 					{
-						// add new student to the class
+						// add new course
 					}
 					if (isHere(right.bound, mouse) && change <= count - 6)
 					{
@@ -807,6 +817,12 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 						trigger_page = true;
 						change -= 6;
 					}
+					for (int i = 0; i < 6; i++) {
+						if (isHere(square[i]->bound, mouse) && course[i]) {
+							page = 8;
+							course_student(window, page, scale, course[i], is_staff);
+						}
+					}
 				}
 				break;
 			}
@@ -816,7 +832,7 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 		}
 
 		window.clear();
-		window.draw(screen.draw);
+		window.draw(screen->draw);
 		if (is_staff)
 			drawWhich(window, add_course_here, add_course, mouse);
 		drawWhich(window, out_here, out, mouse);
@@ -851,6 +867,7 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 			}
 			for (int i = 0; i < 6; i++)
 			{
+				course[i] = cur;
 				if (cur)
 				{
 					inf[i][0]->text.setString(cur->course.course_id);
@@ -872,16 +889,167 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 		{
 			if (inf[i][0]->text.getString() == "")
 				break;
-			window.draw(square[i]->draw);
-			for (int j = 0; j < 4; j++)
-				window.draw(inf[i][j]->text);
+			if (drawWhich(window, square_here[i], square[i], mouse)){
+				for (int j = 0; j < 4; j++) {
+					inf[i][j]->text.setFillColor(Color(118, 36, 2));
+					window.draw(inf[i][j]->text);
+				}
+			}
+			else {
+				for (int j = 0; j < 4; j++) {
+					inf[i][j]->text.setFillColor(Color(46, 68, 112));
+					window.draw(inf[i][j]->text);
+				}
+			}
 		}
 		window.display();
 	}
 	for (int i = 0; i < 6; i++)
 	{
-		delete square[i];
+		delete square[i], square_here[i];
 		for (int j = 0; j < 4; j++)
+			delete inf[i][j];
+	}
+	delete screen;
+}
+
+void course_student(RenderWindow &window, int &page, const float &scale, CourseNode *course, const bool &is_staff)
+{
+	Event event;
+	Object screen = createObject("content/Student/my_class.png");
+	Object out = createObject("content/logout.png", 866.0f * scale, 106.0f * scale);
+	Object out_here = createObject("content/logout1.png", 866.0f * scale, 106.0f * scale);
+	Object back = createObject("content/return.png", 80.0f * scale, 106.0f * scale);
+	Object back_here = createObject("content/return1.png", 80.0f * scale, 106.0f * scale);
+	Object left = createObject("content/Staff/Class/Asset 57.png", 492.0f * scale, 644.0f * scale);
+	Object left_valid = createObject("content/Staff/Class/Asset 55.png", 492.0f * scale, 644.0f * scale);
+	Object left_here = createObject("content/Staff/Class/Asset 91.png", 492.0f * scale, 644.0f * scale);
+	Object right = createObject("content/Staff/Class/Asset 56.png", 510.0f * scale, 644.0f * scale);
+	Object right_here = createObject("content/Staff/Class/Asset 90.png", 510.0f * scale, 644.0f * scale);
+	Object right_valid = createObject("content/Staff/Class/Asset 54.png", 510.0f * scale, 644.0f * scale);
+	Info sub_header = createInfo("content/VNI-Vari.TTF", course->course.course_name, 160.0f * scale, 158.0f * scale, 28.0f * scale);
+	sub_header.text.setFillColor(Color(101, 159, 235));
+	Info header = createInfo("content/VNI-Vari.TTF", course->course.course_id, 160.0f * scale, 200.0f * scale, 43.0f * scale);
+	Info *inf[8][6];
+	for (int i = 0; i < 8; i++)
+	{
+		inf[i][0] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 184.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		inf[i][1] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 232.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		inf[i][2] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 347.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		inf[i][3] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 515.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		inf[i][4] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 633.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		inf[i][5] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 715.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		for (int j = 0; j < 6; j++)
+			inf[i][j]->text.setFillColor(Color::Black);
+	}
+	int count = 0, change = 0;
+	bool trigger_page = true;
+	for (StudentNode *cur = course->student_list; cur; cur = cur->next)
+	{
+		count++;
+	}
+	Info count_student = createInfo("content/Oswald-Regular.ttf", "Total: " + to_string(count) + " Students", 181.0f * scale, 280.0f * scale, 15.0f * scale);
+	count_student.text.setFillColor(Color::White);
+	while (window.isOpen() && page == 8)
+	{
+		Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+		while (window.pollEvent(event))
+		{
+			switch (event.type)
+			{
+			case Event::Closed:
+			{
+				window.close();
+				break;
+			}
+			case Event::MouseButtonReleased:
+			{
+				if (event.mouseButton.button == Mouse::Left)
+				{
+					switchPage(out.bound, mouse, 1, page);
+					switchPage(back.bound, mouse, 7, page);
+					if (isHere(right.bound, mouse) && change <= count - 8)
+					{
+						trigger_page = true;
+						change += 8;
+					}
+					if (isHere(left.bound, mouse) && change != 0)
+					{
+						trigger_page = true;
+						change -= 8;
+					}
+				}
+				break;
+			}
+			default:
+				break;
+			}
+		}
+
+		window.clear();
+		window.draw(screen.draw);
+		drawWhich(window, out_here, out, mouse);
+		drawWhich(window, back_here, back, mouse);
+		window.draw(header.text);
+		window.draw(sub_header.text);
+		window.draw(count_student.text);
+		if (change == 0 && change >= count - 8)
+		{
+			window.draw(right.draw);
+			window.draw(left.draw);
+		}
+		else if (change == 0)
+		{
+			window.draw(left.draw);
+			drawWhich(window, right_here, right_valid, mouse);
+		}
+		else if (count >= count - 8)
+		{
+			window.draw(right.draw);
+			drawWhich(window, left_here, left_valid, mouse);
+		}
+		else
+		{
+			drawWhich(window, right_here, right_valid, mouse);
+			drawWhich(window, left_here, left_valid, mouse);
+		}
+		if (trigger_page)
+		{
+			StudentNode *cur = course->student_list;
+			for (int i = 0; i < change; i++)
+			{
+				cur = cur->next;
+			}
+			for (int i = 0; i < 8; i++)
+			{
+				if (cur)
+				{
+					inf[i][0]->text.setString(to_string(cur->student.num));
+					inf[i][1]->text.setString(cur->student.student_id);
+					inf[i][2]->text.setString(cur->student.last_name + " " + cur->student.first_name);
+					inf[i][4]->text.setString(cur->student.gender ? "F" : "M");
+					inf[i][3]->text.setString(cur->student.dob);
+					inf[i][5]->text.setString(cur->student.social_id);
+					cur = cur->next;
+				}
+				else
+				{
+					for (int j = 0; j < 6; j++)
+						inf[i][j]->text.setString("");
+				}
+			}
+			trigger_page = false;
+		}
+		for (int i = 0; i < 8; i++)
+		{
+			for (int j = 0; j < 6; j++)
+				window.draw(inf[i][j]->text);
+		}
+		window.display();
+	}
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 6; j++)
 			delete inf[i][j];
 	}
 }

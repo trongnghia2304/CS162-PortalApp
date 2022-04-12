@@ -99,6 +99,10 @@ int main()
 			view_course(window, page, scale, school->school_year.list_sem->sem.course_list, is_staff);
 			break;
 		}
+		case 8:
+		{
+			break;
+		}
 		default:
 		{
 			break;

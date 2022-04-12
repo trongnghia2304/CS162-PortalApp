@@ -85,6 +85,12 @@
     <None Include="csv\student_sample_data.csv">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="csv\schoolyear_input.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="csv\schoolyear_output.csv">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="content\Asset 27.png">
