@@ -87,10 +87,6 @@ struct MyCourse
 	string subject_code;
 	CourseNode* course;
 	MyCourse* next;
-	//MyCourse(CourseNode& a) :
-	//	course(&a),
-	//	subject_code(""),
-	//	next(nullptr) {};
 };
 
 struct CourseNode
