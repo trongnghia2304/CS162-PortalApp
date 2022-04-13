@@ -342,36 +342,14 @@ void writeToFileStudentNode1(ofstream &openFile, StudentNode *p_head)
 	}
 }
 
-bool findMyCourse(StudentNode *p_student, CourseNode *p_head)
+void findMyCourses(StudentNode **p_student, YearNode *year)
 {
-	MyCourse *cur = p_student->student.my_course;
-	if (cur) {
-		while (!cur->course)
-			cur = cur->next;
-		while (cur && p_head)
-		{
-			while (cur->subject_code != p_head->course.course_id && p_head)
-				p_head = p_head->next;
-			cur->course = p_head;
-			cur = cur->next;
-		}
-	}
-	if (cur) return false;
-	else return true;
-}
-
-void findAllMyCourses(StudentNode *p_student, YearNode *year)
-{
-	YearNode *cur_year = year;
-	while (cur_year)
-	{
-		SemesterNode *cur_sem = cur_year->school_year.list_sem;
-		while (cur_sem)
-		{
-			if (findMyCourse(p_student, cur_sem->sem.course_list)) return;
-			cur_sem = cur_sem->next;
-		}
-		cur_year = cur_year->next;
+	MyCourse* cur = (*p_student)->student.my_course;
+	while (cur) {
+		YearNode* cur_year = searchYearNode(year, cur->year);
+		SemesterNode* cur_sem = searchSemesterNode(cur_year->school_year.list_sem, cur->sem);
+		cur->course = searchCourseNode(cur_sem->sem.course_list, cur->subject_code);
+		cur = cur->next;
 	}
 }
 

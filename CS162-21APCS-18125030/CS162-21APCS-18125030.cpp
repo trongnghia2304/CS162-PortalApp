@@ -106,9 +106,9 @@ int main()
 				view_course(window, page, scale, school->school_year.list_sem->sem.course_list);
 			else
 			{
-				//findAllMyCourses(user, school);
+				findMyCourses(&user, school);
+				 view_course(window, page, scale, user);
 			}
-			// view_course(window, page, scale, school->school_year.list_sem->sem.course_list, user);
 			break;
 		}
 		case 8:

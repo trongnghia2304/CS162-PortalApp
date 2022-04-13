@@ -37,7 +37,7 @@ void profile(RenderWindow &window, int &page, const float &scale, StudentNode *s
 void view_class(RenderWindow &window, int &page, const float &scale, ClassNode *class_list, StudentNode *user, const bool &is_staff);
 void course_student(RenderWindow &window, int &page, const float &scale, CourseNode *course);
 void view_course(RenderWindow &window, int &page, const float &scale, CourseNode *my_course);
-void view_course(RenderWindow &window, int &page, const float &scale, CourseNode *my_course, StudentNode *user);
+void view_course(RenderWindow &window, int &page, const float &scale, StudentNode *user);
 //-----------------Other features--------------------------
 
 bool isHere(FloatRect &bound, Vector2f &mouse);

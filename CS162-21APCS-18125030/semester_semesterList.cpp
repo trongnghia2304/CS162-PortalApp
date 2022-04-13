@@ -17,9 +17,8 @@ SemesterNode *initSemesterNode(Semester p_new_semester)
 }
 SemesterNode *searchSemesterNode(SemesterNode *p_head, string p_semester_id)
 {
-	if (!p_head || stoi(p_semester_id) > 3)
+	if (!p_head)
 	{
-		cout << "Cannot find the searched semester...\n";
 		return nullptr;
 	}
 	SemesterNode *temp = p_head;

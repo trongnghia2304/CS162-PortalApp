@@ -733,7 +733,7 @@ void view_class(RenderWindow &window, int &page, const float &scale, ClassNode *
 }
 
 // student
-void view_course(RenderWindow &window, int &page, const float &scale, CourseNode *my_course, StudentNode *user)
+void view_course(RenderWindow &window, int &page, const float &scale, StudentNode *user)
 {
 	Event event;
 	Object *screen = createObjectTest("content/Student/my_course.png");
@@ -771,7 +771,7 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 	}
 	int count = 0, change = 0;
 	bool trigger_page = true;
-	for (CourseNode *cur = my_course; cur; cur = cur->next)
+	for (MyCourse *cur = user->student.my_course; cur; cur = cur->next)
 	{
 		count++;
 	}
@@ -849,25 +849,26 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 		}
 		if (trigger_page)
 		{
-			CourseNode *cur = my_course;
+			MyCourse *cur = user->student.my_course;
 			for (int i = 0; i < change; i++)
 			{
 				cur = cur->next;
 			}
 			for (int i = 0; i < 6; i++)
 			{
-				course[i] = cur;
 				if (cur)
 				{
-					inf[i][0]->text.setString(cur->course.course_id);
-					inf[i][1]->text.setString(cur->course.course_name);
-					inf[i][2]->text.setString(cur->course.teacher_name);
-					inf[i][3]->text.setString("Credit: " + to_string(cur->course.num_credit));
+					course[i] = cur->course;
+					inf[i][0]->text.setString(cur->course->course.course_id);
+					inf[i][1]->text.setString(cur->course->course.course_name);
+					inf[i][2]->text.setString(cur->course->course.teacher_name);
+					inf[i][3]->text.setString("Credit: " + to_string(cur->course->course.num_credit));
 					inf[i][0]->text.setPosition(Vector2f(square[i]->bound.left + (square[i]->bound.width - inf[i][0]->text.getGlobalBounds().width) / 2, square[i]->bound.top + 13.0f));
 					cur = cur->next;
 				}
 				else
 				{
+					course[i] = nullptr;
 					for (int j = 0; j < 4; j++)
 						inf[i][j]->text.setString("");
 				}
