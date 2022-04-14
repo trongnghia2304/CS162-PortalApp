@@ -78,6 +78,8 @@ int main()
 		case 2:
 		{
 			logIn(window, page, is_staff, scale, all_classes1, all_staffs, user);
+			if (!is_staff)
+				findMyCourses(&user, school);
 			break;
 		}
 		case 3:
@@ -102,16 +104,15 @@ int main()
 		}
 		case 7:
 		{
-			if (is_staff)
-				view_course(window, page, scale, school->school_year.list_sem->sem.course_list);
-			else
-			{
-				findMyCourses(&user, school);
-				 view_course(window, page, scale, user);
-			}
+			view_year(window, page, scale, school, user, is_staff);
+
 			break;
 		}
 		case 8:
+		{
+			break;
+		}
+		case 9:
 		{
 			break;
 		}

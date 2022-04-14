@@ -36,8 +36,10 @@ void staffHome(RenderWindow &window, int &page, const float &scale);
 void profile(RenderWindow &window, int &page, const float &scale, StudentNode *student, bool is_staff);
 void view_class(RenderWindow &window, int &page, const float &scale, ClassNode *class_list, StudentNode *user, const bool &is_staff);
 void course_student(RenderWindow &window, int &page, const float &scale, CourseNode *course);
-void view_course(RenderWindow &window, int &page, const float &scale, CourseNode *my_course);
-void view_course(RenderWindow &window, int &page, const float &scale, StudentNode *user);
+void view_year(RenderWindow &window, int &page, const float &scale, YearNode *year, StudentNode* user, const bool& is_staff);
+void view_semester(RenderWindow& window, int& page, const float& scale, YearNode* cur_year, StudentNode* user, const bool& is_staff);
+void view_course(RenderWindow &window, int &page, const float &scale, CourseNode *my_course, const bool& is_staff);
+void view_course(RenderWindow &window, int &page, const float &scale, StudentNode *user, const bool& is_staff, const string& sem, const string& year);
 //-----------------Other features--------------------------
 
 bool isHere(FloatRect &bound, Vector2f &mouse);

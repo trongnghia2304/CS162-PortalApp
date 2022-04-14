@@ -306,12 +306,9 @@ void staffHome(RenderWindow &window, int &page, const float &scale)
 			}
 			case Event::MouseButtonReleased:
 			{
-				if (isHere(out.bound, mouse))
-				{
-					page = 1;
-					break;
-				}
+				switchPage(out.bound, mouse, 1, page);
 				switchPage(a[0]->bound, mouse, 5, page);
+				switchPage(a[3]->bound, mouse, 7, page);
 				// for (int j = 0; j < 3; j++)
 				// {
 				// 	if (isHere(a[j]->bound, mouse))
@@ -733,8 +730,13 @@ void view_class(RenderWindow &window, int &page, const float &scale, ClassNode *
 }
 
 // student
-void view_course(RenderWindow &window, int &page, const float &scale, StudentNode *user)
+void view_course(RenderWindow &window, int &page, const float &scale, StudentNode *user, const bool &is_staff, const string &sem, const string &year)
 {
+	MyCourse *initial = user->student.my_course;
+	while (initial && (initial->year != year || initial->sem != sem))
+	{
+		initial = initial->next;
+	}
 	Event event;
 	Object *screen = createObjectTest("content/Student/my_course.png");
 	Object out = createObject("content/logout.png", 866.0f * scale, 106.0f * scale);
@@ -771,13 +773,14 @@ void view_course(RenderWindow &window, int &page, const float &scale, StudentNod
 	}
 	int count = 0, change = 0;
 	bool trigger_page = true;
-	for (MyCourse *cur = user->student.my_course; cur; cur = cur->next)
+	for (MyCourse *cur = initial; cur; cur = cur->next)
 	{
-		count++;
+		if (cur->sem == sem && cur->year == year)
+			count++;
 	}
 	Info count_course = createInfo("content/Oswald-Regular.ttf", "Total: " + to_string(count) + " Courses", 200.0f * scale, 279.0f * scale, 15.0f * scale);
 	count_course.text.setFillColor(Color::White);
-	while (window.isOpen() && page == 7)
+	while (window.isOpen() && page == 9)
 	{
 		Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
 		while (window.pollEvent(event))
@@ -794,8 +797,7 @@ void view_course(RenderWindow &window, int &page, const float &scale, StudentNod
 				if (event.mouseButton.button == Mouse::Left)
 				{
 					switchPage(out.bound, mouse, 1, page);
-					// is_staff: true -> switch to the courses
-					switchPage(back.bound, mouse, 3, page);
+					switchPage(back.bound, mouse, 8, page);
 					if (isHere(right.bound, mouse) && change <= count - 6)
 					{
 						trigger_page = true;
@@ -810,7 +812,7 @@ void view_course(RenderWindow &window, int &page, const float &scale, StudentNod
 					{
 						if (isHere(square[i]->bound, mouse) && course[i])
 						{
-							page = 8;
+							page = 10;
 							course_student(window, page, scale, course[i]);
 						}
 					}
@@ -849,13 +851,15 @@ void view_course(RenderWindow &window, int &page, const float &scale, StudentNod
 		}
 		if (trigger_page)
 		{
-			MyCourse *cur = user->student.my_course;
+			MyCourse *cur = initial;
 			for (int i = 0; i < change; i++)
 			{
 				cur = cur->next;
 			}
 			for (int i = 0; i < 6; i++)
 			{
+				while (cur && (cur->sem != sem || cur->year != year))
+					cur = cur->next;
 				if (cur)
 				{
 					course[i] = cur->course;
@@ -908,22 +912,25 @@ void view_course(RenderWindow &window, int &page, const float &scale, StudentNod
 }
 
 // staff
-void view_course(RenderWindow &window, int &page, const float &scale, CourseNode *my_course)
+void view_course(RenderWindow &window, int &page, const float &scale, CourseNode *my_course, const bool &is_staff)
 {
 	Event event;
-	Object *screen = createObjectTest("content/Student/my_course.png");
+	Object *screen = createObjectTest("content/Staff/course_staff.png");
 	Object out = createObject("content/logout.png", 866.0f * scale, 106.0f * scale);
 	Object out_here = createObject("content/logout1.png", 866.0f * scale, 106.0f * scale);
 	Object back = createObject("content/return.png", 80.0f * scale, 106.0f * scale);
 	Object back_here = createObject("content/return1.png", 80.0f * scale, 106.0f * scale);
-	Object add_course = createObject("content/Student/add_course.png", 682.0f * scale, 273.0f * scale);
-	Object add_course_here = createObject("content/Student/add_course_here.png", 682.0f * scale, 273.0f * scale);
+	Object add_course = createObject("content/Student/add_course.png", 680.0f * scale, 272.0f * scale);
+	Object add_course_here = createObject("content/Student/add_course_here.png", 680.0f * scale, 272.0f * scale);
 	Object left = createObject("content/Staff/Class/Asset 57.png", 492.0f * scale, 644.0f * scale);
 	Object left_valid = createObject("content/Staff/Class/Asset 55.png", 492.0f * scale, 644.0f * scale);
 	Object left_here = createObject("content/Staff/Class/Asset 91.png", 492.0f * scale, 644.0f * scale);
 	Object right = createObject("content/Staff/Class/Asset 56.png", 510.0f * scale, 644.0f * scale);
 	Object right_here = createObject("content/Staff/Class/Asset 90.png", 510.0f * scale, 644.0f * scale);
 	Object right_valid = createObject("content/Staff/Class/Asset 54.png", 510.0f * scale, 644.0f * scale);
+	Info sub_header = createInfo("content/VNI-Vari.TTF", my_course->year_id, 160.0f * scale, 158.0f * scale, 28.0f * scale);
+	sub_header.text.setFillColor(Color(101, 159, 235));
+	Info header = createInfo("content/VNI-Vari.TTF", my_course->semester_id, 160.0f * scale, 200.0f * scale, 43.0f * scale);
 	Info *inf[6][4];
 	Object *square[6], *square_here[6];
 	CourseNode *course[6];
@@ -954,7 +961,7 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 	}
 	Info count_course = createInfo("content/Oswald-Regular.ttf", "Total: " + to_string(count) + " Courses", 200.0f * scale, 279.0f * scale, 15.0f * scale);
 	count_course.text.setFillColor(Color::White);
-	while (window.isOpen() && page == 7)
+	while (window.isOpen() && page == 9)
 	{
 		Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
 		while (window.pollEvent(event))
@@ -971,8 +978,7 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 				if (event.mouseButton.button == Mouse::Left)
 				{
 					switchPage(out.bound, mouse, 1, page);
-					// is_staff: true -> switch to the courses
-					switchPage(back.bound, mouse, 3, page);
+					switchPage(back.bound, mouse, 8, page);
 					if (isHere(add_course.bound, mouse))
 					{
 						// add new course
@@ -991,7 +997,7 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 					{
 						if (isHere(square[i]->bound, mouse) && course[i])
 						{
-							page = 8;
+							page = 10;
 							course_student(window, page, scale, course[i]);
 						}
 					}
@@ -1005,6 +1011,8 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 
 		window.clear();
 		window.draw(screen->draw);
+		window.draw(sub_header.text);
+		window.draw(header.text);
 		drawWhich(window, add_course_here, add_course, mouse);
 		drawWhich(window, out_here, out, mouse);
 		drawWhich(window, back_here, back, mouse);
@@ -1125,7 +1133,7 @@ void course_student(RenderWindow &window, int &page, const float &scale, CourseN
 	}
 	Info count_student = createInfo("content/Oswald-Regular.ttf", "Total: " + to_string(count) + " Students", 181.0f * scale, 280.0f * scale, 15.0f * scale);
 	count_student.text.setFillColor(Color::White);
-	while (window.isOpen() && page == 8)
+	while (window.isOpen() && page == 10)
 	{
 		Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
 		while (window.pollEvent(event))
@@ -1142,7 +1150,7 @@ void course_student(RenderWindow &window, int &page, const float &scale, CourseN
 				if (event.mouseButton.button == Mouse::Left)
 				{
 					switchPage(out.bound, mouse, 1, page);
-					switchPage(back.bound, mouse, 7, page);
+					switchPage(back.bound, mouse, 9, page);
 					if (isHere(right.bound, mouse) && change <= count - 8)
 					{
 						trigger_page = true;
@@ -1227,4 +1235,258 @@ void course_student(RenderWindow &window, int &page, const float &scale, CourseN
 		for (int j = 0; j < 6; j++)
 			delete inf[i][j];
 	}
+}
+
+void view_year(RenderWindow &window, int &page, const float &scale, YearNode *year, StudentNode *user, const bool &is_staff)
+{
+	YearNode *cur_year = year;
+	Event event;
+	Object *screen;
+	if (is_staff)
+		screen = createObjectTest("content/year_staff.png");
+	else
+	{
+		MyCourse *cur = user->student.my_course;
+		while (cur_year && cur_year->school_year.year_id != cur->year)
+			cur_year = cur_year->next;
+		screen = createObjectTest("content/year.png");
+	}
+	Object out = createObject("content/logout.png", 866.0f * scale, 106.0f * scale);
+	Object out_here = createObject("content/logout1.png", 866.0f * scale, 106.0f * scale);
+	Object back = createObject("content/return.png", 80.0f * scale, 106.0f * scale);
+	Object back_here = createObject("content/return1.png", 80.0f * scale, 106.0f * scale);
+	Object add_year = createObject("content/add_year.png", 680.0f * scale, 274.0f * scale);
+	Object add_year_here = createObject("content/add_year_here.png", 680.0f * scale, 274.0f * scale);
+	Object left = createObject("content/Staff/Class/Asset 57.png", 492.0f * scale, 644.0f * scale);
+	Object left_valid = createObject("content/Staff/Class/Asset 55.png", 492.0f * scale, 644.0f * scale);
+	Object left_here = createObject("content/Staff/Class/Asset 91.png", 492.0f * scale, 644.0f * scale);
+	Object right = createObject("content/Staff/Class/Asset 56.png", 510.0f * scale, 644.0f * scale);
+	Object right_here = createObject("content/Staff/Class/Asset 90.png", 510.0f * scale, 644.0f * scale);
+	Object right_valid = createObject("content/Staff/Class/Asset 54.png", 510.0f * scale, 644.0f * scale);
+	Info *inf[4];
+	Object *square[4], *square_here[4];
+	YearNode *a_year[4];
+	for (int i = 0; i < 4; i++)
+	{
+		a_year[i] = nullptr;
+		square[i] = createObjectTest("content/year_node.png", 266.0f * scale, (328.0f + 78.0f * i) * scale);
+		square_here[i] = createObjectTest("content/year_node_here.png", 266.0f * scale, (328.0f + 78.0f * i) * scale);
+		inf[i] = createInfoTest("content/Oswald-Medium.ttf", "demo_text", (243.0f + 220.0f * i) * scale, 330.0f * scale, 25.0f * scale);
+	}
+	int count = 0, change = 0;
+	bool trigger_page = true;
+	for (YearNode *cur = cur_year; cur; cur = cur->next)
+		count++;
+	Info count_course = createInfo("content/Oswald-Regular.ttf", "Total: " + to_string(count) + " Years", 200.0f * scale, 279.0f * scale, 15.0f * scale);
+	count_course.text.setFillColor(Color::White);
+	while (window.isOpen() && page == 7)
+	{
+		Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+		while (window.pollEvent(event))
+		{
+			switch (event.type)
+			{
+			case Event::Closed:
+			{
+				window.close();
+				break;
+			}
+			case Event::MouseButtonReleased:
+			{
+				if (event.mouseButton.button == Mouse::Left)
+				{
+					switchPage(out.bound, mouse, 1, page);
+					// is_staff: true -> switch to the courses
+					switchPage(back.bound, mouse, (is_staff ? 4 : 3), page);
+					if (isHere(add_year.bound, mouse))
+					{
+						// add new year
+					}
+					if (isHere(right.bound, mouse) && change <= count - 4)
+					{
+						trigger_page = true;
+						change += 4;
+					}
+					if (isHere(left.bound, mouse) && change != 0)
+					{
+						trigger_page = true;
+						change -= 4;
+					}
+					for (int i = 0; i < 4; i++)
+					{
+						if (isHere(square[i]->bound, mouse) && a_year[i])
+						{
+							page = 8;
+							view_semester(window, page, scale, a_year[i], user, is_staff);
+						}
+					}
+				}
+				break;
+			}
+			default:
+				break;
+			}
+		}
+
+		window.clear();
+		window.draw(screen->draw);
+		if (is_staff)
+			drawWhich(window, add_year_here, add_year, mouse);
+		drawWhich(window, out_here, out, mouse);
+		drawWhich(window, back_here, back, mouse);
+		window.draw(count_course.text);
+		if (change == 0 && change >= count - 4)
+		{
+			window.draw(right.draw);
+			window.draw(left.draw);
+		}
+		else if (change == 0)
+		{
+			window.draw(left.draw);
+			drawWhich(window, right_here, right_valid, mouse);
+		}
+		else if (count >= count - 4)
+		{
+			window.draw(right.draw);
+			drawWhich(window, left_here, left_valid, mouse);
+		}
+		else
+		{
+			drawWhich(window, right_here, right_valid, mouse);
+			drawWhich(window, left_here, left_valid, mouse);
+		}
+		if (trigger_page)
+		{
+			YearNode *cur = cur_year;
+			for (int i = 0; i < change; i++)
+			{
+				cur = cur->next;
+			}
+			for (int i = 0; i < 4; i++)
+			{
+				a_year[i] = cur;
+				if (cur)
+				{
+					inf[i]->text.setString(a_year[i]->school_year.year_id);
+					inf[i]->text.setPosition(Vector2f(square[i]->bound.left + (square[i]->bound.width - inf[i]->text.getGlobalBounds().width) / 2, square[i]->bound.top + 20.0f));
+					cur = cur->next;
+				}
+				else
+				{
+					inf[i]->text.setString("");
+				}
+			}
+			trigger_page = false;
+		}
+		for (int i = 0; i < 6; i++)
+		{
+			if (inf[i]->text.getString() == "")
+				break;
+			if (drawWhich(window, square_here[i], square[i], mouse))
+				inf[i]->text.setFillColor(Color(118, 36, 2));
+			else
+				inf[i]->text.setFillColor(Color(46, 68, 112));
+			window.draw(inf[i]->text);
+		}
+		window.display();
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		delete square[i], square_here[i], inf[i];
+	}
+	delete screen;
+}
+
+void view_semester(RenderWindow &window, int &page, const float &scale, YearNode *cur_year, StudentNode *user, const bool &is_staff)
+{
+	Event event;
+	Object *screen = createObjectTest("content/Staff/Class/semester.png");
+	Object out = createObject("content/logout.png", 866.0f * scale, 106.0f * scale);
+	Object out_here = createObject("content/logout1.png", 866.0f * scale, 106.0f * scale);
+	Object back = createObject("content/return.png", 80.0f * scale, 106.0f * scale);
+	Object back_here = createObject("content/return1.png", 80.0f * scale, 106.0f * scale);
+	Info sub_header = createInfo("content/VNI-Vari.TTF", cur_year->school_year.year_id, 160.0f * scale, 158.0f * scale, 28.0f * scale);
+	sub_header.text.setFillColor(Color(101, 159, 235));
+	Info header = createInfo("content/VNI-Vari.TTF", "Semester List", 160.0f * scale, 200.0f * scale, 43.0f * scale);
+	Object *square[3], *square_here[3];
+	SemesterNode *a_sem[3];
+	for (int i = 0; i < 3; i++)
+	{
+		a_sem[i] = nullptr;
+		square[i] = createObjectTest("content/Student/Asset " + to_string(104 + i) + ".png", (172.0f + 225.0f * i) * scale, 368.0f * scale);
+		square_here[i] = createObjectTest("content/Student/Asset " + to_string(107 + i) + ".png", (172.0f + 225.0f * i) * scale, 368.0f * scale);
+	}
+	int count = 0, change = 0;
+	bool trigger_page = true;
+	for (SemesterNode *cur = cur_year->school_year.list_sem; cur; cur = cur->next)
+		count++;
+	Info count_course = createInfo("content/Oswald-Regular.ttf", "Total: " + to_string(count) + " Semesters", 200.0f * scale, 279.0f * scale, 15.0f * scale);
+	count_course.text.setFillColor(Color::White);
+	while (window.isOpen() && page == 8)
+	{
+		Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+		while (window.pollEvent(event))
+		{
+			switch (event.type)
+			{
+			case Event::Closed:
+			{
+				window.close();
+				break;
+			}
+			case Event::MouseButtonReleased:
+			{
+				if (event.mouseButton.button == Mouse::Left)
+				{
+					switchPage(out.bound, mouse, 1, page);
+					switchPage(back.bound, mouse, 7, page);
+					for (int i = 0; i < 3; i++)
+					{
+						if (isHere(square[i]->bound, mouse) && a_sem[i])
+						{
+							page = 9;
+							if (is_staff)
+								view_course(window, page, scale, a_sem[i]->sem.course_list, is_staff);
+							else
+							{
+								string year = cur_year->school_year.year_id;
+								string sem = a_sem[i]->sem.semester_id;
+								view_course(window, page, scale, user, is_staff, sem, year);
+							}
+						}
+					}
+				}
+				break;
+			}
+			default:
+				break;
+			}
+		}
+
+		window.clear();
+		window.draw(screen->draw);
+		window.draw(count_course.text);
+		window.draw(header.text);
+		window.draw(sub_header.text);
+		drawWhich(window, out_here, out, mouse);
+		drawWhich(window, back_here, back, mouse);
+		if (trigger_page)
+		{
+			SemesterNode *cur = cur_year->school_year.list_sem;
+			for (int i = 0; i < 3; i++)
+			{
+				a_sem[i] = cur;
+				cur = cur->next;
+			}
+			trigger_page = false;
+		}
+		for (int i = 0; i < 3; i++)
+			drawWhich(window, square_here[i], square[i], mouse);
+		window.display();
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		delete square[i], square_here[i];
+	}
+	delete screen;
 }
