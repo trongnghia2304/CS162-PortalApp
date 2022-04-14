@@ -110,6 +110,7 @@ int main()
 		}
 		case 8:
 		{
+			view_score(window, page, scale, user, is_staff);
 			break;
 		}
 		case 9:

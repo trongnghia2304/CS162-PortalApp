@@ -178,6 +178,41 @@ bool changePassword(Student &me, const string &oldPw, const string &newPw)
 		return false;
 }
 
+// percent ex. : 20, 30 (%)
+float calculateOverallScore(MyCourse *course, float midterm_percent, float final_percent)
+{
+	course->score.overall = (midterm_percent * course->score.mid + final_percent * course->score.fin + (100 - midterm_percent - final_percent) * course->score.process) / 100;
+	return course->score.overall;
+}
+
+float calculateGPA(Student me, string year, string sem)
+{
+	float res = 0, k = 0;
+	for (MyCourse *cur = me.my_course; cur; cur = cur->next)
+	{
+		if (cur->year == year && cur->sem == sem)
+		{
+			k++;
+			res += cur->score.overal;
+		}
+	}
+	if (k == 0)
+		return 0;
+	else
+		return res / k;
+}
+
+float calculateGPA(Student me)
+{
+	float res = 0, k = 0;
+	for (MyCourse *cur = me.my_course; cur; cur = cur->next)
+	{
+		k++;
+		res += cur->score.overall;
+	}
+	return (k == 0 ? 0 : res / k);
+}
+
 // //--------------------------------------- Views ----------------------------------------------------
 // //--------------------------------------------------------------------------------------------------
 // void viewListOfClass(ClassNode *Class_head)

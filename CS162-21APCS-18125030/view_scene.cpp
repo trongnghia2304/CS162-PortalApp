@@ -253,6 +253,7 @@ void studentHome(RenderWindow &window, int &page, const float &scale)
 					switchPage(out.bound, mouse, 1, page);
 					switchPage(a[0]->bound, mouse, 5, page);
 					switchPage(a[1]->bound, mouse, 7, page);
+					switchPage(a[3]->bound, mouse, 8, page);
 				}
 				break;
 			}
@@ -1489,4 +1490,162 @@ void view_semester(RenderWindow &window, int &page, const float &scale, YearNode
 		delete square[i], square_here[i];
 	}
 	delete screen;
+}
+
+void view_score(RenderWindow &window, int &page, const float &scale, StudentNode *user, const bool &is_staff)
+{
+	Event event;
+	Object screen = createObject("content/score.png");
+	Object out = createObject("content/logout.png", 866.0f * scale, 106.0f * scale);
+	Object out_here = createObject("content/logout1.png", 866.0f * scale, 106.0f * scale);
+	Object back = createObject("content/return.png", 80.0f * scale, 106.0f * scale);
+	Object back_here = createObject("content/return1.png", 80.0f * scale, 106.0f * scale);
+	Object add_student = createObject("content/Student/add.png", 682.0f * scale, 273.0f * scale);
+	Object add_student_here = createObject("content/Student/add1.png", 682.0f * scale, 273.0f * scale);
+	Object left = createObject("content/Staff/Class/Asset 57.png", 492.0f * scale, 644.0f * scale);
+	Object left_valid = createObject("content/Staff/Class/Asset 55.png", 492.0f * scale, 644.0f * scale);
+	Object left_here = createObject("content/Staff/Class/Asset 91.png", 492.0f * scale, 644.0f * scale);
+	Object right = createObject("content/Staff/Class/Asset 56.png", 510.0f * scale, 644.0f * scale);
+	Object right_here = createObject("content/Staff/Class/Asset 90.png", 510.0f * scale, 644.0f * scale);
+	Object right_valid = createObject("content/Staff/Class/Asset 54.png", 510.0f * scale, 644.0f * scale);
+	// ClassNode *my_class = searchClassNode(class_list, user->student.student_class);
+	Info sub_header = createInfo("content/VNI-Vari.TTF", user->student.last_name + " " + user->student.first_name, 160.0f * scale, 158.0f * scale, 28.0f * scale);
+	sub_header.text.setFillColor(Color(101, 159, 235));
+	Info header = createInfo("content/VNI-Vari.TTF", "My Score", 160.0f * scale, 200.0f * scale, 43.0f * scale);
+	Info *inf[8][7];
+	for (int i = 0; i < 8; i++)
+	{
+		inf[i][0] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 184.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		inf[i][1] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 224.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		inf[i][2] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 338.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		inf[i][3] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 578.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		inf[i][4] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 650.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		inf[i][5] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 720.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		inf[i][6] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 774.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		for (int j = 0; j < 7; j++)
+			inf[i][j]->text.setFillColor(Color::Black);
+	}
+	int count = 0, change = 0;
+	bool trigger_page = true;
+	for (MyCourse *cur = user->student.my_course; cur; cur = cur->next)
+	{
+		count += cur->course->course.num_credit;
+	}
+	Info count_student = createInfo("content/Oswald-Regular.ttf", "Total: " + to_string(count) + " Credits", 181.0f * scale, 280.0f * scale, 15.0f * scale);
+	count_student.text.setFillColor(Color::White);
+	while (window.isOpen() && page == 8)
+	{
+		Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+		while (window.pollEvent(event))
+		{
+			switch (event.type)
+			{
+			case Event::Closed:
+			{
+				window.close();
+				break;
+			}
+			case Event::MouseButtonReleased:
+			{
+				if (event.mouseButton.button == Mouse::Left)
+				{
+					switchPage(out.bound, mouse, 1, page);
+					// is_staff: true -> switch to the class
+					switchPage(back.bound, mouse, 3, page);
+					if (isHere(add_student.bound, mouse) && is_staff)
+					{
+						// add new student to the class
+					}
+					if (isHere(right.bound, mouse) && change <= count - 8)
+					{
+						trigger_page = true;
+						change += 8;
+					}
+					if (isHere(left.bound, mouse) && change != 0)
+					{
+						trigger_page = true;
+						change -= 8;
+					}
+				}
+				break;
+			}
+			default:
+				break;
+			}
+		}
+
+		window.clear();
+		window.draw(screen.draw);
+		if (is_staff)
+			drawWhich(window, add_student_here, add_student, mouse);
+		drawWhich(window, out_here, out, mouse);
+		drawWhich(window, back_here, back, mouse);
+		window.draw(header.text);
+		window.draw(sub_header.text);
+		window.draw(count_student.text);
+		if (change == 0 && change >= count - 8)
+		{
+			window.draw(right.draw);
+			window.draw(left.draw);
+		}
+		else if (change == 0)
+		{
+			window.draw(left.draw);
+			drawWhich(window, right_here, right_valid, mouse);
+		}
+		else if (count >= count - 8)
+		{
+			window.draw(right.draw);
+			drawWhich(window, left_here, left_valid, mouse);
+		}
+		else
+		{
+			drawWhich(window, right_here, right_valid, mouse);
+			drawWhich(window, left_here, left_valid, mouse);
+		}
+		if (trigger_page)
+		{
+			MyCourse *cur = user->student.my_course;
+			for (int i = 0; i < change; i++)
+			{
+				cur = cur->next;
+			}
+			for (int i = 0; i < 8; i++)
+			{
+				if (cur)
+				{
+					stringstream a,b,c,d;
+					a << fixed << setprecision(1) << cur->score.process;
+					b << fixed << setprecision(1) << cur->score.mid;
+					c << fixed << setprecision(1) << cur->score.fin;
+					d << fixed << setprecision(1) << cur->score.overall;
+					inf[i][0]->text.setString(to_string(i + change + 1));
+					inf[i][1]->text.setString(cur->subject_code);
+					inf[i][2]->text.setString(cur->course->course.course_name);
+					inf[i][3]->text.setString(a.str());
+					inf[i][4]->text.setString(b.str());
+					inf[i][5]->text.setString(c.str());
+					inf[i][6]->text.setString(d.str());
+					cur = cur->next;
+				}
+				else
+				{
+					for (int j = 0; j < 7; j++)
+						inf[i][j]->text.setString("");
+				}
+			}
+			trigger_page = false;
+		}
+		for (int i = 0; i < 8; i++)
+		{
+			for (int j = 0; j < 7; j++)
+				window.draw(inf[i][j]->text);
+		}
+		window.display();
+	}
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 7; j++)
+			delete inf[i][j];
+	}
 }

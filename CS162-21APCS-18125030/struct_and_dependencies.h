@@ -6,6 +6,7 @@
 #include <sstream>
 #include <string.h>
 #include <string>
+#include <iomanip>
 
 using namespace sf;
 using namespace std;
