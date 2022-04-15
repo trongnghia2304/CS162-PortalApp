@@ -87,8 +87,8 @@ void findMyCourses(StudentNode** p_student, YearNode* year);
 
 //--------------------------------------- Views  ---------------------------------------------------
 //--------------------------------------------------------------------------------------------------
-bool changePassword(MyCourse* course, const string& oldPw, const string& newPw);
-float calculateOverallScore(Student& me, float midterm_percent, float final_percent);
+bool changePassword(Student& me, const string& oldPw, const string& newPw);
+float calculateOverallScore(MyCourse* course, float midterm_percent, float final_percent);
 float calculateGPA(Student me, string year, string sem);
 float calculateGPA(Student me);
 //void changeStudent(Student& me);

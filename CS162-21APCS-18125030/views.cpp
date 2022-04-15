@@ -193,7 +193,7 @@ float calculateGPA(Student me, string year, string sem)
 		if (cur->year == year && cur->sem == sem)
 		{
 			k++;
-			res += cur->score.overal;
+			res += cur->score.overall;
 		}
 	}
 	if (k == 0)
