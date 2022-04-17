@@ -123,7 +123,6 @@ int main()
 		}
 		}
 	}
-
 	// save all data
 	writeToFileClassNode(class_output_path, all_classes);
 	writeToFileStudentNode(staff_output_path, all_staffs);
