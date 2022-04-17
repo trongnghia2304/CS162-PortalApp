@@ -1100,6 +1100,8 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 void course_student(RenderWindow &window, int &page, const float &scale, CourseNode *course)
 {
 	Event event;
+	Object export1 = createObject("content/Staff/Create elements/export.png", 680.0f * scale, 272.0f * scale);
+	Object export1_here = createObject("content/Staff/Create elements/export_here.png", 680.0f * scale, 272.0f * scale);
 	Object screen = createObject("content/Student/my_class.png");
 	Object out = createObject("content/logout.png", 866.0f * scale, 106.0f * scale);
 	Object out_here = createObject("content/logout1.png", 866.0f * scale, 106.0f * scale);
@@ -1162,6 +1164,20 @@ void course_student(RenderWindow &window, int &page, const float &scale, CourseN
 						trigger_page = true;
 						change -= 8;
 					}
+					if (isHere(export1.bound, mouse))
+					{
+						//
+						string exported_student = "./csv/exported_student.csv";
+						ofstream fout;
+						fout.open(exported_student);
+						StudentNode* cur = course->student_list;
+						for (int i = 0; i < change; i++)
+						{
+							cur = cur->next;
+						}
+						writeToFileStudentNode(fout, cur);
+						fout.close();
+					}
 				}
 				break;
 			}
@@ -1174,6 +1190,7 @@ void course_student(RenderWindow &window, int &page, const float &scale, CourseN
 		window.draw(screen.draw);
 		drawWhich(window, out_here, out, mouse);
 		drawWhich(window, back_here, back, mouse);
+		drawWhich(window, export1_here, export1, mouse);
 		window.draw(header.text);
 		window.draw(sub_header.text);
 		window.draw(count_student.text);
