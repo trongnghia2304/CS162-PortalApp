@@ -9,12 +9,12 @@ int main()
 	// StudentNode* me = nullptr;
 	// appendNewStudentNode(&me, meme);
 
-	string class_input_path = "./csv/class_input.csv";
-	string class_output_path = "./csv/class_output.csv";
+	// string class_input_path = "./csv/class_input.csv";
+	// string class_output_path = "./csv/class_output.csv";
 
-	ClassNode *all_classes = nullptr;
+	// ClassNode *all_classes = nullptr;
+	// // readFromFileClassNode(class_input_path, all_classes);
 	// readFromFileClassNode(class_input_path, all_classes);
-	readFromFileClassNode(class_input_path, all_classes);
 
 	string staff_input_path = "./csv/staff_input.csv";
 	string staff_output_path = "./csv/staff_output.csv";
@@ -33,6 +33,7 @@ int main()
 	ClassNode *all_classes1 = nullptr;
 
 	readFromFileClassNode1(student_input_path, all_classes1);
+	setupMyCourses(all_classes1, school);
 
 	// Testing student & student list functions
 
@@ -78,8 +79,6 @@ int main()
 		case 2:
 		{
 			logIn(window, page, is_staff, scale, all_classes1, all_staffs, user);
-			if (!is_staff && user)
-				findMyCourses(&user, school);
 			break;
 		}
 		case 3:
@@ -104,7 +103,7 @@ int main()
 		}
 		case 7:
 		{
-			view_year(window, page, scale, school, user, is_staff);
+			view_year(window, page, scale, school, user, is_staff, all_classes1);
 
 			break;
 		}
@@ -130,13 +129,13 @@ int main()
 		}
 	}
 	// save all data
-	writeToFileClassNode(class_output_path, all_classes);
+	// writeToFileClassNode(class_output_path, all_classes);
 	writeToFileStudentNode(staff_output_path, all_staffs);
 	writeToFileYearNode(school_output_path, school);
 	writeToFileClassNode1(student_output_path, all_classes1);
 
 	// delete all SLL
-	deleteClassNode(all_classes);
+	// deleteClassNode(all_classes);
 	deleteStudentList(all_staffs);
 	deleteClassNode(all_classes1);
 

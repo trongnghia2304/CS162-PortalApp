@@ -3,6 +3,8 @@
         "xiosbase": "cpp",
         "xutility": "cpp",
         "iterator": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "iomanip": "cpp",
+        "sstream": "cpp"
     }
 }
