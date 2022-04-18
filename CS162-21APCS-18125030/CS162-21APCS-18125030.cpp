@@ -78,7 +78,7 @@ int main()
 		case 2:
 		{
 			logIn(window, page, is_staff, scale, all_classes1, all_staffs, user);
-			if (!is_staff)
+			if (!is_staff && user)
 				findMyCourses(&user, school);
 			break;
 		}

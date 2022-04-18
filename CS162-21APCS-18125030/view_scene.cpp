@@ -1114,6 +1114,9 @@ void course_student(RenderWindow &window, int &page, const float &scale, CourseN
 	Object right_here = createObject("content/Staff/Class/Asset 90.png", 510.0f * scale, 644.0f * scale);
 	Object right_valid = createObject("content/Staff/Class/Asset 54.png", 510.0f * scale, 644.0f * scale);
 	Info sub_header = createInfo("content/VNI-Vari.TTF", course->course.course_name, 160.0f * scale, 158.0f * scale, 28.0f * scale);
+	Object export_success = createObject("content/Staff/Create elements/Asset 115.png", 316.0f * scale, 386.0f * scale);
+	Object return1 = createObject("content/Staff/Create elements/a7.png", 444.0f * scale, 484.0f * scale);
+	Object return1_here = createObject("content/Staff/Create elements/b7.png", 444.0f * scale, 484.0f * scale);
 	sub_header.text.setFillColor(Color(101, 159, 235));
 	Info header = createInfo("content/VNI-Vari.TTF", course->course.course_id, 160.0f * scale, 200.0f * scale, 43.0f * scale);
 	Info *inf[8][6];
@@ -1129,7 +1132,7 @@ void course_student(RenderWindow &window, int &page, const float &scale, CourseN
 			inf[i][j]->text.setFillColor(Color::Black);
 	}
 	int count = 0, change = 0;
-	bool trigger_page = true;
+	bool trigger_page = true, export_done = false;
 	for (StudentNode *cur = course->student_list; cur; cur = cur->next)
 	{
 		count++;
@@ -1166,18 +1169,14 @@ void course_student(RenderWindow &window, int &page, const float &scale, CourseN
 					}
 					if (isHere(export1.bound, mouse))
 					{
-						//
-						string exported_student = "./csv/exported_student.csv";
+						string exported_student = "./csv/exported/" + course->course.course_id + "_" + course->course.teacher_name + ".csv";
 						ofstream fout;
 						fout.open(exported_student);
-						StudentNode* cur = course->student_list;
-						for (int i = 0; i < change; i++)
-						{
-							cur = cur->next;
-						}
-						writeToFileStudentNode(fout, cur);
+						writeToFileStudentNode(fout, course->student_list);
 						fout.close();
+						export_done = true;
 					}
+					if (isHere(return1.bound, mouse)) export_done = false;
 				}
 				break;
 			}
@@ -1245,6 +1244,10 @@ void course_student(RenderWindow &window, int &page, const float &scale, CourseN
 		{
 			for (int j = 0; j < 6; j++)
 				window.draw(inf[i][j]->text);
+		}
+		if (export_done){
+			window.draw(export_success.draw);
+			drawWhich(window, return1_here, return1, mouse);
 		}
 		window.display();
 	}
@@ -1494,7 +1497,8 @@ void view_semester(RenderWindow &window, int &page, const float &scale, YearNode
 			for (int i = 0; i < 3; i++)
 			{
 				a_sem[i] = cur;
-				cur = cur->next;
+				if (cur)
+					cur = cur->next;
 			}
 			trigger_page = false;
 		}
@@ -1631,7 +1635,7 @@ void view_score(RenderWindow &window, int &page, const float &scale, StudentNode
 			{
 				if (cur)
 				{
-					stringstream a,b,c,d;
+					stringstream a, b, c, d;
 					a << fixed << setprecision(1) << cur->score.process;
 					b << fixed << setprecision(1) << cur->score.mid;
 					c << fixed << setprecision(1) << cur->score.fin;
