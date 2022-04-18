@@ -110,7 +110,13 @@ int main()
 		}
 		case 8:
 		{
-			view_score(window, page, scale, user, is_staff);
+			while (page == 8 || page == 9)
+			{
+				if (page == 8)
+					view_score(window, page, scale, user, is_staff);
+				else
+					view_score2(window, page, scale, user, is_staff);
+			}
 			break;
 		}
 		case 9:

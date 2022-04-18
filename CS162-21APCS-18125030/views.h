@@ -41,6 +41,7 @@ void view_semester(RenderWindow& window, int& page, const float& scale, YearNode
 void view_course(RenderWindow &window, int &page, const float &scale, CourseNode *my_course, const bool& is_staff);
 void view_course(RenderWindow &window, int &page, const float &scale, StudentNode *user, const bool& is_staff, const string& sem, const string& year);
 void view_score(RenderWindow &window, int &page, const float &scale, StudentNode *user, const bool &is_staff);
+void view_score2(RenderWindow& window, int& page, const float& scale, StudentNode* user, const bool& is_staff);
 //-----------------Other features--------------------------
 
 bool isHere(FloatRect &bound, Vector2f &mouse);

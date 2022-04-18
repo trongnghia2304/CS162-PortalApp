@@ -36,6 +36,8 @@ struct Student
 	string password;
 	string student_class;
 	MyCourse* my_course;
+	float cur_gpa = 0.0f;
+	float total_gpa = 0.0f;
 };
 
 struct StudentNode
