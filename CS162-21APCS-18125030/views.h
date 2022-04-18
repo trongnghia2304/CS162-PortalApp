@@ -39,7 +39,7 @@ void course_student(RenderWindow &window, int &page, const float &scale, CourseN
 void course_student2(RenderWindow &window, int &page, const float &scale, CourseNode *course, ClassNode *all_class);
 void view_year(RenderWindow &window, int &page, const float &scale, YearNode *year, StudentNode* user, const bool& is_staff, ClassNode* all_class);
 void view_semester(RenderWindow& window, int& page, const float& scale, YearNode* cur_year, StudentNode* user, const bool& is_staff, ClassNode* all_class);
-void view_course(RenderWindow &window, int &page, const float &scale, CourseNode *my_course, const bool& is_staff, ClassNode* all_class);
+void view_course(RenderWindow &window, int &page, const float &scale, CourseNode *my_course, const bool& is_staff, ClassNode* all_class, const string& year, const string& sem);
 void view_course(RenderWindow &window, int &page, const float &scale, StudentNode *user, const bool& is_staff, const string& sem, const string& year);
 void view_score(RenderWindow &window, int &page, const float &scale, StudentNode *user, const bool &is_staff);
 void view_score2(RenderWindow& window, int& page, const float& scale, StudentNode* user, const bool& is_staff);

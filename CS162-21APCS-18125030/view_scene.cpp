@@ -679,7 +679,7 @@ void view_class(RenderWindow &window, int &page, const float &scale, ClassNode *
 			window.draw(left.draw);
 			drawWhich(window, right_here, right_valid, mouse);
 		}
-		else if (count >= count - 8)
+		else if (change >= count - 8)
 		{
 			window.draw(right.draw);
 			drawWhich(window, left_here, left_valid, mouse);
@@ -840,7 +840,7 @@ void view_course(RenderWindow &window, int &page, const float &scale, StudentNod
 			window.draw(left.draw);
 			drawWhich(window, right_here, right_valid, mouse);
 		}
-		else if (count >= count - 6)
+		else if (change >= count - 6)
 		{
 			window.draw(right.draw);
 			drawWhich(window, left_here, left_valid, mouse);
@@ -913,7 +913,7 @@ void view_course(RenderWindow &window, int &page, const float &scale, StudentNod
 }
 
 // staff
-void view_course(RenderWindow &window, int &page, const float &scale, CourseNode *my_course, const bool &is_staff, ClassNode* all_class)
+void view_course(RenderWindow &window, int &page, const float &scale, CourseNode *my_course, const bool &is_staff, ClassNode* all_class, const string& year, const string& sem)
 {
 	Event event;
 	Object *screen = createObjectTest("content/Staff/course_staff.png");
@@ -929,9 +929,9 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 	Object right = createObject("content/Staff/Class/Asset 56.png", 510.0f * scale, 644.0f * scale);
 	Object right_here = createObject("content/Staff/Class/Asset 90.png", 510.0f * scale, 644.0f * scale);
 	Object right_valid = createObject("content/Staff/Class/Asset 54.png", 510.0f * scale, 644.0f * scale);
-	Info sub_header = createInfo("content/VNI-Vari.TTF", my_course->year_id, 160.0f * scale, 158.0f * scale, 28.0f * scale);
+	Info sub_header = createInfo("content/VNI-Vari.TTF", year, 160.0f * scale, 158.0f * scale, 28.0f * scale);
+	Info header = createInfo("content/VNI-Vari.TTF", sem, 160.0f * scale, 200.0f * scale, 43.0f * scale);
 	sub_header.text.setFillColor(Color(101, 159, 235));
-	Info header = createInfo("content/VNI-Vari.TTF", my_course->semester_id, 160.0f * scale, 200.0f * scale, 43.0f * scale);
 	Info *inf[6][4];
 	Object *square[6], *square_here[6];
 	CourseNode *course[6];
@@ -1034,7 +1034,7 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 			window.draw(left.draw);
 			drawWhich(window, right_here, right_valid, mouse);
 		}
-		else if (count >= count - 6)
+		else if (change >= count - 6)
 		{
 			window.draw(right.draw);
 			drawWhich(window, left_here, left_valid, mouse);
@@ -1214,7 +1214,7 @@ void course_student(RenderWindow &window, int &page, const float &scale, CourseN
 			window.draw(left.draw);
 			drawWhich(window, right_here, right_valid, mouse);
 		}
-		else if (count >= count - 8)
+		else if (change >= count - 8)
 		{
 			window.draw(right.draw);
 			drawWhich(window, left_here, left_valid, mouse);
@@ -1382,7 +1382,7 @@ void course_student2(RenderWindow &window, int &page, const float &scale, Course
 			window.draw(left.draw);
 			drawWhich(window, right_here, right_valid, mouse);
 		}
-		else if (count >= count - 8)
+		else if (change >= count - 8)
 		{
 			window.draw(right.draw);
 			drawWhich(window, left_here, left_valid, mouse);
@@ -1507,11 +1507,32 @@ void view_year(RenderWindow &window, int &page, const float &scale, YearNode *ye
 				if (event.mouseButton.button == Mouse::Left)
 				{
 					switchPage(out.bound, mouse, 1, page);
-					// is_staff: true -> switch to the courses
 					switchPage(back.bound, mouse, (is_staff ? 4 : 3), page);
 					if (isHere(add_year.bound, mouse))
 					{
-						// add new year
+						YearNode* cur = year;
+						string s;
+						if (!cur) s = "2021-2022";
+						else {
+							while (cur->next) cur = cur->next;
+							s = cur->school_year.year_id;
+							stringstream input(s);
+							int year1, year2;
+							char junk;
+							input >> year1 >> junk >> year2;
+							s = to_string(year1 + 1) + "-" + to_string(year2 + 1);
+						}
+						Year new_year = createYear(s);
+						new_year.list_sem = nullptr;
+						for (int i = 1; i < 4; i++) {
+							Semester new_sem = createSemester("Semester " + to_string(i));
+							new_sem.course_list = nullptr;
+							appendNewSemesterNode(&new_year.list_sem, new_sem);
+						}
+						appendNewYearNode(&year, new_year);
+						count++;
+						count_course.text.setString("Total: " + to_string(count) + " Years");
+						trigger_page = true;
 					}
 					if (isHere(right.bound, mouse) && change <= count - 4)
 					{
@@ -1556,7 +1577,7 @@ void view_year(RenderWindow &window, int &page, const float &scale, YearNode *ye
 			window.draw(left.draw);
 			drawWhich(window, right_here, right_valid, mouse);
 		}
-		else if (count >= count - 4)
+		else if (change >= count - 4)
 		{
 			window.draw(right.draw);
 			drawWhich(window, left_here, left_valid, mouse);
@@ -1589,7 +1610,7 @@ void view_year(RenderWindow &window, int &page, const float &scale, YearNode *ye
 			}
 			trigger_page = false;
 		}
-		for (int i = 0; i < 6; i++)
+		for (int i = 0; i < 4; i++)
 		{
 			if (inf[i]->text.getString() == "")
 				break;
@@ -1631,7 +1652,7 @@ void view_semester(RenderWindow &window, int &page, const float &scale, YearNode
 	bool trigger_page = true;
 	for (SemesterNode *cur = cur_year->school_year.list_sem; cur; cur = cur->next)
 		count++;
-	Info count_course = createInfo("content/Oswald-Regular.ttf", "Total: " + to_string(count) + " Semesters", 200.0f * scale, 279.0f * scale, 15.0f * scale);
+	Info count_course = createInfo("content/Oswald-Regular.ttf", "Total: " + to_string(count) + " Semesters", 190.0f * scale, 279.0f * scale, 15.0f * scale);
 	count_course.text.setFillColor(Color::White);
 	while (window.isOpen() && page == 8)
 	{
@@ -1656,13 +1677,12 @@ void view_semester(RenderWindow &window, int &page, const float &scale, YearNode
 						if (isHere(square[i]->bound, mouse) && a_sem[i])
 						{
 							page = 9;
+							string year = cur_year->school_year.year_id;
+							string sem = a_sem[i]->sem.semester_id;
 							if (is_staff)
-								view_course(window, page, scale, a_sem[i]->sem.course_list, is_staff, all_class);
+								view_course(window, page, scale, a_sem[i]->sem.course_list, is_staff, all_class, year, sem);
 							else
-							{
-								string year = cur_year->school_year.year_id;
-								string sem = a_sem[i]->sem.semester_id;
-							}
+								view_course(window, page, scale, user, is_staff, sem, year);
 						}
 					}
 				}
@@ -1807,7 +1827,7 @@ void view_score(RenderWindow &window, int &page, const float &scale, StudentNode
 			window.draw(left.draw);
 			drawWhich(window, right_here, right_valid, mouse);
 		}
-		else if (count >= count - 8)
+		else if (change >= count - 8)
 		{
 			window.draw(right.draw);
 			drawWhich(window, left_here, left_valid, mouse);
