@@ -288,5 +288,45 @@ void writeToFileCourseNode(ofstream &openFile, CourseNode *p_head)
     }
     return;
 }
+bool checkCourseCollision(Course a, Course b)
+{
+    if (a.teaching_session[0].day_of_the_week == b.teaching_session[0].day_of_the_week)
+    {
+        if (a.teaching_session[0].session_no == b.teaching_session[0].session_no)
+            return true;
+    }
+    else if (a.teaching_session[0].day_of_the_week == b.teaching_session[1].day_of_the_week)
+    {
+        if (a.teaching_session[0].session_no == b.teaching_session[1].session_no)
+            return true;
+    }
+    else if (a.teaching_session[1].day_of_the_week == b.teaching_session[0].day_of_the_week)
+    {
+        if (a.teaching_session[1].session_no == b.teaching_session[0].session_no)
+            return true;
+    }
+    else if (a.teaching_session[1].day_of_the_week == b.teaching_session[1].day_of_the_week)
+    {
+        if (a.teaching_session[1].session_no == b.teaching_session[1].session_no)
+            return true;
+    }
+    return false;
+}
+bool checkCourseWithMyCourse(Course a, CourseNode *course_list)
+{
+    if (!course_list)
+        return false;
+    if (course->max_students < 1)
+        return true;
+
+    CourseNode *temp = course_list;
+    while (temp)
+    {
+        if (checkCourseCollision(a, temp->course))
+            return true;
+        temp = temp->next;
+    }
+    return false;
+}
 
 //--------------------------------------------------------------------------------------------------

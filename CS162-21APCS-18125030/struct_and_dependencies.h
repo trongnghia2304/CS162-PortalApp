@@ -7,6 +7,8 @@
 #include <string.h>
 #include <string>
 #include <iomanip>
+#include <ctime>
+#include <algorithm>
 
 using namespace sf;
 using namespace std;
@@ -35,7 +37,7 @@ struct Student
 	string social_id;
 	string password;
 	string student_class;
-	MyCourse* my_course;
+	MyCourse *my_course;
 	float cur_gpa = 0.0f;
 	float total_gpa = 0.0f;
 };
@@ -43,26 +45,26 @@ struct Student
 struct StudentNode
 {
 	Student student;
-	StudentNode* next;
+	StudentNode *next;
 };
 
 struct Class
 {
 	string class_id;
 	string head_teacher;
-	StudentNode* student_list = nullptr;
+	StudentNode *student_list = nullptr;
 };
 
 struct ClassNode
 {
 	Class my_class;
-	ClassNode* next;
+	ClassNode *next;
 };
 
 struct Session
 {
 	int day_of_the_week; // MON / TUE / WED / THU / FRI / SAT
-	int session_no; // S1 (07:30), S2 (09:30), S3(13:30) and S4 (15:30)
+	int session_no;		 // S1 (07:30), S2 (09:30), S3(13:30) and S4 (15:30)
 };
 
 struct Score
@@ -89,8 +91,8 @@ struct MyCourse
 	string subject_code;
 	string sem;
 	string year;
-	CourseNode* course = nullptr;
-	MyCourse* next;
+	CourseNode *course = nullptr;
+	MyCourse *next;
 };
 
 struct CourseNode
@@ -98,31 +100,38 @@ struct CourseNode
 	string semester_id;
 	string year_id;
 	Course course;
-	StudentNode* student_list;
-	CourseNode* next;
+	StudentNode *student_list;
+	CourseNode *next;
 };
 
 struct Semester
 {
 	string semester_id;
-	CourseNode* course_list = nullptr;
+	CourseNode *course_list = nullptr;
 };
 
 struct SemesterNode
 {
 	Semester sem;
-	SemesterNode* next;
+	SemesterNode *next;
 };
 
 struct Year
 {
 	string year_id;
-	ClassNode* list_class;
-	SemesterNode* list_sem = nullptr;
+	ClassNode *list_class;
+	SemesterNode *list_sem = nullptr;
 };
 
 struct YearNode
 {
 	Year school_year;
-	YearNode* next;
+	YearNode *next;
+};
+
+struct RegistrationSession
+{
+	CourseNode *list_of_courses;
+	string start_date;
+	string end_date;
 };
