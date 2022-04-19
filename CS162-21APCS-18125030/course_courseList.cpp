@@ -17,6 +17,34 @@ Course createCourse(string p_course_id, string p_course_name, string p_teacher_n
 
     return new_course;
 }
+
+string day_convert(Session a)
+{
+    int k = a.day_of_the_week;
+    switch (k)
+    {
+    case 2:
+        return "MON";
+    case 3:
+        return "TUE";
+    case 4:
+        return "WED";
+    case 5:
+        return "THU";
+    case 6:
+        return "FRI";
+    case 7:
+        return "SAT";
+    default:
+        return "SUN";
+    }
+}
+string no_convert(Session a)
+{
+    int k = session_no;
+    return "S" + to_string(k);
+}
+
 void printCourse(Course p_course)
 {
     cout << p_course.course_id << endl;
@@ -316,7 +344,7 @@ bool checkCourseWithMyCourse(Course a, CourseNode *course_list)
 {
     if (!course_list)
         return false;
-    if (course->max_students < 1)
+    if (a.max_students < 1)
         return true;
 
     CourseNode *temp = course_list;

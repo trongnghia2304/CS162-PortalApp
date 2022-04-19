@@ -119,7 +119,6 @@ struct SemesterNode
 struct Year
 {
 	string year_id;
-	ClassNode *list_class;
 	SemesterNode *list_sem = nullptr;
 };
 

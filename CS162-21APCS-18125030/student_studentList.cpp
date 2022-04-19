@@ -376,4 +376,26 @@ void setupMyCourses(ClassNode *p_class, YearNode *year)
 	}
 }
 
+void removeMyCourses(StudentNode *p_head, CourseNode *course)
+{
+	MyCourse *founded_course = searchMyCourse(p_head, course);
+	if (!p_head || !founded_course)
+	{
+		return;
+	}
+	if (founded_course == p_head->student.my_course)
+	{
+		MyCourse *temp = founded_course;
+		p_head->student.my_course = p_head->student.my_course->next;
+		delete temp;
+		return;
+	}
+	MyCourse *temp = p_head->student.my_course;
+	while (temp->next != founded_course)
+		temp = temp->next;
+	temp->next = temp->next->next;
+	delete founded_course;
+	return;
+}
+
 //--------------------------------------------------------------------------------------------------

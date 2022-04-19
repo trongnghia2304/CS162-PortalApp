@@ -53,6 +53,8 @@ void writeToFileCourseNode(ofstream &openFile, CourseNode *p_head);
 bool checkCourseWithMyCourse(Course a, CourseNode *course_list);
 bool checkCourseCollision(Course a, Course b);
 void printCourseNode(CourseNode *p_head); // Used for checking outputs <----- can omit
+string day_convert(Session a);
+string no_convert(Session a);
 //--------------------------------------------------------------------------------------------------
 
 //----------------------------- Semester & SemesterList --------------------------------------------
@@ -89,6 +91,7 @@ void printStudentNode(StudentNode *p_head);
 void findMyCourses(StudentNode **p_student, YearNode *year);
 void setupMyCourses(ClassNode *p_class, YearNode *year);
 MyCourse *searchMyCourse(StudentNode *p_student, CourseNode *course);
+void removeMyCourses(StudentNode *p_head, CourseNode *course);
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------------- Views  ---------------------------------------------------

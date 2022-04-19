@@ -18,22 +18,22 @@ int main()
 
 	string staff_input_path = "./csv/staff_input.csv";
 	string staff_output_path = "./csv/staff_output.csv";
-	StudentNode *all_staffs = nullptr;
-
-	readFromFileStudentNode(staff_input_path, &all_staffs);
-
 	string school_input_path = "./csv/schoolyear_input.csv";
 	string school_output_path = "./csv/schoolyear_output.csv";
-
-	YearNode *school = nullptr;
-	readFromFileYearNode(school_input_path, &school);
-
 	string student_input_path = "./csv/student_input.csv";
 	string student_output_path = "./csv/student_output.csv";
+
+	YearNode *school = nullptr;
+	StudentNode *all_staffs = nullptr;
 	ClassNode *all_classes1 = nullptr;
 
+
+	readFromFileStudentNode(staff_input_path, &all_staffs);
+	readFromFileYearNode(school_input_path, &school);
 	readFromFileClassNode1(student_input_path, all_classes1);
+
 	setupMyCourses(all_classes1, school);
+
 
 	// Testing student & student list functions
 
@@ -104,7 +104,6 @@ int main()
 		case 7:
 		{
 			view_year(window, page, scale, school, user, is_staff, all_classes1);
-
 			break;
 		}
 		case 8:
@@ -138,6 +137,7 @@ int main()
 	// deleteClassNode(all_classes);
 	deleteStudentList(all_staffs);
 	deleteClassNode(all_classes1);
+	deleteYearNode(school);
 
 	// deleteStudentList(me);
 	return 0;
