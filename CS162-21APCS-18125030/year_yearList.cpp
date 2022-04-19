@@ -81,7 +81,6 @@ void deleteYearNode(YearNode *&p_head)
 		YearNode *cur = p_head;
 		p_head = p_head->next;
 		deleteSemesterNode(cur->school_year.list_sem);
-		deleteClassNode(cur->school_year.list_class);
 		delete cur;
 	}
 }

@@ -41,7 +41,7 @@ string day_convert(Session a)
 }
 string no_convert(Session a)
 {
-    int k = session_no;
+    int k = a.session_no;
     return "S" + to_string(k);
 }
 
