@@ -100,7 +100,7 @@ struct CourseNode
 	string semester_id;
 	string year_id;
 	Course course;
-	StudentNode *student_list;
+	StudentNode *student_list = nullptr;
 	CourseNode *next;
 };
 
@@ -130,7 +130,7 @@ struct YearNode
 
 struct RegistrationSession
 {
-	CourseNode *list_of_courses;
+	CourseNode *list_of_courses = nullptr;
 	string start_date;
 	string end_date;
 };

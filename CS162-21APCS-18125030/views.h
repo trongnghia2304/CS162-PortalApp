@@ -43,7 +43,7 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 void view_course(RenderWindow &window, int &page, const float &scale, StudentNode *user, const bool &is_staff, const string &sem, const string &year);
 void view_score(RenderWindow &window, int &page, const float &scale, StudentNode *user, const bool &is_staff);
 void view_score2(RenderWindow &window, int &page, const float &scale, StudentNode *user, const bool &is_staff);
-void view_class_list(RenderWindow& window, int& page, const float& scale, ClassNode* class_list,bool &is_staff );
+void view_class_list(RenderWindow &window, int &page, const float &scale, ClassNode *&class_list, bool &is_staff);
 bool change_course_info(RenderWindow &window, int &page, const float &scale, CourseNode *&course, const string &year, const string &sem);
 bool add_new_course(RenderWindow &window, int &page, const float &scale, CourseNode *&course, const string &year, const string &sem);
 //-----------------Other features--------------------------
@@ -63,5 +63,6 @@ bool checkInputCourse(Info *inf[], int n, CourseNode *&course);
 bool checkInputCourse_change(Info *inf[], int n, CourseNode *&course);
 void deleteEvent_course(CourseNode *&list_course, CourseNode *course, ClassNode *list_class);
 void deleteEvent_student(StudentNode *&list_student, StudentNode *me);
+void deleteEvent_class(ClassNode *&list_class, ClassNode *my_class);
 // bool empty(sf::String s);
 // bool pop_back(sf::String s);

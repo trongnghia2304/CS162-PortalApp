@@ -27,13 +27,11 @@ int main()
 	StudentNode *all_staffs = nullptr;
 	ClassNode *all_classes1 = nullptr;
 
-
 	readFromFileStudentNode(staff_input_path, &all_staffs);
 	readFromFileYearNode(school_input_path, &school);
 	readFromFileClassNode1(student_input_path, all_classes1);
 
 	setupMyCourses(all_classes1, school);
-
 
 	// Testing student & student list functions
 
@@ -118,7 +116,8 @@ int main()
 			break;
 		}
 		case 9:
-		{view_class_list(window,page,scale,all_classes1,is_staff);
+		{
+			view_class_list(window, page, scale, all_classes1, is_staff);
 			break;
 		}
 		default:

@@ -76,7 +76,7 @@ void pushNewStudentNode(StudentNode **p_head, Student p_new_student)
 void removeStudentNode(StudentNode **p_head, string p_student_id)
 {
 	StudentNode *founded_student = searchStudentNode(*p_head, p_student_id);
-	if (!p_head || !founded_student)
+	if (!(*p_head) || !founded_student)
 	{
 		cout << "Empty student list...";
 		return;

@@ -312,6 +312,18 @@ void deleteEvent_student(StudentNode *&list_student, StudentNode *me)
 	removeStudentNode(&list_student, id);
 }
 
+void deleteEvent_class(ClassNode *&list_class, ClassNode *my_class)
+{
+	StudentNode *cur = my_class->my_class.student_list, *pre = nullptr;
+	while (cur)
+	{
+		pre = cur;
+		cur = cur->next;
+		deleteEvent_student(my_class->my_class.student_list, pre);
+	}
+	removeClassNode(&list_class, my_class->my_class.class_id);
+}
+
 // //--------------------------------------- Views ----------------------------------------------------
 // //--------------------------------------------------------------------------------------------------
 // void viewListOfClass(ClassNode *Class_head)
