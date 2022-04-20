@@ -118,7 +118,7 @@ int main()
 			break;
 		}
 		case 9:
-		{
+		{view_class_list(window,page,scale,all_classes1,is_staff);
 			break;
 		}
 		default:
