@@ -213,7 +213,7 @@ float calculateGPA(Student me)
 	return (k == 0 ? 0 : res / k);
 }
 
-bool checkInputCourse(Info* inf[], int n, CourseNode*& course)
+bool checkInputCourse(Info *inf[], int n, CourseNode *&course)
 {
 	// id, name, name, num, stu, s1, s2, d1, d2
 	int num = 0, stu = 0, d1, d2, s1, s2;
@@ -224,15 +224,41 @@ bool checkInputCourse(Info* inf[], int n, CourseNode*& course)
 	stringstream num_check(inf[3]->s), stu_check(inf[6]->s);
 	num_check >> num;
 	stu_check >> stu;
-	if (!num || !stu) return false;
+	if (!num || !stu)
+		return false;
 	Course new_course = createCourse(inf[0]->s, inf[1]->s, inf[2]->s, num, stu, d1, s1, d2, s2);
 	appendNewCourseNode(&course, new_course);
 	return true;
 }
 
-bool checkSession(string s, int& x)
+bool checkInputCourse_change(Info *inf[], int n, CourseNode *&course)
 {
-	if (s.size() < 2 || !(s[0] == 's' || s[0] == 'S') || s[1] < '0' || s[1] > '9') 
+	// id, name, name, num, stu, s1, s2, d1, d2
+	int num = 0, stu = 0, d1, d2, s1, s2;
+	if (!checkWeekday(inf[4]->s, d1) || !checkWeekday(inf[5]->s, d2))
+		return false;
+	if (!checkSession(inf[7]->s, s1) || !checkSession(inf[8]->s, s2))
+		return false;
+	stringstream num_check(inf[3]->s), stu_check(inf[6]->s);
+	num_check >> num;
+	stu_check >> stu;
+	if (!num || !stu)
+		return false;
+	course->course.course_id = inf[0]->s;
+	course->course.course_name = inf[1]->s;
+	course->course.teacher_name = inf[2]->s;
+	course->course.num_credit = num;
+	course->course.max_students = stu;
+	course->course.teaching_session[0].day_of_the_week = d1;
+	course->course.teaching_session[0].session_no = s1;
+	course->course.teaching_session[1].day_of_the_week = d2;
+	course->course.teaching_session[1].session_no = d2;
+	return true;
+}
+
+bool checkSession(string s, int &x)
+{
+	if (s.size() < 2 || !(s[0] == 's' || s[0] == 'S') || s[1] < '0' || s[1] > '9')
 	{
 		return false;
 	}
@@ -240,10 +266,10 @@ bool checkSession(string s, int& x)
 	return true;
 }
 
-
-bool checkWeekday(string s, int& x)
+bool checkWeekday(string s, int &x)
 {
-	for (int i = 0; i < s.size(); i++) {
+	for (int i = 0; i < s.size(); i++)
+	{
 		s[i] = toupper(s[i]);
 	}
 	if (s == "MON")
@@ -260,10 +286,31 @@ bool checkWeekday(string s, int& x)
 		x = 7;
 	else if (s == "SUN")
 		x = 8;
-	else return false;
+	else
+		return false;
 	return true;
 }
 
+void deleteEvent_course(CourseNode *&list_course, CourseNode *course, ClassNode *list_class)
+{
+	string id = course->course.course_id;
+	for (StudentNode *cur = course->student_list; cur; cur = cur->next)
+	{
+		ClassNode *cur_class = searchClassNode(list_class, cur->student.student_class);
+		StudentNode *stu = searchStudentNode(cur_class->my_class.student_list, cur->student.student_id);
+		removeMyCourses(stu, course);
+	}
+	removeCourseNode(&list_course, id);
+}
+void deleteEvent_student(StudentNode *&list_student, StudentNode *me)
+{
+	string id = me->student.student_id;
+	for (MyCourse *cur = me->student.my_course; cur; cur = cur->next)
+	{
+		removeStudentNode(&cur->course->student_list, id);
+	}
+	removeStudentNode(&list_student, id);
+}
 
 // //--------------------------------------- Views ----------------------------------------------------
 // //--------------------------------------------------------------------------------------------------

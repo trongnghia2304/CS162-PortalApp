@@ -97,6 +97,7 @@ void removeStudentNode(StudentNode **p_head, string p_student_id)
 		temp = temp->next;
 	}
 	temp->next = founded_student->next;
+	deleteMyCourse(founded_student->student.my_course);
 	delete founded_student;
 }
 void readFromFileStudentNode(string p_student_file_path, StudentNode **p_head)
@@ -179,6 +180,7 @@ void deleteStudentList(StudentNode *&p_head)
 	{
 		StudentNode *cur = p_head;
 		p_head = p_head->next;
+		delete(cur->student.my_course);
 		delete cur;
 	}
 }
@@ -396,6 +398,17 @@ void removeMyCourses(StudentNode *p_head, CourseNode *course)
 	temp->next = temp->next->next;
 	delete founded_course;
 	return;
+}
+
+void deleteMyCourse(MyCourse *&p_head)
+{
+	MyCourse* cur;
+	while (p_head)
+	{
+		cur = p_head;
+		p_head = p_head->next;
+		delete cur;
+	}
 }
 
 //--------------------------------------------------------------------------------------------------

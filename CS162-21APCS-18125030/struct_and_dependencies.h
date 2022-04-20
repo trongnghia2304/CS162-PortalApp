@@ -37,7 +37,7 @@ struct Student
 	string social_id;
 	string password;
 	string student_class;
-	MyCourse *my_course;
+	MyCourse *my_course = nullptr;
 	float cur_gpa = 0.0f;
 	float total_gpa = 0.0f;
 };
@@ -69,10 +69,10 @@ struct Session
 
 struct Score
 {
-	float process;
-	float mid;
-	float fin;
-	float overall;
+	float process = 0.0f;
+	float mid = 0.0f;
+	float fin = 0.0f;
+	float overall = 0.0f;
 };
 
 struct Course

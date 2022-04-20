@@ -88,10 +88,11 @@ int countStudentNode(StudentNode *p_head);
 void deleteStudentList(StudentNode *&p_head);
 void printStudent(Student p_student);
 void printStudentNode(StudentNode *p_head);
-void findMyCourses(StudentNode **p_student, YearNode *year);
-void setupMyCourses(ClassNode *p_class, YearNode *year);
 MyCourse *searchMyCourse(StudentNode *p_student, CourseNode *course);
+void setupMyCourses(ClassNode *p_class, YearNode *year);
+void findMyCourses(StudentNode **p_student, YearNode *year);
 void removeMyCourses(StudentNode *p_head, CourseNode *course);
+void deleteMyCourse(MyCourse *&p_head);
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------------- Views  ---------------------------------------------------

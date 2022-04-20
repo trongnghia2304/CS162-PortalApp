@@ -43,8 +43,8 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 void view_course(RenderWindow &window, int &page, const float &scale, StudentNode *user, const bool &is_staff, const string &sem, const string &year);
 void view_score(RenderWindow &window, int &page, const float &scale, StudentNode *user, const bool &is_staff);
 void view_score2(RenderWindow &window, int &page, const float &scale, StudentNode *user, const bool &is_staff);
-bool change_course_info(RenderWindow& window, int& page, const float& scale, CourseNode*& course, const string& year, const string& sem);
-bool add_new_course(RenderWindow &window, int &page, const float &scale, CourseNode *&course, const string& year, const string& sem);
+bool change_course_info(RenderWindow &window, int &page, const float &scale, CourseNode *&course, const string &year, const string &sem);
+bool add_new_course(RenderWindow &window, int &page, const float &scale, CourseNode *&course, const string &year, const string &sem);
 //-----------------Other features--------------------------
 
 bool isHere(FloatRect &bound, Vector2f &mouse);
@@ -56,8 +56,11 @@ void changePos(Object *a, float x, float y);
 void changePos(Info *a, float x, float y);
 void texting(Info &text, Uint32 unicode, unsigned int limit);
 void texting(Info *&text, Uint32 unicode, unsigned int limit);
-bool checkWeekday(string s, int& x);
-bool checkSession(string s, int& x);
-bool checkInputCourse(Info* inf[], int n, CourseNode*& course);
+bool checkWeekday(string s, int &x);
+bool checkSession(string s, int &x);
+bool checkInputCourse(Info *inf[], int n, CourseNode *&course);
+bool checkInputCourse_change(Info *inf[], int n, CourseNode *&course);
+void deleteEvent_course(CourseNode *&list_course, CourseNode *course, ClassNode *list_class);
+void deleteEvent_student(StudentNode *&list_student, StudentNode *me);
 // bool empty(sf::String s);
 // bool pop_back(sf::String s);

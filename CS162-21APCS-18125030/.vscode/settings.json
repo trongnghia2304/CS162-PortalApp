@@ -10,6 +10,11 @@
         "atomic": "cpp",
         "ios": "cpp",
         "system_error": "cpp",
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "xlocale": "cpp",
+        "xlocmon": "cpp",
+        "xlocnum": "cpp",
+        "xloctime": "cpp",
+        "algorithm": "cpp"
     }
 }
