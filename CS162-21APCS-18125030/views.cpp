@@ -213,6 +213,57 @@ float calculateGPA(Student me)
 	return (k == 0 ? 0 : res / k);
 }
 
+bool checkInputCourse(Info* inf[], int n, CourseNode*& course)
+{
+	// id, name, name, num, stu, s1, s2, d1, d2
+	int num = 0, stu = 0, d1, d2, s1, s2;
+	if (!checkWeekday(inf[4]->s, d1) || !checkWeekday(inf[5]->s, d2))
+		return false;
+	if (!checkSession(inf[7]->s, s1) || !checkSession(inf[8]->s, s2))
+		return false;
+	stringstream num_check(inf[3]->s), stu_check(inf[6]->s);
+	num_check >> num;
+	stu_check >> stu;
+	if (!num || !stu) return false;
+	Course new_course = createCourse(inf[0]->s, inf[1]->s, inf[2]->s, num, stu, d1, s1, d2, s2);
+	appendNewCourseNode(&course, new_course);
+	return true;
+}
+
+bool checkSession(string s, int& x)
+{
+	if (s.size() < 2 || !(s[0] == 's' || s[0] == 'S') || s[1] < '0' || s[1] > '9') 
+	{
+		return false;
+	}
+	x = int(s[1] - '0');
+	return true;
+}
+
+
+bool checkWeekday(string s, int& x)
+{
+	for (int i = 0; i < s.size(); i++) {
+		s[i] = toupper(s[i]);
+	}
+	if (s == "MON")
+		x = 2;
+	else if (s == "TUE")
+		x = 3;
+	else if (s == "WED")
+		x = 4;
+	else if (s == "THU")
+		x = 5;
+	else if (s == "FRI")
+		x = 6;
+	else if (s == "SAT")
+		x = 7;
+	else if (s == "SUN")
+		x = 8;
+	else return false;
+	return true;
+}
+
 
 // //--------------------------------------- Views ----------------------------------------------------
 // //--------------------------------------------------------------------------------------------------

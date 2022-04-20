@@ -5,6 +5,11 @@
         "iterator": "cpp",
         "xstring": "cpp",
         "iomanip": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "iosfwd": "cpp",
+        "atomic": "cpp",
+        "ios": "cpp",
+        "system_error": "cpp",
+        "fstream": "cpp"
     }
 }

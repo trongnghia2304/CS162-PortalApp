@@ -37,12 +37,14 @@ void profile(RenderWindow &window, int &page, const float &scale, StudentNode *s
 void view_class(RenderWindow &window, int &page, const float &scale, ClassNode *class_list, StudentNode *user, const bool &is_staff);
 void course_student(RenderWindow &window, int &page, const float &scale, CourseNode *course);
 void course_student2(RenderWindow &window, int &page, const float &scale, CourseNode *course, ClassNode *all_class);
-void view_year(RenderWindow &window, int &page, const float &scale, YearNode *year, StudentNode* user, const bool& is_staff, ClassNode* all_class);
-void view_semester(RenderWindow& window, int& page, const float& scale, YearNode* cur_year, StudentNode* user, const bool& is_staff, ClassNode* all_class);
-void view_course(RenderWindow &window, int &page, const float &scale, CourseNode *my_course, const bool& is_staff, ClassNode* all_class, const string& year, const string& sem);
-void view_course(RenderWindow &window, int &page, const float &scale, StudentNode *user, const bool& is_staff, const string& sem, const string& year);
+void view_year(RenderWindow &window, int &page, const float &scale, YearNode *year, StudentNode *user, const bool &is_staff, ClassNode *all_class);
+void view_semester(RenderWindow &window, int &page, const float &scale, YearNode *cur_year, StudentNode *user, const bool &is_staff, ClassNode *all_class);
+void view_course(RenderWindow &window, int &page, const float &scale, CourseNode *&my_course, const bool &is_staff, ClassNode *all_class, const string &year, const string &sem);
+void view_course(RenderWindow &window, int &page, const float &scale, StudentNode *user, const bool &is_staff, const string &sem, const string &year);
 void view_score(RenderWindow &window, int &page, const float &scale, StudentNode *user, const bool &is_staff);
-void view_score2(RenderWindow& window, int& page, const float& scale, StudentNode* user, const bool& is_staff);
+void view_score2(RenderWindow &window, int &page, const float &scale, StudentNode *user, const bool &is_staff);
+bool change_course_info(RenderWindow& window, int& page, const float& scale, CourseNode*& course, const string& year, const string& sem);
+bool add_new_course(RenderWindow &window, int &page, const float &scale, CourseNode *&course, const string& year, const string& sem);
 //-----------------Other features--------------------------
 
 bool isHere(FloatRect &bound, Vector2f &mouse);
@@ -54,5 +56,8 @@ void changePos(Object *a, float x, float y);
 void changePos(Info *a, float x, float y);
 void texting(Info &text, Uint32 unicode, unsigned int limit);
 void texting(Info *&text, Uint32 unicode, unsigned int limit);
+bool checkWeekday(string s, int& x);
+bool checkSession(string s, int& x);
+bool checkInputCourse(Info* inf[], int n, CourseNode*& course);
 // bool empty(sf::String s);
 // bool pop_back(sf::String s);
