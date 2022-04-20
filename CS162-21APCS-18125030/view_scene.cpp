@@ -2434,7 +2434,7 @@ bool change_course_info(RenderWindow &window, int &page, const float &scale, Cou
 		delete (inf[i]);
 	return check;
 }
-void view_class_(RenderWindow& window, int& page, const float& scale, ClassNode* class_list,bool &is_staff ) {
+void view_class_list(RenderWindow& window, int& page, const float& scale, ClassNode* class_list,bool &is_staff ) {
 	ClassNode* cur_class = class_list;
 	Event event;
 	Object screen = createObject("content/Staff/Class/ClassPage.png");
