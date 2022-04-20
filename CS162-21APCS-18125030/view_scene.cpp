@@ -308,6 +308,7 @@ void staffHome(RenderWindow &window, int &page, const float &scale)
 			case Event::MouseButtonReleased:
 			{
 				switchPage(out.bound, mouse, 1, page);
+				switchPage(a[1]->bound, mouse, 9, page);
 				switchPage(a[0]->bound, mouse, 5, page);
 				switchPage(a[3]->bound, mouse, 7, page);
 				// for (int j = 0; j < 3; j++)
@@ -641,7 +642,7 @@ void view_class(RenderWindow &window, int &page, const float &scale, ClassNode *
 					
 					if (!is_staff)
 						switchPage(back.bound, mouse, 5, page);
-					else switchPage(back.bound, mouse, 10, page);
+					else switchPage(back.bound, mouse, 9, page);
 					if (isHere(add_student.bound, mouse) && is_staff)
 					{
 						// add new student to the class

@@ -62,7 +62,7 @@ int main()
 	float scale = 1.5f;
 	window.create(VideoMode(1000.0f * scale, 750.0f * scale), "CS162-Project", Style::Close);
 	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-	int page = 1;
+	int page = 9;
 
 	StudentNode *user = NULL;
 	bool is_staff;
