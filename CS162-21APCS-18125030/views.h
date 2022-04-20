@@ -43,6 +43,7 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 void view_course(RenderWindow &window, int &page, const float &scale, StudentNode *user, const bool &is_staff, const string &sem, const string &year);
 void view_score(RenderWindow &window, int &page, const float &scale, StudentNode *user, const bool &is_staff);
 void view_score2(RenderWindow &window, int &page, const float &scale, StudentNode *user, const bool &is_staff);
+void view_class(RenderWindow &window, int &page, const float &scale, ClassNode *class_list, StudentNode *user, const bool &is_staff)
 bool change_course_info(RenderWindow &window, int &page, const float &scale, CourseNode *&course, const string &year, const string &sem);
 bool add_new_course(RenderWindow &window, int &page, const float &scale, CourseNode *&course, const string &year, const string &sem);
 //-----------------Other features--------------------------
