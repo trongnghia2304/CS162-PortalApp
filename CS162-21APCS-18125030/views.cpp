@@ -332,7 +332,28 @@ StudentNode* copyForCourse(StudentNode* me, int k)
 	return new_stu;
 }
 
-
+void importCSVFile(ifstream open_file, StudentNode* student_list, string subject_code)
+{
+	string line, word[9];
+	while (getline(open_file, line))
+	{
+		stringstream ss(line);
+		for (int i = 0; i < 9; i++)
+		{
+			getline(ss, word[i], ',');
+		}
+		StudentNode* temp = searchStudentNode(student_list, word[1]);
+		MyCourse* cur = temp->student.my_course;
+		
+		while (cur && cur->subject_code != subject_code)
+			cur = cur->next;
+		
+		istringstream(word[3]) >> cur->score.process;
+		istringstream(word[4]) >> cur->score.mid;
+		istringstream(word[5]) >> cur->score.fin;
+		istringstream(word[6]) >> cur->score.overall;
+	}
+}
 // //--------------------------------------- Views ----------------------------------------------------
 // //--------------------------------------------------------------------------------------------------
 // void viewListOfClass(ClassNode *Class_head)

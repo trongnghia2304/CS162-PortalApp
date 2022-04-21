@@ -104,6 +104,8 @@ float calculateOverallScore(MyCourse *course, float midterm_percent, float final
 float calculateGPA(Student me, string year, string sem);
 float calculateGPA(Student me);
 StudentNode* copyForCourse(StudentNode* me, int k);
+void importCSVFile(ifstream open_file, StudentNode* student_list, string subject_code);
+
 // void changeStudent(Student& me);
 // void checkMyCourse(Student me);
 // void subscribeCourse(Student& me, CourseNode& a);
