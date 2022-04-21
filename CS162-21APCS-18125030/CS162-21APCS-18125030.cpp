@@ -3,19 +3,6 @@
 int main()
 {
 	//------------------ demo data-----------------------------
-	// Student meme = createStudent(1, "21125011", "Nghia", "Nguyen Trong", 0, "12/12/2003", "123273862");
-	// meme.password = "demo";
-	// meme.student_class = "21CTT1 - APCS";
-	// StudentNode* me = nullptr;
-	// appendNewStudentNode(&me, meme);
-
-	// string class_input_path = "./csv/class_input.csv";
-	// string class_output_path = "./csv/class_output.csv";
-
-	// ClassNode *all_classes = nullptr;
-	// // readFromFileClassNode(class_input_path, all_classes);
-	// readFromFileClassNode(class_input_path, all_classes);
-
 	string staff_input_path = "./csv/staff_input.csv";
 	string staff_output_path = "./csv/staff_output.csv";
 	string school_input_path = "./csv/schoolyear_input.csv";
@@ -25,38 +12,18 @@ int main()
 	string registration_input_path = "./csv/registration_day.csv";
 	string registration_output_path = "./csv/registration_day_output.csv";
 
-	YearNode *school = nullptr;
-	StudentNode *all_staffs = nullptr;
-	ClassNode *all_classes1 = nullptr;
+	YearNode* school = nullptr;
+	StudentNode* all_staffs = nullptr;
+	ClassNode* all_classes1 = nullptr;
 	RegistrationSession data;
 
 	readFromFileStudentNode(staff_input_path, &all_staffs);
 	readFromFileYearNode(school_input_path, &school);
 	readFromFileClassNode1(student_input_path, all_classes1);
-	//readFromFileRegSess(registration_input_path, data);
+	readFromFileRegSess(registration_input_path, data);
 
 	setupMyCourses(all_classes1, school);
-
-	// Testing student & student list functions
-
-	// if (new_list)
-	// {
-	// 	removeStudentNode(&new_list, "18125030");
-	// 	new_list->student.password = "TrTRTR";
-	// 	writeToFileStudentNode(student_output_path, new_list);
-	// }
-
-	// // // Testing course and course list functions
-	// string course_input_path = "sample_course_data.csv";
-	// string course_output_path = "sample_course_output.csv";
-	// CourseNode* new_course_list = nullptr;
-	// readFromFileCourseNode(course_input_path, &new_course_list);
-	// if (new_course_list)
-	// {
-	// 	removeCourseNode(&new_course_list, "PHY101");
-	// 	writeToFileCourseNode(course_output_path, new_course_list);
-	// }
-	// ------------------------------------------------------------
+	// ----------------------------------------------------------
 
 	RenderWindow window;
 	Image icon;
@@ -65,8 +32,9 @@ int main()
 	window.create(VideoMode(1000.0f * scale, 750.0f * scale), "CS162-Project", Style::Close);
 	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 	int page = 1;
-	StudentNode *user = NULL;
+	StudentNode* user = NULL;
 	bool is_staff;
+
 	while (page > 0 && window.isOpen())
 	{
 		switch (page)
@@ -122,7 +90,6 @@ int main()
 			view_class_list(window, page, scale, all_classes1, is_staff);
 			break;
 		}
-		
 		case 11:
 		{
 			if (is_staff)
@@ -138,18 +105,15 @@ int main()
 		}
 	}
 	// save all data
-	// writeToFileClassNode(class_output_path, all_classes);
 	writeToFileStudentNode(staff_output_path, all_staffs);
 	writeToFileYearNode(school_output_path, school);
 	writeToFileClassNode1(student_output_path, all_classes1);
-	//writeToFileRegSess(registration_output_path, data);
+	writeToFileRegSess(registration_output_path, data);
 
 	// delete all SLL
-	// deleteClassNode(all_classes);
 	deleteStudentList(all_staffs);
 	deleteClassNode(all_classes1);
 	deleteYearNode(school);
 	deleteCourseNode(data.list_of_courses);
-	// deleteStudentList(me);
 	return 0;
 }

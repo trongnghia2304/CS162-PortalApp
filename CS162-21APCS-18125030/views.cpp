@@ -367,7 +367,7 @@ bool checkDOB(string s)
 	int day = 0, mon = 0, year = 0;
 	char c1, c2;
 	check >> day >> c1 >> mon >> c2 >> year;
-	if (!(day & mon & year)) return false;
+	if (!day || !mon || !year) return false;
 	if (day < 32 && day > 0 && mon > 0 && mon < 13) return true;
 	else return false;
 }

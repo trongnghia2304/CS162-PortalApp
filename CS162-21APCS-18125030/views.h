@@ -34,6 +34,7 @@ void logIn(RenderWindow &window, int &page, bool role, const float &scale, Class
 void studentHome(RegistrationSession data, RenderWindow &window, int &page, const float &scale);
 void staffHome(RenderWindow &window, int &page, const float &scale);
 void profile(RenderWindow &window, int &page, const float &scale, StudentNode *student, bool is_staff);
+void view_class(string cur_class, string cur_teacher, RenderWindow &window, int &page, const float &scale, ClassNode *class_list, StudentNode *user, const bool &is_staff);
 void view_class(RenderWindow &window, int &page, const float &scale, ClassNode *class_list, StudentNode *user, const bool &is_staff);
 void course_student(int k, RenderWindow &window, int &page, const float &scale, CourseNode *course);
 void course_student2(RenderWindow &window, int &page, const float &scale, CourseNode *course, ClassNode *all_class);

@@ -776,6 +776,169 @@ void view_class(RenderWindow &window, int &page, const float &scale, ClassNode *
 	}
 }
 
+void view_class(string cur_class, string cur_teacher, RenderWindow &window, int &page, const float &scale, ClassNode *class_list, StudentNode *user, const bool &is_staff)
+{
+	Event event;
+	Object screen = createObject("content/Student/my_class.png");
+	Object out = createObject("content/logout.png", 866.0f * scale, 106.0f * scale);
+	Object out_here = createObject("content/logout1.png", 866.0f * scale, 106.0f * scale);
+	Object export_1 = createObject("content/Staff/Create elements/export.png", 600.0f * scale, 272.0f * scale);
+	Object export_here_1 = createObject("content/Staff/Create elements/export_here.png", 600.0f * scale, 272.0f * scale);
+	Object back = createObject("content/return.png", 80.0f * scale, 106.0f * scale);
+	Object back_here = createObject("content/return1.png", 80.0f * scale, 106.0f * scale);
+	Object add_student = createObject("content/Student/add.png", 682.0f * scale, 272.0f * scale);
+	Object add_student_here = createObject("content/Student/add1.png", 682.0f * scale, 272.0f * scale);
+	Object left = createObject("content/Staff/Class/Asset 57.png", 492.0f * scale, 644.0f * scale);
+	Object left_valid = createObject("content/Staff/Class/Asset 55.png", 492.0f * scale, 644.0f * scale);
+	Object left_here = createObject("content/Staff/Class/Asset 91.png", 492.0f * scale, 644.0f * scale);
+	Object right = createObject("content/Staff/Class/Asset 56.png", 510.0f * scale, 644.0f * scale);
+	Object right_here = createObject("content/Staff/Class/Asset 90.png", 510.0f * scale, 644.0f * scale);
+	Object right_valid = createObject("content/Staff/Class/Asset 54.png", 510.0f * scale, 644.0f * scale);
+	ClassNode *my_class = searchClassNode(class_list, cur_class);
+	Info sub_header = createInfo("content/VNI-Vari.TTF", "Class - " + cur_teacher, 160.0f * scale, 158.0f * scale, 28.0f * scale);
+	sub_header.text.setFillColor(Color(101, 159, 235));
+	Info header = createInfo("content/VNI-Vari.TTF", cur_class, 160.0f * scale, 200.0f * scale, 43.0f * scale);
+	Info *inf[8][6];
+	for (int i = 0; i < 8; i++)
+	{
+		inf[i][0] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 184.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		inf[i][1] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 232.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		inf[i][2] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 347.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		inf[i][3] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 515.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		inf[i][4] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 633.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		inf[i][5] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 715.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		for (int j = 0; j < 6; j++)
+			inf[i][j]->text.setFillColor(Color::Black);
+	}
+	int count = 0, change = 0;
+	bool trigger_page = true;
+	for (StudentNode *cur = my_class->my_class.student_list; cur; cur = cur->next)
+	{
+		count++;
+	}
+	Info count_student = createInfo("content/Oswald-Regular.ttf", "Total: " + to_string(count) + " Students", 181.0f * scale, 280.0f * scale, 15.0f * scale);
+	count_student.text.setFillColor(Color::White);
+	while (window.isOpen() && page == 6)
+	{
+		Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+		while (window.pollEvent(event))
+		{
+			switch (event.type)
+			{
+			case Event::Closed:
+			{
+				window.close();
+				break;
+			}
+			case Event::MouseButtonReleased:
+			{
+				if (event.mouseButton.button == Mouse::Left)
+				{
+					switchPage(out.bound, mouse, 1, page);
+
+					if (!is_staff)
+						switchPage(back.bound, mouse, 5, page);
+					else
+						switchPage(back.bound, mouse, 9, page);
+					if (isHere(add_student.bound, mouse) && is_staff)
+					{
+						page = 2;
+						int k = student_profile(window, page, scale, my_class->my_class.student_list, is_staff, true, my_class->my_class.class_id);
+						count += k;
+						count_student.text.setString("Total: " + to_string(count) + " Students");
+						trigger_page = true;
+						// add new student to the class
+					}
+					if (isHere(right.bound, mouse) && change <= count - 8)
+					{
+						trigger_page = true;
+						change += 8;
+					}
+					if (isHere(left.bound, mouse) && change != 0)
+					{
+						trigger_page = true;
+						change -= 8;
+					}
+				}
+				break;
+			}
+			default:
+				break;
+			}
+		}
+
+		window.clear();
+		window.draw(screen.draw);
+		if (is_staff)
+			drawWhich(window, add_student_here, add_student, mouse);
+		drawWhich(window, out_here, out, mouse);
+		drawWhich(window, back_here, back, mouse);
+		if (is_staff)
+			drawWhich(window, export_here_1, export_1, mouse);
+		window.draw(header.text);
+		window.draw(sub_header.text);
+		window.draw(count_student.text);
+		if (change == 0 && change >= count - 8)
+		{
+			window.draw(right.draw);
+			window.draw(left.draw);
+		}
+		else if (change == 0)
+		{
+			window.draw(left.draw);
+			drawWhich(window, right_here, right_valid, mouse);
+		}
+		else if (count >= count - 8)
+		{
+			window.draw(right.draw);
+			drawWhich(window, left_here, left_valid, mouse);
+		}
+		else
+		{
+			drawWhich(window, right_here, right_valid, mouse);
+			drawWhich(window, left_here, left_valid, mouse);
+		}
+		if (trigger_page)
+		{
+			StudentNode *cur = my_class->my_class.student_list;
+			for (int i = 0; i < change; i++)
+			{
+				cur = cur->next;
+			}
+			for (int i = 0; i < 8; i++)
+			{
+				if (cur)
+				{
+					inf[i][0]->text.setString(to_string(cur->student.num));
+					inf[i][1]->text.setString(cur->student.student_id);
+					inf[i][2]->text.setString(cur->student.last_name + " " + cur->student.first_name);
+					inf[i][4]->text.setString(cur->student.gender ? "F" : "M");
+					inf[i][3]->text.setString(cur->student.dob);
+					inf[i][5]->text.setString(cur->student.social_id);
+					cur = cur->next;
+				}
+				else
+				{
+					for (int j = 0; j < 6; j++)
+						inf[i][j]->text.setString("");
+				}
+			}
+			trigger_page = false;
+		}
+		for (int i = 0; i < 8; i++)
+		{
+			for (int j = 0; j < 6; j++)
+				window.draw(inf[i][j]->text);
+		}
+		window.display();
+	}
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 6; j++)
+			delete inf[i][j];
+	}
+}
+
 // student
 void view_course(RenderWindow &window, int &page, const float &scale, StudentNode *user, const bool &is_staff, const string &sem, const string &year)
 {
@@ -2485,6 +2648,8 @@ bool change_course_info(RenderWindow &window, int &page, const float &scale, Cou
 void view_class_list(RenderWindow &window, int &page, const float &scale, ClassNode *&class_list, bool &is_staff)
 {
 	Event event;
+	Info class_name = createInfo("content/Oswald-Light.ttf", "Enter Class ID", 400.0f * scale, 415.0f * scale, 16.0f * scale);
+	Info teacher_name = createInfo("content/Oswald-Light.ttf", "Enter Teacher name", 400.0f * scale, 455.0f * scale, 16.0f * scale);
 	Object screen = createObject("content/Staff/Class/ClassPage.png");
 	Object out = createObject("content/logout.png", 866.0f * scale, 106.0f * scale);
 	Object out_here = createObject("content/logout1.png", 866.0f * scale, 106.0f * scale);
@@ -2509,15 +2674,20 @@ void view_class_list(RenderWindow &window, int &page, const float &scale, ClassN
 	Object nah_here = createObject("content/General/b3.png", 376.0f * scale, 484.0f * scale);
 	Object ofcourse = createObject("content/General/a2.png", 506.0f * scale, 484.0f * scale);
 	Object ofcourse_here = createObject("content/General/b2.png", 506.0f * scale, 484.0f * scale);
+	Object return2 = createObject("content/General/a7.png", 386.0f * scale, 484.0f * scale);
+	Object return2_here = createObject("content/General/b7.png", 386.0f * scale, 484.0f * scale);
+	Object ok = createObject("content/General/a1.png", 516.0f * scale, 484.0f * scale);
+	Object ok_here = createObject("content/General/b1.png", 516.0f * scale, 484.0f * scale);
+	Object enter = createObject("content/Staff/Create elements/enter.png", 316.0f * scale, 386.0f * scale);
 	int count = 0, change = 0;
-	bool trigger_page = true, del = false, sure_check = false, success = false;
+	bool trigger_page = true, del = false, sure_check = false, success = false, add_new = false;
 	for (ClassNode *cur = class_list; cur; cur = cur->next)
 	{
 		count++;
 	}
 	Info *inf[5], *num[5];
 	Object *square[5], *square_here[5], *rem[5], *rem_here[5];
-	ClassNode *a_class[7], *tmp = nullptr;
+	ClassNode *a_class[5], *tmp = nullptr;
 	for (int i = 0; i < 5; i++)
 	{
 		a_class[i] = nullptr;
@@ -2547,18 +2717,103 @@ void view_class_list(RenderWindow &window, int &page, const float &scale, ClassN
 			{
 				if (event.mouseButton.button == Mouse::Left)
 				{
-					switchPage(out.bound, mouse, 1, page);
-					switchPage(back.bound, mouse, 4, page);
-					if (isHere(add_class.bound, mouse))
+					if (!add_new)
 					{
-						// window.close();
-						//  add new class
-						if (add_new_class(window, page, scale, class_list)) {
-							count++;
-							count_class.text.setString("Total: " + to_string(count) + " Classes");trigger_page = true;
+						if (del)
+						{
+							if (sure_check)
+							{
+								if (isHere(ofcourse.bound, mouse))
+								{
+									deleteEvent_class(class_list, tmp);
+									success = true;
+									sure_check = false;
+									trigger_page = true;
+									count--;
+									count_class.text.setString("Total: " + to_string(count) + " Classes");
+								}
+								if (isHere(nah.bound, mouse))
+								{
+									sure_check = false;
+								}
+							}
+							else if (!success)
+							{
+								for (int i = 0; i < 5; i++)
+								{
+									if (isHere(square[i]->bound, mouse) && a_class[i])
+									{
+										sure_check = true;
+										tmp = a_class[i];
+									}
+								}
+							}
+						}
+						else
+						{
+							for (int i = 0; i < 5; i++)
+							{
+								if (isHere(square[i]->bound, mouse) && a_class[i])
+								{
+									page = 6;
+									view_class(a_class[i]->my_class.class_id, a_class[i]->my_class.head_teacher, window, page, scale, a_class[i], a_class[i]->my_class.student_list, true);
+									trigger_page = true;
+								}
+							}
 						}
 					}
-					if (isHere(right.bound, mouse) && change <= count - 5)
+					else
+					{
+						if (isHere(class_name.bound, mouse))
+						{
+							class_name.check = true;
+							teacher_name.check = false;
+						}
+						if (isHere(teacher_name.bound, mouse))
+						{
+							class_name.check = false;
+							teacher_name.check = true;
+						}
+						if (!success)
+						{
+							if (isHere(ok.bound, mouse))
+								success = true;
+							if (isHere(return2.bound, mouse))
+								add_new = false;
+						}
+					}
+					switchPage(out.bound, mouse, 1, page);
+					switchPage(back.bound, mouse, 4, page);
+					if (success && isHere(return1.bound, mouse))
+					{
+						success = false;
+						if (add_new)
+						{
+							ClassNode *new_class = new ClassNode;
+							new_class->next = nullptr;
+							new_class->my_class.student_list = nullptr;
+							new_class->my_class.head_teacher = teacher_name.s;
+							new_class->my_class.class_id = class_name.s;
+							if (!class_list)
+								class_list = new_class;
+							else
+							{
+								ClassNode *head = class_list;
+								while (head->next)
+									head = head->next;
+								head->next = new_class;
+							}
+							count++;
+							count_class.text.setString("Total: " + to_string(count) + " Classes");
+							trigger_page = true;
+							add_new = false;
+						}
+					}
+					if (isHere(add_class.bound, mouse))
+					{
+						add_new = true;
+					}
+					if (isHere(right.bound, mouse) && change < count - 5)
 					{
 						trigger_page = true;
 						change += 5;
@@ -2574,51 +2829,13 @@ void view_class_list(RenderWindow &window, int &page, const float &scale, ClassN
 						sure_check = false;
 						success = false;
 					}
-					if (success && isHere(return1.bound, mouse))
-						success = false;
-					if (del)
-					{
-						if (sure_check)
-						{
-							if (isHere(ofcourse.bound, mouse))
-							{
-								deleteEvent_class(class_list, tmp);
-								success = true;
-								sure_check = false;
-								trigger_page = true;
-								count--;
-								count_class.text.setString("Total: " + to_string(count) + " Classes");
-							}
-							if (isHere(nah.bound, mouse))
-							{
-								sure_check = false;
-							}
-						}
-						else if (!success)
-						{
-							for (int i = 0; i < 5; i++)
-							{
-								if (isHere(square[i]->bound, mouse) && a_class[i])
-								{
-									sure_check = true;
-									tmp = a_class[i];
-								}
-							}
-						}
-					}
-					else
-					{
-						for (int i = 0; i < count; i++)
-						{
-							if (isHere(square[i]->bound, mouse) && a_class[i])
-							{
-								page = 6;
-								view_class(window, page, scale, a_class[i], a_class[i]->my_class.student_list, true);
-								trigger_page = true;
-							}
-						}
-					}
 				}
+				break;
+			}
+			case Event::TextEntered:
+			{
+				texting(class_name, event.text.unicode, 10);
+				texting(teacher_name, event.text.unicode, 30);
 				break;
 			}
 			default:
@@ -2677,54 +2894,95 @@ void view_class_list(RenderWindow &window, int &page, const float &scale, ClassN
 		drawWhich(window, back_here, back, mouse);
 		window.draw(total_class.draw);
 		window.draw(count_class.text);
-		for (int i = 0; i < 5; i++)
+		if (!add_new)
 		{
-			if (inf[i]->text.getString() == "")
-				break;
-			if (success || sure_check)
+			for (int i = 0; i < 5; i++)
 			{
-				window.draw(rem[i]->draw);
-				inf[i]->text.setFillColor(Color(46, 58, 112));
-				num[i]->text.setFillColor(Color(46, 58, 112));
-			}
-			else
-			{
-				if (drawWhich(window, border_here[i], border[i], mouse))
+				if (inf[i]->text.getString() == "")
+					break;
+				if (success || sure_check)
 				{
-					inf[i]->text.setFillColor(Color(118, 36, 2));
-					num[i]->text.setFillColor(Color(118, 36, 2));
-				}
-				else
-				{
+					window.draw(rem[i]->draw);
 					inf[i]->text.setFillColor(Color(46, 58, 112));
 					num[i]->text.setFillColor(Color(46, 58, 112));
 				}
+				else
+				{
+					if (drawWhich(window, border_here[i], border[i], mouse))
+					{
+						inf[i]->text.setFillColor(Color(118, 36, 2));
+						num[i]->text.setFillColor(Color(118, 36, 2));
+					}
+					else
+					{
+						inf[i]->text.setFillColor(Color(46, 58, 112));
+						num[i]->text.setFillColor(Color(46, 58, 112));
+					}
+				}
+				window.draw(inf[i]->text);
+				window.draw(num[i]->text);
 			}
-			window.draw(inf[i]->text);
-			window.draw(num[i]->text);
-		}
-		if (del)
-		{
-			(border) = rem;
-			(border_here) = rem_here;
-			window.draw(del_course_here.draw);
-			if (sure_check)
+			if (del)
 			{
-				window.draw(sure.draw);
-				drawWhich(window, nah_here, nah, mouse);
-				drawWhich(window, ofcourse_here, ofcourse, mouse);
+				(border) = rem;
+				(border_here) = rem_here;
+				window.draw(del_course_here.draw);
+				if (sure_check)
+				{
+					window.draw(sure.draw);
+					drawWhich(window, nah_here, nah, mouse);
+					drawWhich(window, ofcourse_here, ofcourse, mouse);
+				}
+				if (success)
+				{
+					window.draw(del_success.draw);
+					drawWhich(window, return1_here, return1, mouse);
+				}
 			}
-			if (success)
+			else
 			{
-				window.draw(del_success.draw);
-				drawWhich(window, return1_here, return1, mouse);
+				(border) = square;
+				(border_here) = square_here;
+				drawWhich(window, del_course_here, del_course, mouse);
 			}
 		}
 		else
 		{
-			(border) = square;
-			(border_here) = square_here;
-			drawWhich(window, del_course_here, del_course, mouse);
+			if (del)
+			{
+				border = rem;
+				border_here = rem_here;
+				window.draw(del_course_here.draw);
+			}
+			else
+			{
+				border = square;
+				border = square_here;
+				window.draw(del_course.draw);
+			}
+			for (int i = 0; i < 5; i++)
+			{
+				if (inf[i]->text.getString() == "")
+					break;
+				inf[i]->text.setFillColor(Color(46, 58, 112));
+				num[i]->text.setFillColor(Color(46, 58, 112));
+				window.draw(square[i]->draw);
+				window.draw(inf[i]->text);
+				window.draw(num[i]->text);
+			}
+			if (!success)
+			{
+				window.draw(enter.draw);
+				window.draw(class_name.text);
+				window.draw(teacher_name.text);
+				drawWhich(window, ok_here, ok, mouse);
+				drawWhich(window, return2_here, return2, mouse);
+			}
+			else
+			{
+				window.draw(del_success.draw);
+				drawWhich(window, return1_here, return1, mouse);
+			}
 		}
 		window.display();
 	}
@@ -3349,76 +3607,12 @@ void view_registration_student(YearNode *school, RenderWindow &window, int &page
 	delete sub, sub_here;
 }
 
-bool add_new_class(RenderWindow& window, int& page, const float& scale, ClassNode* class_list) {
-	bool  entered = false, change = false;
-	Event event;
-	Object out = createObject("content/logout.png", 300 * scale, 383.0f * scale);
-	Object out_here = createObject("content/logout1.png", 300.0f * scale, 383.0f * scale);
-	Object screen = createObject("content/Staff/Create elements/enter.png", 300.0f * scale, 390.0f * scale);
-	Info class_name = createInfo("content/Oswald-Light.ttf", "Enter Class ID ", 380.0f * scale, 413.0f * scale, 24.25f * scale);
-	Info teacher_name = createInfo("content/Oswald-Light.ttf", "Enter Head Teacher Name ", 380.0f * scale, 454.0f * scale, 24.25f * scale);
-	Object ok = createObject("content/Registration/a1.png", 425.0f * scale, 493.0f * scale);
-	Object ok_here = createObject("content/Staff/Create elements/b1.png", 425.0f * scale, 493.0f * scale);
-	while (window.isOpen()) {
-		Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
-		while (window.pollEvent(event))
-		{
-			window.draw(screen.draw);
-			window.draw(class_name.text);
-			window.draw(teacher_name.text);
-			drawWhich(window, out_here, out, mouse);
-			drawWhich(window, ok_here, ok, mouse);
-			window.display();
-			switch (event.type)
-			{
-			case Event::Closed:
-			{
-				window.close();
-				break;
-			}
-			case Event::MouseButtonReleased:
-			{
-				if (event.mouseButton.button == Mouse::Left)
-				{
-					if (isHere(out.bound, mouse))return 0;
-					if (isHere(ok.bound, mouse)) {
-						Class new_class_1 = createClass(class_name.s, teacher_name.s);
-						appendNewClassNode(class_list, new_class_1);
-						return 1; }
-					if (isHere(class_name.bound, mouse))
-					{
-						class_name.check = true;
-						teacher_name.check = false;
-					}
-					else if (isHere(teacher_name.bound, mouse))
-					{
-						teacher_name.check = true;
-						class_name.check = false;
-					}
-					else {
-						teacher_name.check = false;
-						class_name.check = false;
-					}
-				}
-			}
-			case Event::TextEntered:
-			{
-				texting(class_name, event.text.unicode, 10);
-				texting(teacher_name, event.text.unicode, 30);
-			}
-			}
-
-		}
-	}
-	Class new_class_1= createClass(class_name.s, teacher_name.s);
-	appendNewClassNode(class_list, new_class_1);
-}
-
 int student_profile(RenderWindow &window, int &page, const float &scale, StudentNode *&student, bool is_staff, bool is_new, string cur_class)
 {
 	int res = 0;
 	string text[7];
 	Info *header, *sub_header;
+	bool gender;
 	if (!is_new)
 	{
 		text[0] = student->student.student_id;
@@ -3428,6 +3622,7 @@ int student_profile(RenderWindow &window, int &page, const float &scale, Student
 		text[4] = student->student.dob;
 		text[5] = student->student.password;
 		text[6] = student->student.social_id;
+		gender = student->student.gender;
 		sub_header = createInfoTest("content/VNI-Vari.TTF", "Change Profile", 160.0f * scale, 158.0f * scale, 28.0f * scale);
 		sub_header->text.setFillColor(Color(101, 159, 235));
 		header = createInfoTest("content/VNI-Vari.TTF", student->student.last_name + " " + student->student.first_name, 160.0f * scale, 200.0f * scale, 43.0f * scale);
@@ -3437,6 +3632,7 @@ int student_profile(RenderWindow &window, int &page, const float &scale, Student
 		for (unsigned int i = 0; i < 7; i++)
 			text[i] = "Enter text";
 		text[3] = cur_class;
+		gender = false;
 		sub_header = createInfoTest("content/VNI-Vari.TTF", cur_class, 160.0f * scale, 158.0f * scale, 28.0f * scale);
 		sub_header->text.setFillColor(Color(101, 159, 235));
 		header = createInfoTest("content/VNI-Vari.TTF", "Add New Student", 160.0f * scale, 200.0f * scale, 43.0f * scale);
@@ -3477,7 +3673,7 @@ int student_profile(RenderWindow &window, int &page, const float &scale, Student
 	changePos(b[5], 426.0f * scale, 477.5f * scale);
 	Info pw = createInfo("content/Oswald-Light.ttf", "Enter your new password here", 400.0f * scale, 455.0f * scale, 15.0f * scale);
 	Info pw_old = createInfo("content/Oswald-Light.ttf", "Enter your old password here", 400.0f * scale, 415.0f * scale, 15.0f * scale);
-	bool view_my_class = true, fail = false, change_success = false, gender = student->student.gender;
+	bool view_my_class = true, fail = false, change_success = false;
 	// switch subpage in "change password" (under_working(1), normal(0), changed(2))
 	int password_status = 0;
 	Event event;
@@ -3489,7 +3685,7 @@ int student_profile(RenderWindow &window, int &page, const float &scale, Student
 		Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
 		while (window.pollEvent(event))
 		{
-						switch (event.type)
+			switch (event.type)
 			{
 			case Event::Closed:
 			{
