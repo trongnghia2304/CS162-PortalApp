@@ -130,6 +130,8 @@ struct YearNode
 
 struct RegistrationSession
 {
+	string year;
+	string sem;
 	CourseNode *list_of_courses = nullptr;
 	string start_date;
 	string end_date;

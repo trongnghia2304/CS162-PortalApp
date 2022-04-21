@@ -180,7 +180,7 @@ void deleteStudentList(StudentNode *&p_head)
 	{
 		StudentNode *cur = p_head;
 		p_head = p_head->next;
-		delete(cur->student.my_course);
+		delete (cur->student.my_course);
 		delete cur;
 	}
 }
@@ -402,7 +402,7 @@ void removeMyCourses(StudentNode *p_head, CourseNode *course)
 
 void deleteMyCourse(MyCourse *&p_head)
 {
-	MyCourse* cur;
+	MyCourse *cur;
 	while (p_head)
 	{
 		cur = p_head;
@@ -410,5 +410,31 @@ void deleteMyCourse(MyCourse *&p_head)
 		delete cur;
 	}
 }
+
+void appendNewMyCourse(StudentNode *me, MyCourse *new_course)
+{
+	if (!me->student.my_course)
+	{
+		me->student.my_course = new_course;
+		return;
+	}
+	MyCourse *cur = me->student.my_course;
+	while (cur->next)
+		cur = cur->next;
+	cur->next = new_course;
+	return;
+}
+
+MyCourse *createMyCourse(CourseNode *course)
+{
+	MyCourse *me = new MyCourse;
+	me->next = nullptr;
+	me->course = course;
+	me->sem = course->semester_id;
+	me->year = course->year_id;
+	me->subject_code = course->course.course_id;
+	return me;
+}
+
 
 //--------------------------------------------------------------------------------------------------

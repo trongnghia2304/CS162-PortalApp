@@ -324,6 +324,15 @@ void deleteEvent_class(ClassNode *&list_class, ClassNode *my_class)
 	removeClassNode(&list_class, my_class->my_class.class_id);
 }
 
+StudentNode* copyForCourse(StudentNode* me, int k)
+{
+	StudentNode* new_stu = new StudentNode;
+	new_stu->student = createStudent(k, me->student.student_id, me->student.first_name, me->student.last_name, me->student.gender, me->student.dob, me->student.social_id, "", me->student.student_class);
+	new_stu->next = nullptr;
+	return new_stu;
+}
+
+
 // //--------------------------------------- Views ----------------------------------------------------
 // //--------------------------------------------------------------------------------------------------
 // void viewListOfClass(ClassNode *Class_head)

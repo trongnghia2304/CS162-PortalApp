@@ -1,17 +1,18 @@
-#include "struct_and_dependencies.h"
+#include "header.h"
 
 string getCurrentDate()
 {
-    string current_date = "";
-    time_t ttime = time(0);
-    tm *local_time = localtime(&ttime);
+ /*   string current_date = "";
+    const time_t ttime = time(0);
+    tm* local_time;
+    localtime_s(local_time, ttime);
 
     string year = to_string(1900 + local_time->tm_year);
     string month = to_string(1 + local_time->tm_mon);
     string day = to_string(local_time->tm_mday);
 
     current_date += (day + "/" + month + "/" + year);
-    return current_date;
+    return current_date;*/
 }
 
 string *splitDate(string str, char seperator)
@@ -83,18 +84,11 @@ void readFromFileRegSess(string filepath, RegistrationSession &new_session)
         new_session.start_date.assign(line);
         getline(openFile, line);
         new_session.end_date.assign(line);
-        while (getline(openFile, line))
-        {
-            stringstream ss(line);
-            for (int i = 0; i < 9; i++)
-            {
-                getline(ss, word[i], ',');
-            }
-
-            // Create new course data and append to current list
-            Course new_course = createCourse(word[0], word[1], word[2], stoi(word[3]), (word[4].empty() ? false : stoi(word[4])), stoi(word[5]), stoi(word[6]), stoi(word[7]), stoi(word[8]));
-            appendNewCourseNode(&(new_session.list_of_courses), new_course);
-        }
+        getline(openFile, line);
+        new_session.year.assign(line);
+        getline(openFile, line);
+        new_session.sem.assign(line);
+        readFromFileCourseNode(openFile, &new_session.list_of_courses);
         openFile.close();
     }
 }
@@ -108,22 +102,10 @@ void writeToFileRegSess(string filepath, RegistrationSession new_session)
         openFile << endl;
         openFile << new_session.end_date;
         openFile << endl;
+        openFile << new_session.year << endl;
+        openFile << new_session.sem << endl;
         CourseNode *temp = new_session.list_of_courses;
-        while (temp)
-        {
-            openFile << temp->course.course_id << ",";
-            openFile << temp->course.course_name << ",";
-            openFile << temp->course.teacher_name << ",";
-            openFile << temp->course.num_credit << ",";
-            openFile << temp->course.max_students << ",";
-            openFile << temp->course.teaching_session[0].day_of_the_week << ",";
-            openFile << temp->course.teaching_session[0].session_no << ",";
-            openFile << temp->course.teaching_session[1].day_of_the_week << ",";
-            openFile << temp->course.teaching_session[1].session_no;
-            openFile << endl;
-
-            temp = temp->next;
-        }
+        writeToFileCourseNode(openFile, new_session.list_of_courses);
         openFile.close();
     }
     return;

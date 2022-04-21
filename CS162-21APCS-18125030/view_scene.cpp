@@ -254,6 +254,7 @@ void studentHome(RenderWindow &window, int &page, const float &scale)
 					switchPage(a[0]->bound, mouse, 5, page);
 					switchPage(a[1]->bound, mouse, 7, page);
 					switchPage(a[3]->bound, mouse, 8, page);
+					switchPage(a[5]->bound, mouse, 11, page);
 				}
 				break;
 			}
@@ -311,6 +312,7 @@ void staffHome(RenderWindow &window, int &page, const float &scale)
 				switchPage(a[1]->bound, mouse, 9, page);
 				switchPage(a[0]->bound, mouse, 5, page);
 				switchPage(a[1]->bound, mouse, 9, page);
+				switchPage(a[2]->bound, mouse, 11, page);
 				switchPage(a[3]->bound, mouse, 7, page);
 				// for (int j = 0; j < 3; j++)
 				// {
@@ -587,12 +589,12 @@ void view_class(RenderWindow &window, int &page, const float &scale, ClassNode *
 	Object screen = createObject("content/Student/my_class.png");
 	Object out = createObject("content/logout.png", 866.0f * scale, 106.0f * scale);
 	Object out_here = createObject("content/logout1.png", 866.0f * scale, 106.0f * scale);
-	Object export_1 = createObject("content/Staff/Create elements/export.png", 600.0f * scale, 273.0f * scale);
-	Object export_here_1 = createObject("content/Staff/Create elements/export_here.png", 600.0f * scale, 273.0f * scale);
+	Object export_1 = createObject("content/Staff/Create elements/export.png", 600.0f * scale, 272.0f * scale);
+	Object export_here_1 = createObject("content/Staff/Create elements/export_here.png", 600.0f * scale, 272.0f * scale);
 	Object back = createObject("content/return.png", 80.0f * scale, 106.0f * scale);
 	Object back_here = createObject("content/return1.png", 80.0f * scale, 106.0f * scale);
-	Object add_student = createObject("content/Student/add.png", 682.0f * scale, 273.0f * scale);
-	Object add_student_here = createObject("content/Student/add1.png", 682.0f * scale, 273.0f * scale);
+	Object add_student = createObject("content/Student/add.png", 682.0f * scale, 272.0f * scale);
+	Object add_student_here = createObject("content/Student/add1.png", 682.0f * scale, 272.0f * scale);
 	Object left = createObject("content/Staff/Class/Asset 57.png", 492.0f * scale, 644.0f * scale);
 	Object left_valid = createObject("content/Staff/Class/Asset 55.png", 492.0f * scale, 644.0f * scale);
 	Object left_here = createObject("content/Staff/Class/Asset 91.png", 492.0f * scale, 644.0f * scale);
@@ -892,22 +894,9 @@ void view_course(RenderWindow &window, int &page, const float &scale, StudentNod
 		{
 			if (inf[i][0]->text.getString() == "")
 				break;
-			if (drawWhich(window, square_here[i], square[i], mouse))
-			{
-				for (int j = 0; j < 4; j++)
-				{
-					inf[i][j]->text.setFillColor(Color(118, 36, 2));
-					window.draw(inf[i][j]->text);
-				}
-			}
-			else
-			{
-				for (int j = 0; j < 4; j++)
-				{
-					inf[i][j]->text.setFillColor(Color(46, 68, 112));
-					window.draw(inf[i][j]->text);
-				}
-			}
+			window.draw(square[i]->draw);
+			for (int j = 0; j < 4; j++)
+				window.draw(inf[i][j]->text);
 		}
 		window.display();
 	}
@@ -1070,7 +1059,7 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 								while (page == 10 || page == 11)
 								{
 									if (page == 10)
-										course_student(window, page, scale, course[i]);
+										course_student(1, window, page, scale, course[i]);
 									else
 										course_student2(window, page, scale, course[i], all_class);
 								}
@@ -1227,7 +1216,7 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 	delete screen;
 }
 
-void course_student(RenderWindow &window, int &page, const float &scale, CourseNode *course)
+void course_student(int k, RenderWindow &window, int &page, const float &scale, CourseNode *course)
 {
 	Event event;
 	Object export1 = createObject("content/Staff/Create elements/export.png", 680.0f * scale, 272.0f * scale);
@@ -1286,7 +1275,8 @@ void course_student(RenderWindow &window, int &page, const float &scale, CourseN
 				{
 					switchPage(out.bound, mouse, 1, page);
 					switchPage(back.bound, mouse, 9, page);
-					switchPage(split.bound, mouse, 11, page);
+					if (k == 1)
+						switchPage(split.bound, mouse, 11, page);
 					if (isHere(right.bound, mouse) && change <= count - 8)
 					{
 						trigger_page = true;
@@ -1321,7 +1311,8 @@ void course_student(RenderWindow &window, int &page, const float &scale, CourseN
 		drawWhich(window, out_here, out, mouse);
 		drawWhich(window, back_here, back, mouse);
 		drawWhich(window, export1_here, export1, mouse);
-		drawWhich(window, split_here, split, mouse);
+		if (k == 1)
+			drawWhich(window, split_here, split, mouse);
 		window.draw(header.text);
 		window.draw(sub_header.text);
 		window.draw(count_student.text);
@@ -1579,7 +1570,7 @@ void view_year(RenderWindow &window, int &page, const float &scale, YearNode *ye
 	else
 	{
 		MyCourse *cur = user->student.my_course;
-		while (cur_year && cur_year->school_year.year_id != cur->year)
+		while (cur && cur_year && cur_year->school_year.year_id != cur->year)
 			cur_year = cur_year->next;
 		screen = createObjectTest("content/year.png");
 	}
@@ -2169,7 +2160,10 @@ void view_score2(RenderWindow &window, int &page, const float &scale, StudentNod
 						inf[i][j]->text.setString("");
 				}
 			}
-			k = gpa_count / (float)count_course;
+			if (!count_course)
+				k = 0.0;
+			else
+				k = gpa_count / (float)count_course;
 			stringstream gpa;
 			gpa << fixed << setprecision(1) << k;
 			count_student.text.setString("Total: " + to_string(count) + " Credits");
@@ -2470,7 +2464,7 @@ void view_class_list(RenderWindow &window, int &page, const float &scale, ClassN
 	{
 		count++;
 	}
-	Info *inf[5];
+	Info *inf[5], *num[5];
 	Object *square[5], *square_here[5], *rem[5], *rem_here[5];
 	ClassNode *a_class[5], *tmp = nullptr;
 	for (int i = 0; i < 5; i++)
@@ -2480,7 +2474,8 @@ void view_class_list(RenderWindow &window, int &page, const float &scale, ClassN
 		square_here[i] = createObjectTest("content/Staff/Class/Asset 142.png", 160.0f * scale, (328.0f + 60.0f * i) * scale);
 		rem[i] = createObjectTest("content/Staff/Class/Asset 152.png", 160.0f * scale, (328.0f + 60.0f * i) * scale);
 		rem_here[i] = createObjectTest("content/Staff/Class/Asset 151.png", 160.0f * scale, (328.0f + 60.0f * i) * scale);
-		inf[i] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 190.0f * scale, (336.0f + 60.0f * i) * scale, 25.0f * scale);
+		inf[i] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 210.0f * scale, (336.0f + 60.0f * i) * scale, 25.0f * scale);
+		num[i] = createInfoTest("content/oswald-Regular.ttf", "demo_text", 0.0f, 0.0f, 25.0f * scale);
 	}
 	Info count_class = createInfo("content/Oswald-Regular.ttf", "Total: " + to_string(count) + " Classes", 189.0f * scale, 280.0f * scale, 15.0f * scale);
 	count_class.text.setFillColor(Color::White);
@@ -2609,7 +2604,9 @@ void view_class_list(RenderWindow &window, int &page, const float &scale, ClassN
 				a_class[i] = cur;
 				if (cur)
 				{
-					inf[i]->text.setString(a_class[i]->my_class.class_id + " - " + a_class[i]->my_class.head_teacher);
+					inf[i]->text.setString(a_class[i]->my_class.class_id);
+					num[i]->text.setString(a_class[i]->my_class.head_teacher);
+					num[i]->text.setPosition(square[i]->bound.left + square[i]->bound.width - num[i]->text.getGlobalBounds().width - 100.0f, (336.0f + 60.0f * i) * scale);
 					cur = cur->next;
 				}
 				else
@@ -2632,16 +2629,23 @@ void view_class_list(RenderWindow &window, int &page, const float &scale, ClassN
 			{
 				window.draw(rem[i]->draw);
 				inf[i]->text.setFillColor(Color(46, 58, 112));
-				window.draw(inf[i]->text);
+				num[i]->text.setFillColor(Color(46, 58, 112));
 			}
 			else
 			{
 				if (drawWhich(window, border_here[i], border[i], mouse))
+				{
 					inf[i]->text.setFillColor(Color(118, 36, 2));
+					num[i]->text.setFillColor(Color(118, 36, 2));
+				}
 				else
+				{
 					inf[i]->text.setFillColor(Color(46, 58, 112));
-				window.draw(inf[i]->text);
+					num[i]->text.setFillColor(Color(46, 58, 112));
+				}
 			}
+			window.draw(inf[i]->text);
+			window.draw(num[i]->text);
 		}
 		if (del)
 		{
@@ -2670,4 +2674,602 @@ void view_class_list(RenderWindow &window, int &page, const float &scale, ClassN
 	}
 	for (int i = 0; i < 5; i++)
 		delete square[i], square_here[i], inf[i], rem[i], rem_here[i];
+}
+
+void view_registration_staff(RenderWindow &window, int &page, const float &scale, RegistrationSession data, const bool &is_staff)
+{
+	Event event;
+	Object screen = createObject("content/Registration/register_student.png");
+	Object out = createObject("content/logout.png", 866.0f * scale, 106.0f * scale);
+	Object out_here = createObject("content/logout1.png", 866.0f * scale, 106.0f * scale);
+	Object back = createObject("content/return.png", 80.0f * scale, 106.0f * scale);
+	Object back_here = createObject("content/return1.png", 80.0f * scale, 106.0f * scale);
+	Object *add_class, *add_class_here;
+	Info sub_header = createInfo("content/VNI-Vari.TTF", "Course Registration", 160.0f * scale, 158.0f * scale, 28.0f * scale);
+	sub_header.text.setFillColor(Color(101, 159, 235));
+	Info header = createInfo("content/VNI-Vari.TTF", data.year + " " + data.sem, 160.0f * scale, 200.0f * scale, 43.0f * scale);
+	if (is_staff)
+	{
+		add_class = createObjectTest("content/Registration/Asset 120.png", 686.0f * scale, 340.0f * scale);
+		add_class_here = createObjectTest("content/Registration/Asset 119.png", 686.0f * scale, 340.0f * scale);
+	}
+	else
+	{
+		add_class = createObjectTest("content/Registration/sub.png", 686.0f * scale, 340.0f * scale);
+		add_class_here = createObjectTest("content/Registration/sub_here.png", 686.0f * scale, 340.0f * scale);
+	}
+	Object del_course = createObject("content/Registration/unsub.png", 500.0f * scale, 340.0f * scale);
+	Object del_course_here = createObject("content/Registration/unsub_here.png", 500.0f * scale, 340.0f * scale);
+	Object total_class = createObject("content/Staff/Class/Asset 53.png", 160.0f * scale, 274.0f * scale);
+	Object left = createObject("content/Staff/Class/Asset 57.png", 492.0f * scale, 644.0f * scale);
+	Object left_valid = createObject("content/Staff/Class/Asset 55.png", 492.0f * scale, 644.0f * scale);
+	Object left_here = createObject("content/Staff/Class/Asset 91.png", 492.0f * scale, 644.0f * scale);
+	Object right = createObject("content/Staff/Class/Asset 56.png", 510.0f * scale, 644.0f * scale);
+	Object right_here = createObject("content/Staff/Class/Asset 90.png", 510.0f * scale, 644.0f * scale);
+	Object right_valid = createObject("content/Staff/Class/Asset 54.png", 510.0f * scale, 644.0f * scale);
+	Object sure = createObject("content/Staff/Create elements/sure.png", 316.0f * scale, 386.0f * scale);
+	Object del_success = createObject("content/Staff/Create elements/Asset 115.png", 316.0f * scale, 386.0f * scale);
+	Object return1 = createObject("content/Staff/Create elements/a7.png", 444.0f * scale, 484.0f * scale);
+	Object return1_here = createObject("content/Staff/Create elements/b7.png", 444.0f * scale, 484.0f * scale);
+	Object nah = createObject("content/General/a3.png", 376.0f * scale, 484.0f * scale);
+	Object nah_here = createObject("content/General/b3.png", 376.0f * scale, 484.0f * scale);
+	Object ofcourse = createObject("content/General/a2.png", 506.0f * scale, 484.0f * scale);
+	Object ofcourse_here = createObject("content/General/b2.png", 506.0f * scale, 484.0f * scale);
+	int count = 0, change = 0;
+	bool trigger_page = true, del = false, sure_check = false, success = false;
+	for (CourseNode *cur = data.list_of_courses; cur; cur = cur->next)
+	{
+		count++;
+	}
+	Info *inf[4], *num[4];
+	Info start_date = createInfo("content/Oswald-Regular.ttf", data.start_date, 216.0f * scale, 284.0f * scale, 18.0f * scale);
+	Info end_date = createInfo("content/Oswald-Regular.ttf", data.end_date, 568.0f * scale, 284.0f * scale, 18.0f * scale);
+	Object *square[4], *square_here[4];
+	CourseNode *a_class[4], *tmp = nullptr;
+	for (int i = 0; i < 4; i++)
+	{
+		a_class[i] = nullptr;
+		square[i] = createObjectTest("content/Registration/Asset 118.png", 174.0f * scale, (388.0f + 60.0f * i) * scale);
+		square_here[i] = createObjectTest("content/Registration/Asset 124.png", 174.0f * scale, (388.0f + 60.0f * i) * scale);
+		num[i] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 198.0f * scale, (396.0f + 60.0f * i) * scale, 25.0f * scale);
+		inf[i] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 198.0f * scale, (396.0f + 60.0f * i) * scale, 25.0f * scale);
+	}
+	Info count_class = createInfo("content/Oswald-Regular.ttf", "Total: " + to_string(count) + " Courses", 190.0f * scale, 346.0f * scale, 15.0f * scale);
+	count_class.text.setFillColor(Color::White);
+	Object **border = square, **border_here = square_here;
+	while (window.isOpen() && page == 11)
+	{
+		Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+		while (window.pollEvent(event))
+		{
+			switch (event.type)
+			{
+			case Event::Closed:
+			{
+				window.close();
+				break;
+			}
+			case Event::MouseButtonReleased:
+			{
+				if (event.mouseButton.button == Mouse::Left)
+				{
+					switchPage(out.bound, mouse, 1, page);
+					switchPage(back.bound, mouse, 4, page);
+					if (isHere(add_class->bound, mouse))
+					{
+						// window.close();
+						//  add new class
+					}
+					if (isHere(right.bound, mouse) && change <= count - 4)
+					{
+						trigger_page = true;
+						change += 4;
+					}
+					if (isHere(left.bound, mouse) && change != 0)
+					{
+						trigger_page = true;
+						change -= 4;
+					}
+					for (int i = 0; i < 4; i++)
+					{
+						if (isHere(square[i]->bound, mouse))
+						{
+							page = 10;
+							course_student(0, window, page, scale, a_class[i]);
+							page = 11;
+						}
+					}
+				}
+				break;
+			}
+			default:
+				break;
+			}
+		}
+		window.clear();
+		window.draw(screen.draw);
+		window.draw(count_class.text);
+		window.draw(header.text);
+		window.draw(sub_header.text);
+		drawWhich(window, add_class_here, add_class, mouse);
+		if (change == 0 && change >= count - 4)
+		{
+			window.draw(right.draw);
+			window.draw(left.draw);
+		}
+		else if (change == 0)
+		{
+			window.draw(left.draw);
+			drawWhich(window, right_here, right_valid, mouse);
+		}
+		else if (change >= count - 4)
+		{
+			window.draw(right.draw);
+			drawWhich(window, left_here, left_valid, mouse);
+		}
+		else
+		{
+			drawWhich(window, right_here, right_valid, mouse);
+			drawWhich(window, left_here, left_valid, mouse);
+		}
+		if (trigger_page)
+		{
+			CourseNode *cur = data.list_of_courses;
+			for (int i = 0; i < change; i++)
+			{
+				cur = cur->next;
+			}
+			for (int i = 0; i < 4; i++)
+			{
+				a_class[i] = cur;
+				if (cur)
+				{
+					inf[i]->text.setString(a_class[i]->course.course_id + " - " + a_class[i]->course.teacher_name + " (" + day_convert(a_class[i]->course.teaching_session[0]) + "-" + no_convert(a_class[i]->course.teaching_session[0]) + ", " + day_convert(a_class[i]->course.teaching_session[1]) + "-" + no_convert(a_class[i]->course.teaching_session[1]) + ")");
+					int stu = 0;
+					for (StudentNode *cur_stu = a_class[i]->student_list; cur_stu; cur_stu = cur_stu->next)
+					{
+						stu++;
+					}
+					num[i]->text.setString(to_string(stu) + "/" + to_string(a_class[i]->course.max_students));
+					num[i]->text.setPosition(square[i]->bound.left + square[i]->bound.width - num[i]->text.getGlobalBounds().width - 30.0f, (396.0f + 60.0f * i) * scale);
+					cur = cur->next;
+				}
+				else
+				{
+					inf[i]->text.setString("");
+					num[i]->text.setString("");
+				}
+			}
+			trigger_page = false;
+		}
+
+		drawWhich(window, out_here, out, mouse);
+		drawWhich(window, back_here, back, mouse);
+		window.draw(count_class.text);
+		for (int i = 0; i < 4; i++)
+		{
+			if (inf[i]->text.getString() == "")
+				break;
+			if (success || sure_check)
+			{
+				window.draw(border[i]->draw);
+				inf[i]->text.setFillColor(Color(46, 58, 112));
+				num[i]->text.setFillColor(Color(46, 58, 112));
+			}
+			else
+			{
+				if (drawWhich(window, border_here[i], border[i], mouse))
+				{
+					inf[i]->text.setFillColor(Color(118, 36, 2));
+					num[i]->text.setFillColor(Color(118, 36, 2));
+				}
+				else
+				{
+					inf[i]->text.setFillColor(Color(46, 58, 112));
+					num[i]->text.setFillColor(Color(46, 58, 112));
+				}
+			}
+			window.draw(inf[i]->text);
+			window.draw(num[i]->text);
+		}
+		// if (del)
+		// {
+		// 	(border) = rem;
+		// 	(border_here) = rem_here;
+		// 	window.draw(del_course_here.draw);
+		// 	if (sure_check)
+		// 	{
+		// 		window.draw(sure.draw);
+		// 		drawWhich(window, nah_here, nah, mouse);
+		// 		drawWhich(window, ofcourse_here, ofcourse, mouse);
+		// 	}
+		// 	if (success)
+		// 	{
+		// 		window.draw(del_success.draw);
+		// 		drawWhich(window, return1_here, return1, mouse);
+		// 	}
+		// }
+		// else
+		// {
+		// 	(border) = square;
+		// 	(border_here) = square_here;
+		// 	drawWhich(window, del_course_here, del_course, mouse);
+		// }
+		window.draw(start_date.text);
+		window.draw(end_date.text);
+		window.display();
+	}
+	for (int i = 0; i < 4; i++)
+		delete square[i], square_here[i], inf[i], num[i];
+	delete add_class, add_class_here;
+}
+
+void view_registration_student(YearNode *school, RenderWindow &window, int &page, const float &scale, RegistrationSession data, const bool &is_staff, StudentNode *user)
+{
+	Event event;
+	Object screen = createObject("content/Registration/register_student.png");
+	Object out = createObject("content/logout.png", 866.0f * scale, 106.0f * scale);
+	Object out_here = createObject("content/logout1.png", 866.0f * scale, 106.0f * scale);
+	Object back = createObject("content/return.png", 80.0f * scale, 106.0f * scale);
+	Object back_here = createObject("content/return1.png", 80.0f * scale, 106.0f * scale);
+	Object *sub, *sub_here;
+	Info sub_header = createInfo("content/VNI-Vari.TTF", "Course Registration", 160.0f * scale, 158.0f * scale, 28.0f * scale);
+	sub_header.text.setFillColor(Color(101, 159, 235));
+	Info header = createInfo("content/VNI-Vari.TTF", data.year + " " + data.sem, 160.0f * scale, 200.0f * scale, 43.0f * scale);
+	if (is_staff)
+	{
+		sub = createObjectTest("content/Registration/Asset 120.png", 686.0f * scale, 340.0f * scale);
+		sub_here = createObjectTest("content/Registration/Asset 119.png", 686.0f * scale, 340.0f * scale);
+	}
+	else
+	{
+		sub = createObjectTest("content/Registration/sub.png", 686.0f * scale, 340.0f * scale);
+		sub_here = createObjectTest("content/Registration/sub_here.png", 686.0f * scale, 340.0f * scale);
+	}
+	Object unsub = createObject("content/Registration/unsub.png", 500.0f * scale, 340.0f * scale);
+	Object unsub_here = createObject("content/Registration/unsub_here.png", 500.0f * scale, 340.0f * scale);
+	Object total_class = createObject("content/Staff/Class/Asset 53.png", 160.0f * scale, 274.0f * scale);
+	Object left = createObject("content/Staff/Class/Asset 57.png", 492.0f * scale, 644.0f * scale);
+	Object left_valid = createObject("content/Staff/Class/Asset 55.png", 492.0f * scale, 644.0f * scale);
+	Object left_here = createObject("content/Staff/Class/Asset 91.png", 492.0f * scale, 644.0f * scale);
+	Object right = createObject("content/Staff/Class/Asset 56.png", 510.0f * scale, 644.0f * scale);
+	Object right_here = createObject("content/Staff/Class/Asset 90.png", 510.0f * scale, 644.0f * scale);
+	Object right_valid = createObject("content/Staff/Class/Asset 54.png", 510.0f * scale, 644.0f * scale);
+	Object sure = createObject("content/Staff/Create elements/sure.png", 316.0f * scale, 386.0f * scale);
+	Object del_success = createObject("content/Staff/Create elements/Asset 115.png", 316.0f * scale, 386.0f * scale);
+	Object invalid = createObject("content/Registration/invalid.png", 316.0f * scale, 386.0f * scale);
+	Object return1 = createObject("content/Staff/Create elements/a7.png", 444.0f * scale, 484.0f * scale);
+	Object return1_here = createObject("content/Staff/Create elements/b7.png", 444.0f * scale, 484.0f * scale);
+	Object nah = createObject("content/General/a3.png", 376.0f * scale, 484.0f * scale);
+	Object nah_here = createObject("content/General/b3.png", 376.0f * scale, 484.0f * scale);
+	Object ofcourse = createObject("content/General/a2.png", 506.0f * scale, 484.0f * scale);
+	Object ofcourse_here = createObject("content/General/b2.png", 506.0f * scale, 484.0f * scale);
+	int count = 0, change = 0, count_check = 0;
+	bool trigger_page = true, stop = false, fail = false, success = false, sub_check = true;
+	Info *inf[4], *num[4];
+	for (CourseNode *cur = data.list_of_courses; cur; cur = cur->next)
+		count++;
+	for (MyCourse *cur = user->student.my_course; cur; cur = cur->next)
+	{
+		if (cur->year == data.year && cur->sem == data.sem)
+		{
+			count_check++;
+		}
+	}
+	Info start_date = createInfo("content/Oswald-Regular.ttf", data.start_date, 216.0f * scale, 284.0f * scale, 18.0f * scale);
+	Info end_date = createInfo("content/Oswald-Regular.ttf", data.end_date, 568.0f * scale, 284.0f * scale, 18.0f * scale);
+	Object *square[4], *square_here[4], *square_del[4];
+	CourseNode *a_class[4], *tmp = nullptr;
+	for (int i = 0; i < 4; i++)
+	{
+		a_class[i] = nullptr;
+		square[i] = createObjectTest("content/Registration/Asset 118.png", 174.0f * scale, (388.0f + 60.0f * i) * scale);
+		square_here[i] = createObjectTest("content/Registration/Asset 124.png", 174.0f * scale, (388.0f + 60.0f * i) * scale);
+		square_del[i] = createObjectTest("content/Registration/Asset 123.png", 174.0f * scale, (388.0f + 60.0f * i) * scale);
+		num[i] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 198.0f * scale, (396.0f + 60.0f * i) * scale, 25.0f * scale);
+		inf[i] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 198.0f * scale, (396.0f + 60.0f * i) * scale, 25.0f * scale);
+	}
+	Info count_class = createInfo("content/Oswald-Regular.ttf", to_string(count_check) + "/5 Courses", 200.0f * scale, 346.0f * scale, 15.0f * scale);
+	count_class.text.setFillColor(Color::White);
+	bool in_here[4], first_check = true;
+	int current_students[4];
+	Object **border = square, **border_here = square_here;
+	while (window.isOpen() && page == 11)
+	{
+		Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+		while (window.pollEvent(event))
+		{
+			switch (event.type)
+			{
+			case Event::Closed:
+			{
+				window.close();
+				break;
+			}
+			case Event::MouseButtonReleased:
+			{
+				if (event.mouseButton.button == Mouse::Left)
+				{
+					switchPage(out.bound, mouse, 1, page);
+					switchPage(back.bound, mouse, 3, page);
+					for (int i = 0; i < 4; i++)
+					{
+						if (isHere(square[i]->bound, mouse) && a_class[i])
+						{
+							if (!stop)
+							{
+								if (sub_check)
+								{
+									if (count_check >= 5 || in_here[i] || current_students[i] >= a_class[i]->course.max_students)
+									{
+										fail = true;
+										stop = true;
+									}
+									else
+									{
+										bool collision = false;
+										for (MyCourse *cur = user->student.my_course; cur; cur = cur->next)
+										{
+											if (data.year == cur->year && data.sem == cur->sem)
+											{
+												if (checkCourseCollision(cur->course->course, a_class[i]->course))
+												{
+													collision = true;
+													break;
+												}
+											}
+										}
+										if (collision)
+										{
+											fail = true;
+											stop = true;
+										}
+										else
+										{
+											int k = 2;
+											count_check++;
+											count_class.text.setString(to_string(count_check) + "/5 Courses");
+											YearNode *cur_year = searchYearNode(school, a_class[i]->year_id);
+											SemesterNode *cur_sem = searchSemesterNode(cur_year->school_year.list_sem, a_class[i]->semester_id);
+											CourseNode *cur_course = searchCourseNode(cur_sem->sem.course_list, a_class[i]->course.course_id);
+											MyCourse *new_cur = createMyCourse(cur_course);
+											appendNewMyCourse(user, new_cur);
+											StudentNode *head = a_class[i]->student_list, *head1 = cur_course->student_list;
+											if (head)
+											{
+												while (head->next)
+												{
+													k++;
+													head1 = head1->next;
+													head = head->next;
+												}
+												head->next = copyForCourse(user, k);
+												head1->next = copyForCourse(user, k);
+											}
+											else
+											{
+												a_class[i]->student_list = copyForCourse(user, 1);
+												cur_course->student_list = copyForCourse(user, 1);
+											}
+											success = true;
+											stop = true;
+											trigger_page = true;
+										}
+									}
+								}
+								// unsub
+								else if (in_here[i])
+								{
+									count_check--;
+									count_class.text.setString(to_string(count_check) + "/5 Courses");
+									YearNode *cur_year = searchYearNode(school, a_class[i]->year_id);
+									SemesterNode *cur_sem = searchSemesterNode(cur_year->school_year.list_sem, a_class[i]->semester_id);
+									CourseNode *cur_course = searchCourseNode(cur_sem->sem.course_list, a_class[i]->course.course_id);
+									removeStudentNode(&cur_course->student_list, user->student.student_id);
+									removeStudentNode(&a_class[i]->student_list, user->student.student_id);
+									removeMyCourses(user, cur_course);
+									success = true;
+									stop = true;
+									trigger_page = true;
+								}
+							}
+						}
+					}
+					if (sub_check && isHere(unsub.bound, mouse))
+						sub_check = false;
+					if (!sub_check && isHere(sub->bound, mouse))
+						sub_check = true;
+					if (success && isHere(return1.bound, mouse))
+					{
+						success = false;
+						stop = false;
+					}
+					if (fail && isHere(return1.bound, mouse))
+					{
+						fail = false;
+						stop = false;
+					}
+					if (isHere(right.bound, mouse) && change <= count - 4)
+					{
+						trigger_page = true;
+						change += 4;
+					}
+					if (isHere(left.bound, mouse) && change != 0)
+					{
+						trigger_page = true;
+						change -= 4;
+					}
+				}
+				break;
+			}
+			default:
+				break;
+			}
+		}
+		window.clear();
+		window.draw(screen.draw);
+		window.draw(count_class.text);
+		window.draw(header.text);
+		window.draw(sub_header.text);
+		if (sub_check)
+		{
+			window.draw(sub_here->draw);
+			window.draw(unsub.draw);
+		}
+		else
+		{
+			window.draw(sub->draw);
+			window.draw(unsub_here.draw);
+		}
+		if (change == 0 && change >= count - 4)
+		{
+			window.draw(right.draw);
+			window.draw(left.draw);
+		}
+		else if (change == 0)
+		{
+			window.draw(left.draw);
+			drawWhich(window, right_here, right_valid, mouse);
+		}
+		else if (change >= count - 4)
+		{
+			window.draw(right.draw);
+			drawWhich(window, left_here, left_valid, mouse);
+		}
+		else
+		{
+			drawWhich(window, right_here, right_valid, mouse);
+			drawWhich(window, left_here, left_valid, mouse);
+		}
+		if (trigger_page)
+		{
+			CourseNode *cur = data.list_of_courses;
+			for (int i = 0; i < change; i++)
+			{
+				cur = cur->next;
+			}
+			for (int i = 0; i < 4; i++)
+			{
+				in_here[i] = false;
+				current_students[i] = 0;
+				a_class[i] = cur;
+				if (cur)
+				{
+					inf[i]->text.setString(a_class[i]->course.course_id + " - " + a_class[i]->course.teacher_name + " (" + day_convert(a_class[i]->course.teaching_session[0]) + "-" + no_convert(a_class[i]->course.teaching_session[0]) + ", " + day_convert(a_class[i]->course.teaching_session[1]) + "-" + no_convert(a_class[i]->course.teaching_session[1]) + ")");
+					int stu = 0;
+					for (StudentNode *cur_stu = a_class[i]->student_list; cur_stu; cur_stu = cur_stu->next)
+					{
+						current_students[i]++;
+						if (cur_stu->student.student_id == user->student.student_id)
+							in_here[i] = true;
+					}
+					num[i]->text.setString(to_string(current_students[i]) + "/" + to_string(a_class[i]->course.max_students));
+					num[i]->text.setPosition(square[i]->bound.left + square[i]->bound.width - num[i]->text.getGlobalBounds().width - 30.0f, (396.0f + 60.0f * i) * scale);
+					cur = cur->next;
+				}
+				else
+				{
+					inf[i]->text.setString("");
+					num[i]->text.setString("");
+				}
+			}
+			trigger_page = false;
+		}
+		drawWhich(window, out_here, out, mouse);
+		drawWhich(window, back_here, back, mouse);
+		window.draw(count_class.text);
+		// draw border
+		if (sub_check)
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				if (inf[i]->text.getString() == "")
+					break;
+				if (in_here[i])
+				{
+					window.draw(border_here[i]->draw);
+					inf[i]->text.setFillColor(Color(118, 36, 2));
+					num[i]->text.setFillColor(Color(118, 36, 2));
+				}
+				else if (stop)
+				{
+					window.draw(border[i]->draw);
+					inf[i]->text.setFillColor(Color(46, 58, 112));
+					num[i]->text.setFillColor(Color(46, 58, 112));
+				}
+				else
+				{
+					if (drawWhich(window, border_here[i], border[i], mouse))
+					{
+						inf[i]->text.setFillColor(Color(118, 36, 2));
+						num[i]->text.setFillColor(Color(118, 36, 2));
+					}
+					else
+					{
+						inf[i]->text.setFillColor(Color(46, 58, 112));
+						num[i]->text.setFillColor(Color(46, 58, 112));
+					}
+				}
+				window.draw(inf[i]->text);
+				window.draw(num[i]->text);
+			}
+		}
+		else
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				if (inf[i]->text.getString() == "")
+					break;
+				if (in_here[i])
+				{
+					if (stop)
+					{
+						window.draw(border_here[i]->draw);
+						inf[i]->text.setFillColor(Color(118, 36, 2));
+						num[i]->text.setFillColor(Color(118, 36, 2));
+					}
+					else
+					{
+						if (drawWhich(window, square_del[i], border_here[i], mouse))
+						{
+							inf[i]->text.setFillColor(Color::White);
+							num[i]->text.setFillColor(Color::White);
+						}
+						else
+						{
+							inf[i]->text.setFillColor(Color(118, 36, 2));
+							num[i]->text.setFillColor(Color(118, 36, 2));
+						}
+					}
+				}
+				else
+				{
+					window.draw(border[i]->draw);
+					inf[i]->text.setFillColor(Color(46, 58, 112));
+					num[i]->text.setFillColor(Color(46, 58, 112));
+				}
+				window.draw(inf[i]->text);
+				window.draw(num[i]->text);
+			}
+		}
+		if (stop)
+		{
+			if (success)
+			{
+				window.draw(del_success.draw);
+				drawWhich(window, return1_here, return1, mouse);
+			}
+			if (fail)
+			{
+				window.draw(invalid.draw);
+				drawWhich(window, return1_here, return1, mouse);
+			}
+		}
+		window.draw(start_date.text);
+		window.draw(end_date.text);
+		window.display();
+	}
+	for (int i = 0; i < 4; i++)
+		delete square[i], square_here[i], inf[i], num[i], square_del[i];
+	delete sub, sub_here;
 }

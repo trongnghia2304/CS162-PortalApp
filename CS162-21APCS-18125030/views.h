@@ -35,7 +35,7 @@ void studentHome(RenderWindow &window, int &page, const float &scale);
 void staffHome(RenderWindow &window, int &page, const float &scale);
 void profile(RenderWindow &window, int &page, const float &scale, StudentNode *student, bool is_staff);
 void view_class(RenderWindow &window, int &page, const float &scale, ClassNode *class_list, StudentNode *user, const bool &is_staff);
-void course_student(RenderWindow &window, int &page, const float &scale, CourseNode *course);
+void course_student(int k, RenderWindow &window, int &page, const float &scale, CourseNode *course);
 void course_student2(RenderWindow &window, int &page, const float &scale, CourseNode *course, ClassNode *all_class);
 void view_year(RenderWindow &window, int &page, const float &scale, YearNode *year, StudentNode *user, const bool &is_staff, ClassNode *all_class);
 void view_semester(RenderWindow &window, int &page, const float &scale, YearNode *cur_year, StudentNode *user, const bool &is_staff, ClassNode *all_class);
@@ -46,6 +46,8 @@ void view_score2(RenderWindow &window, int &page, const float &scale, StudentNod
 void view_class_list(RenderWindow &window, int &page, const float &scale, ClassNode *&class_list, bool &is_staff);
 bool change_course_info(RenderWindow &window, int &page, const float &scale, CourseNode *&course, const string &year, const string &sem);
 bool add_new_course(RenderWindow &window, int &page, const float &scale, CourseNode *&course, const string &year, const string &sem);
+void view_registration_staff(RenderWindow& window, int& page, const float& scale, RegistrationSession data, const bool& is_staff);
+void view_registration_student(YearNode* school, RenderWindow& window, int& page, const float& scale, RegistrationSession data, const bool& is_staff, StudentNode* user);
 //-----------------Other features--------------------------
 
 bool isHere(FloatRect &bound, Vector2f &mouse);

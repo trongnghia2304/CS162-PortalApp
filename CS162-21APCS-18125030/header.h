@@ -93,6 +93,8 @@ void setupMyCourses(ClassNode *p_class, YearNode *year);
 void findMyCourses(StudentNode **p_student, YearNode *year);
 void removeMyCourses(StudentNode *p_head, CourseNode *course);
 void deleteMyCourse(MyCourse *&p_head);
+void appendNewMyCourse(StudentNode *me, MyCourse* new_course);
+MyCourse *createMyCourse(CourseNode *course);
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------------- Views  ---------------------------------------------------
@@ -101,6 +103,7 @@ bool changePassword(Student &me, const string &oldPw, const string &newPw);
 float calculateOverallScore(MyCourse *course, float midterm_percent, float final_percent);
 float calculateGPA(Student me, string year, string sem);
 float calculateGPA(Student me);
+StudentNode* copyForCourse(StudentNode* me, int k);
 // void changeStudent(Student& me);
 // void checkMyCourse(Student me);
 // void subscribeCourse(Student& me, CourseNode& a);
@@ -111,3 +114,10 @@ float calculateGPA(Student me);
 // void viewListOfClass(ClassNode* Class_head);
 // bool checkLogin(StudentNode* p_head, string username, string password);
 //--------------------------------------------------------------------------------------------------
+
+//----------------------Registration---------------------------
+string getCurrentDate();
+string *splitDate(string str, char seperator);
+int compareDate(string date_1, string date_2);
+void readFromFileRegSess(string filepath, RegistrationSession &new_session);
+void writeToFileRegSess(string filepath, RegistrationSession new_session);
