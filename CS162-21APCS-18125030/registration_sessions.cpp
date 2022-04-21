@@ -2,17 +2,14 @@
 
 string getCurrentDate()
 {
- /*   string current_date = "";
-    const time_t ttime = time(0);
-    tm* local_time;
-    localtime_s(local_time, ttime);
-
+    string current_date = "";
+    time_t ttime = time(0);
+    tm* local_time = localtime(&ttime);
     string year = to_string(1900 + local_time->tm_year);
     string month = to_string(1 + local_time->tm_mon);
     string day = to_string(local_time->tm_mday);
-
     current_date += (day + "/" + month + "/" + year);
-    return current_date;*/
+    return current_date;
 }
 
 string *splitDate(string str, char seperator)

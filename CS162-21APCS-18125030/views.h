@@ -31,7 +31,7 @@ Info *createInfoTest(string s, string info, float x, float y, float size);
 
 void Scene1(RenderWindow &window, int &page, bool &role, const float &scale);
 void logIn(RenderWindow &window, int &page, bool role, const float &scale, ClassNode *class_list, StudentNode *staff_list, StudentNode *&user);
-void studentHome(RenderWindow &window, int &page, const float &scale);
+void studentHome(RegistrationSession data, RenderWindow &window, int &page, const float &scale);
 void staffHome(RenderWindow &window, int &page, const float &scale);
 void profile(RenderWindow &window, int &page, const float &scale, StudentNode *student, bool is_staff);
 void view_class(RenderWindow &window, int &page, const float &scale, ClassNode *class_list, StudentNode *user, const bool &is_staff);
@@ -46,9 +46,10 @@ void view_score2(RenderWindow &window, int &page, const float &scale, StudentNod
 void view_class_list(RenderWindow &window, int &page, const float &scale, ClassNode *&class_list, bool &is_staff);
 bool change_course_info(RenderWindow &window, int &page, const float &scale, CourseNode *&course, const string &year, const string &sem);
 bool add_new_course(RenderWindow &window, int &page, const float &scale, CourseNode *&course, const string &year, const string &sem);
-void view_registration_staff(RenderWindow& window, int& page, const float& scale, RegistrationSession data, const bool& is_staff);
-void view_registration_student(YearNode* school, RenderWindow& window, int& page, const float& scale, RegistrationSession data, const bool& is_staff, StudentNode* user);
 bool add_new_class(RenderWindow& window, int& page, const float& scale, ClassNode* class_list);
+void view_registration_staff(RenderWindow &window, int &page, const float &scale, RegistrationSession& data, const bool &is_staff);
+void view_registration_student(YearNode *school, RenderWindow &window, int &page, const float &scale, RegistrationSession data, const bool &is_staff, StudentNode *user);
+int student_profile(RenderWindow &window, int &page, const float &scale, StudentNode *&student, bool is_staff, bool is_new, string cur_class);
 //-----------------Other features--------------------------
 
 bool isHere(FloatRect &bound, Vector2f &mouse);
@@ -67,5 +68,7 @@ bool checkInputCourse_change(Info *inf[], int n, CourseNode *&course);
 void deleteEvent_course(CourseNode *&list_course, CourseNode *course, ClassNode *list_class);
 void deleteEvent_student(StudentNode *&list_student, StudentNode *me);
 void deleteEvent_class(ClassNode *&list_class, ClassNode *my_class);
+bool checkDOB(string s);
+bool checkID(string s);
 // bool empty(sf::String s);
 // bool pop_back(sf::String s);

@@ -67,7 +67,6 @@ int main()
 	int page = 1;
 	StudentNode *user = NULL;
 	bool is_staff;
-
 	while (page > 0 && window.isOpen())
 	{
 		switch (page)
@@ -84,7 +83,7 @@ int main()
 		}
 		case 3:
 		{
-			studentHome(window, page, scale);
+			studentHome(data, window, page, scale);
 			break;
 		}
 		case 4:

@@ -324,9 +324,9 @@ void deleteEvent_class(ClassNode *&list_class, ClassNode *my_class)
 	removeClassNode(&list_class, my_class->my_class.class_id);
 }
 
-StudentNode* copyForCourse(StudentNode* me, int k)
+StudentNode *copyForCourse(StudentNode *me, int k)
 {
-	StudentNode* new_stu = new StudentNode;
+	StudentNode *new_stu = new StudentNode;
 	new_stu->student = createStudent(k, me->student.student_id, me->student.first_name, me->student.last_name, me->student.gender, me->student.dob, me->student.social_id, "", me->student.student_class);
 	new_stu->next = nullptr;
 	return new_stu;
@@ -354,6 +354,32 @@ void importCSVFile(ifstream open_file, StudentNode* student_list, string subject
 		istringstream(word[6]) >> cur->score.overall;
 	}
 }
+
+string session_convert(Session a)
+{
+	string s = day_convert(a) + "-" + no_convert(a);
+	return s;
+}
+
+bool checkDOB(string s)
+{
+	stringstream check(s);
+	int day = 0, mon = 0, year = 0;
+	char c1, c2;
+	check >> day >> c1 >> mon >> c2 >> year;
+	if (!(day & mon & year)) return false;
+	if (day < 32 && day > 0 && mon > 0 && mon < 13) return true;
+	else return false;
+}
+
+bool checkID(string s)
+{
+	stringstream check(s);
+	int id;
+	check >> id;
+	return to_string(id) == s;
+}
+
 // //--------------------------------------- Views ----------------------------------------------------
 // //--------------------------------------------------------------------------------------------------
 // void viewListOfClass(ClassNode *Class_head)

@@ -55,6 +55,7 @@ bool checkCourseCollision(Course a, Course b);
 void printCourseNode(CourseNode *p_head); // Used for checking outputs <----- can omit
 string day_convert(Session a);
 string no_convert(Session a);
+string session_convert(Session a);
 //--------------------------------------------------------------------------------------------------
 
 //----------------------------- Semester & SemesterList --------------------------------------------
@@ -120,6 +121,7 @@ void importCSVFile(ifstream open_file, StudentNode* student_list, string subject
 //----------------------Registration---------------------------
 string getCurrentDate();
 string *splitDate(string str, char seperator);
+//< = > (-1 0 1)
 int compareDate(string date_1, string date_2);
 void readFromFileRegSess(string filepath, RegistrationSession &new_session);
 void writeToFileRegSess(string filepath, RegistrationSession new_session);

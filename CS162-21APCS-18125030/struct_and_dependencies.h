@@ -35,7 +35,7 @@ struct Student
 	bool gender; // male(0), female(1)
 	string dob;
 	string social_id;
-	string password;
+	string password = "default";
 	string student_class;
 	MyCourse *my_course = nullptr;
 	float cur_gpa = 0.0f;
