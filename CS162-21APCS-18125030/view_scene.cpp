@@ -2466,7 +2466,7 @@ void view_class_list(RenderWindow &window, int &page, const float &scale, ClassN
 	}
 	Info *inf[5], *num[5];
 	Object *square[5], *square_here[5], *rem[5], *rem_here[5];
-	ClassNode *a_class[5], *tmp = nullptr;
+	ClassNode *a_class[7], *tmp = nullptr;
 	for (int i = 0; i < 5; i++)
 	{
 		a_class[i] = nullptr;
@@ -2502,6 +2502,10 @@ void view_class_list(RenderWindow &window, int &page, const float &scale, ClassN
 					{
 						// window.close();
 						//  add new class
+						if (add_new_class(window, page, scale, class_list)) {
+							count++;
+							count_class.text.setString("Total: " + to_string(count) + " Classes");trigger_page = true;
+						}
 					}
 					if (isHere(right.bound, mouse) && change <= count - 5)
 					{
@@ -2675,7 +2679,6 @@ void view_class_list(RenderWindow &window, int &page, const float &scale, ClassN
 	for (int i = 0; i < 5; i++)
 		delete square[i], square_here[i], inf[i], rem[i], rem_here[i];
 }
-
 void view_registration_staff(RenderWindow &window, int &page, const float &scale, RegistrationSession data, const bool &is_staff)
 {
 	Event event;
@@ -2903,7 +2906,6 @@ void view_registration_staff(RenderWindow &window, int &page, const float &scale
 		delete square[i], square_here[i], inf[i], num[i];
 	delete add_class, add_class_here;
 }
-
 void view_registration_student(YearNode *school, RenderWindow &window, int &page, const float &scale, RegistrationSession data, const bool &is_staff, StudentNode *user)
 {
 	Event event;
@@ -3272,4 +3274,68 @@ void view_registration_student(YearNode *school, RenderWindow &window, int &page
 	for (int i = 0; i < 4; i++)
 		delete square[i], square_here[i], inf[i], num[i], square_del[i];
 	delete sub, sub_here;
+}
+bool add_new_class(RenderWindow& window, int& page, const float& scale, ClassNode* class_list) {
+	bool  entered = false, change = false;
+	Event event;
+	Object out = createObject("content/logout.png", 300 * scale, 383.0f * scale);
+	Object out_here = createObject("content/logout1.png", 300.0f * scale, 383.0f * scale);
+	Object screen = createObject("content/Staff/Create elements/enter.png", 300.0f * scale, 390.0f * scale);
+	Info class_name = createInfo("content/Oswald-Light.ttf", "Enter Class ID ", 380.0f * scale, 413.0f * scale, 24.25f * scale);
+	Info teacher_name = createInfo("content/Oswald-Light.ttf", "Enter Head Teacher Name ", 380.0f * scale, 454.0f * scale, 24.25f * scale);
+	Object ok = createObject("content/Registration/a1.png", 425.0f * scale, 493.0f * scale);
+	Object ok_here = createObject("content/Staff/Create elements/b1.png", 425.0f * scale, 493.0f * scale);
+	while (window.isOpen()) {
+		Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+		while (window.pollEvent(event))
+		{
+			window.draw(screen.draw);
+			window.draw(class_name.text);
+			window.draw(teacher_name.text);
+			drawWhich(window, out_here, out, mouse);
+			drawWhich(window, ok_here, ok, mouse);
+			window.display();
+			switch (event.type)
+			{
+			case Event::Closed:
+			{
+				window.close();
+				break;
+			}
+			case Event::MouseButtonReleased:
+			{
+				if (event.mouseButton.button == Mouse::Left)
+				{
+					if (isHere(out.bound, mouse))return 0;
+					if (isHere(ok.bound, mouse)) {
+						Class new_class_1 = createClass(class_name.s, teacher_name.s);
+						appendNewClassNode(class_list, new_class_1);
+						return 1; }
+					if (isHere(class_name.bound, mouse))
+					{
+						class_name.check = true;
+						teacher_name.check = false;
+					}
+					else if (isHere(teacher_name.bound, mouse))
+					{
+						teacher_name.check = true;
+						class_name.check = false;
+					}
+					else {
+						teacher_name.check = false;
+						class_name.check = false;
+					}
+				}
+			}
+			case Event::TextEntered:
+			{
+				texting(class_name, event.text.unicode, 10);
+				texting(teacher_name, event.text.unicode, 30);
+			}
+			}
+
+		}
+	}
+	Class new_class_1= createClass(class_name.s, teacher_name.s);
+	appendNewClassNode(class_list, new_class_1);
 }

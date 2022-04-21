@@ -48,6 +48,7 @@ bool change_course_info(RenderWindow &window, int &page, const float &scale, Cou
 bool add_new_course(RenderWindow &window, int &page, const float &scale, CourseNode *&course, const string &year, const string &sem);
 void view_registration_staff(RenderWindow& window, int& page, const float& scale, RegistrationSession data, const bool& is_staff);
 void view_registration_student(YearNode* school, RenderWindow& window, int& page, const float& scale, RegistrationSession data, const bool& is_staff, StudentNode* user);
+bool add_new_class(RenderWindow& window, int& page, const float& scale, ClassNode* class_list);
 //-----------------Other features--------------------------
 
 bool isHere(FloatRect &bound, Vector2f &mouse);

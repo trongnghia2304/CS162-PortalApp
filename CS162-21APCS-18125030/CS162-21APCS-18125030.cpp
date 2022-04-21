@@ -33,7 +33,7 @@ int main()
 	readFromFileStudentNode(staff_input_path, &all_staffs);
 	readFromFileYearNode(school_input_path, &school);
 	readFromFileClassNode1(student_input_path, all_classes1);
-	readFromFileRegSess(registration_input_path, data);
+	//readFromFileRegSess(registration_input_path, data);
 
 	setupMyCourses(all_classes1, school);
 
@@ -65,7 +65,6 @@ int main()
 	window.create(VideoMode(1000.0f * scale, 750.0f * scale), "CS162-Project", Style::Close);
 	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 	int page = 1;
-
 	StudentNode *user = NULL;
 	bool is_staff;
 
@@ -124,6 +123,7 @@ int main()
 			view_class_list(window, page, scale, all_classes1, is_staff);
 			break;
 		}
+		
 		case 11:
 		{
 			if (is_staff)
@@ -143,7 +143,7 @@ int main()
 	writeToFileStudentNode(staff_output_path, all_staffs);
 	writeToFileYearNode(school_output_path, school);
 	writeToFileClassNode1(student_output_path, all_classes1);
-	writeToFileRegSess(registration_output_path, data);
+	//writeToFileRegSess(registration_output_path, data);
 
 	// delete all SLL
 	// deleteClassNode(all_classes);

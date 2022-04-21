@@ -7,6 +7,7 @@ Class createClass(string p_class_id, string p_head_teacher)
 	Class new_class;
 	new_class.class_id.assign(p_class_id);
 	new_class.head_teacher.assign(p_head_teacher);
+	new_class.student_list = NULL;
 	return new_class;
 }
 ClassNode* initClassNode(Class p_new_class)
