@@ -318,25 +318,14 @@ void writeToFileCourseNode(ofstream &openFile, CourseNode *p_head)
 }
 bool checkCourseCollision(Course a, Course b)
 {
-    if (a.teaching_session[0].day_of_the_week == b.teaching_session[0].day_of_the_week)
-    {
-        if (a.teaching_session[0].session_no == b.teaching_session[0].session_no)
-            return true;
-    }
-    else if (a.teaching_session[0].day_of_the_week == b.teaching_session[1].day_of_the_week)
-    {
-        if (a.teaching_session[0].session_no == b.teaching_session[1].session_no)
-            return true;
-    }
-    else if (a.teaching_session[1].day_of_the_week == b.teaching_session[0].day_of_the_week)
-    {
-        if (a.teaching_session[1].session_no == b.teaching_session[0].session_no)
-            return true;
-    }
-    else if (a.teaching_session[1].day_of_the_week == b.teaching_session[1].day_of_the_week)
-    {
-        if (a.teaching_session[1].session_no == b.teaching_session[1].session_no)
-            return true;
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            if (a.teaching_session[i].day_of_the_week == b.teaching_session[i].day_of_the_week && a.teaching_session[j].session_no == b.teaching_session[j].session_no)
+            {
+                cout << a.teaching_session[i].day_of_the_week << a.teaching_session[i].session_no << endl;
+                return true;
+            }
+        }
     }
     return false;
 }

@@ -2990,15 +2990,21 @@ void view_class_list(RenderWindow &window, int &page, const float &scale, ClassN
 
 void view_registration_staff(YearNode *school, RenderWindow &window, int &page, const float &scale, RegistrationSession &data, const bool &is_staff)
 {
-	YearNode *current_year = searchYearNode(school, data.year);
-	SemesterNode *current_semester = searchSemesterNode(current_year->school_year.list_sem, data.sem);
+	YearNode *cur_year = searchYearNode(school, data.year);
+	SemesterNode *cur_sem = searchSemesterNode(cur_year->school_year.list_sem, data.sem);
 	CourseNode *cur = data.list_of_courses;
 	while (cur)
 	{
 		string tmp = cur->course.course_id;
+		CourseNode* pre = cur;
 		cur = cur->next;
-		if (!searchCourseNode(current_semester->sem.course_list, tmp))
+		CourseNode *temp = searchCourseNode(cur_sem->sem.course_list, tmp);
+		if (!temp)
 			removeCourseNode(&data.list_of_courses, tmp);
+		else
+		{
+			pre->course = temp->course;
+		}
 	}
 	Event event;
 	Info class_name = createInfo("content/Oswald-Light.ttf", "Enter Course ID", 400.0f * scale, 415.0f * scale, 16.0f * scale);
@@ -3090,8 +3096,8 @@ void view_registration_staff(YearNode *school, RenderWindow &window, int &page, 
 						add_new = true;
 						class_name.s = "";
 						teacher_name.s = "";
-						class_name.text.setString(class_name.s);
-						teacher_name.text.setString(teacher_name.s);
+						class_name.text.setString("Enter Course ID");
+						teacher_name.text.setString("Enter Teacher name");
 					}
 					if (!add_new)
 					{
@@ -3121,12 +3127,7 @@ void view_registration_staff(YearNode *school, RenderWindow &window, int &page, 
 					}
 					else
 					{
-						if (isHere(return1.bound, mouse) && (success || fail))
-						{
-							add_new = false;
-							success = false;
-							fail = false;
-						}
+
 						if (success || fail)
 						{
 							teacher_name.check = false;
@@ -3178,6 +3179,12 @@ void view_registration_staff(YearNode *school, RenderWindow &window, int &page, 
 							}
 							start_date.check = false;
 							end_date.check = false;
+						}
+						if (isHere(return1.bound, mouse) && (success || fail))
+						{
+							add_new = false;
+							success = false;
+							fail = false;
 						}
 					}
 				}
@@ -3339,6 +3346,22 @@ void view_registration_staff(YearNode *school, RenderWindow &window, int &page, 
 }
 void view_registration_student(YearNode *school, RenderWindow &window, int &page, const float &scale, RegistrationSession data, const bool &is_staff, StudentNode *user)
 {
+	YearNode* cur_year = searchYearNode(school, data.year);
+	SemesterNode* cur_sem = searchSemesterNode(cur_year->school_year.list_sem, data.sem);
+	CourseNode* cur = data.list_of_courses;
+	while (cur)
+	{
+		string tmp = cur->course.course_id;
+		CourseNode* pre = cur;
+		cur = cur->next;
+		CourseNode* temp = searchCourseNode(cur_sem->sem.course_list, tmp);
+		if (!temp)
+			removeCourseNode(&data.list_of_courses, tmp);
+		else
+		{
+			pre->course = temp->course;
+		}
+	}
 	Event event;
 	Object screen = createObject("content/Registration/register_student.png");
 	Object out = createObject("content/logout.png", 866.0f * scale, 106.0f * scale);
@@ -3448,22 +3471,17 @@ void view_registration_student(YearNode *school, RenderWindow &window, int &page
 												if (checkCourseCollision(cur->course->course, a_class[i]->course))
 												{
 													collision = true;
+													fail = true;
+													stop = true;
 													break;
 												}
 											}
 										}
-										if (collision)
-										{
-											fail = true;
-											stop = true;
-										}
-										else
+										if (!collision)
 										{
 											int k = 2;
 											count_check++;
 											count_class.text.setString(to_string(count_check) + "/5 Courses");
-											YearNode *cur_year = searchYearNode(school, a_class[i]->year_id);
-											SemesterNode *cur_sem = searchSemesterNode(cur_year->school_year.list_sem, a_class[i]->semester_id);
 											CourseNode *cur_course = searchCourseNode(cur_sem->sem.course_list, a_class[i]->course.course_id);
 											MyCourse *new_cur = createMyCourse(cur_course);
 											appendNewMyCourse(user, new_cur);
