@@ -961,7 +961,7 @@ void view_course(RenderWindow &window, int &page, const float &scale, StudentNod
 	Object right = createObject("content/Staff/Class/Asset 56.png", 510.0f * scale, 644.0f * scale);
 	Object right_here = createObject("content/Staff/Class/Asset 90.png", 510.0f * scale, 644.0f * scale);
 	Object right_valid = createObject("content/Staff/Class/Asset 54.png", 510.0f * scale, 644.0f * scale);
-	Info *inf[6][5];
+	Info *inf[6][4];
 	Object *square[6], *square_here[6];
 	CourseNode *course[6];
 	for (int i = 0; i < 3; i++)
@@ -969,8 +969,8 @@ void view_course(RenderWindow &window, int &page, const float &scale, StudentNod
 		square[i] = createObjectTest("content/Student/course.png", (172.0f + 220.0f * i) * scale, 322.0f * scale);
 		square_here[i] = createObjectTest("content/Student/course_here.png", (172.0f + 220.0f * i) * scale, 322.0f * scale);
 		inf[i][0] = createInfoTest("content/Oswald-Medium.ttf", "demo_text", (243.0f + 220.0f * i) * scale, 330.0f * scale, 25.0f * scale);
-		for (int j = 1; j < 5; j++)
-			inf[i][j] = createInfoTest("content/Oswald-Medium.ttf", "demo_text", (198.0f + 220.0f * i) * scale, (378.0f + 22.0f * j) * scale, 13.0f * scale);
+		for (int j = 1; j < 4; j++)
+			inf[i][j] = createInfoTest("content/Oswald-Medium.ttf", "demo_text", (185.0f + 220.0f * i) * scale, (356.0f + 22.0f * j) * scale, 12.5f * scale);
 	}
 	for (int i = 3; i < 6; i++)
 	{
@@ -978,8 +978,8 @@ void view_course(RenderWindow &window, int &page, const float &scale, StudentNod
 		square[i] = createObjectTest("content/Student/course.png", (172.0f + 220.0f * (i - 3)) * scale, 480.0f * scale);
 		square_here[i] = createObjectTest("content/Student/course_here.png", (172.0f + 220.0f * (i - 3)) * scale, 480.0f * scale);
 		inf[i][0] = createInfoTest("content/Oswald-Medium.ttf", "demo_text", (243.0f + 220.0f * (i - 3)) * scale, 485.0f * scale, 25.0f * scale);
-		for (int j = 1; j < 5; j++)
-			inf[i][j] = createInfoTest("content/Oswald-Medium.ttf", "demo_text", (198.0f + 220.0f * i) * scale, (532.0f + 22.0f * j) * scale, 13.0f * scale);
+		for (int j = 1; j < 4; j++)
+			inf[i][j] = createInfoTest("content/Oswald-Medium.ttf", "demo_text", (185.0f + 220.0f * (i - 3)) * scale, (518.0f + 22.0f * j) * scale, 12.5f * scale);
 	}
 	int count = 0, change = 0;
 	bool trigger_page = true;
@@ -1075,15 +1075,14 @@ void view_course(RenderWindow &window, int &page, const float &scale, StudentNod
 					inf[i][0]->text.setString(cur->course->course.course_id);
 					inf[i][1]->text.setString(cur->course->course.course_name);
 					inf[i][2]->text.setString(cur->course->course.teacher_name);
-					inf[i][3]->text.setString("Credit: " + to_string(cur->course->course.num_credit));
-					inf[i][4]->text.setString(session_convert(cur->course->course.teaching_session[0]) + ", " + session_convert(cur->course->course.teaching_session[1]));
+					inf[i][3]->text.setString("Credit: " + to_string(cur->course->course.num_credit) + "    " + session_convert(cur->course->course.teaching_session[0]) + ", " + session_convert(cur->course->course.teaching_session[1]));
 					inf[i][0]->text.setPosition(square[i]->bound.left + (square[i]->bound.width - inf[i][0]->text.getGlobalBounds().width) / 2, square[i]->bound.top + 16.0f);
 					cur = cur->next;
 				}
 				else
 				{
 					course[i] = nullptr;
-					for (int j = 0; j < 5; j++)
+					for (int j = 0; j < 4; j++)
 						inf[i][j]->text.setString("");
 				}
 			}
@@ -1094,7 +1093,7 @@ void view_course(RenderWindow &window, int &page, const float &scale, StudentNod
 			if (inf[i][0]->text.getString() == "")
 				break;
 			window.draw(square[i]->draw);
-			for (int j = 0; j < 5; j++)
+			for (int j = 0; j < 4; j++)
 				window.draw(inf[i][j]->text);
 		}
 		window.display();
@@ -1102,7 +1101,7 @@ void view_course(RenderWindow &window, int &page, const float &scale, StudentNod
 	for (int i = 0; i < 6; i++)
 	{
 		delete square[i], square_here[i];
-		for (int j = 0; j < 5; j++)
+		for (int j = 0; j < 4; j++)
 			delete inf[i][j];
 	}
 	delete screen;
@@ -1148,9 +1147,8 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 		rem[i] = createObjectTest("content/Staff/Create elements/rem.png", (172.0f + 220.0f * i) * scale, 322.0f * scale);
 		rem_here[i] = createObjectTest("content/Staff/Create elements/rem_here.png", (172.0f + 220.0f * i) * scale, 322.0f * scale);
 		inf[i][0] = createInfoTest("content/Oswald-Medium.ttf", "demo_text", (243.0f + 220.0f * i) * scale, 330.0f * scale, 25.0f * scale);
-		inf[i][1] = createInfoTest("content/Oswald-Medium.ttf", "demo_text", (185.0f + 220.0f * i) * scale, 378.0f * scale, 12.5f * scale);
-		inf[i][2] = createInfoTest("content/Oswald-Medium.ttf", "demo_text", (185.0f + 220.0f * i) * scale, 400.0f * scale, 12.5f * scale);
-		inf[i][3] = createInfoTest("content/Oswald-Medium.ttf", "demo_text", (185.0f + 220.0f * i) * scale, 422.0f * scale, 12.5f * scale);
+		for (int j = 1; j < 4; j++)
+			inf[i][j] = createInfoTest("content/Oswald-Medium.ttf", "demo_text", (185.0f + 220.0f * i) * scale, (356.0f + 22.0f * j) * scale, 12.5f * scale);
 	}
 	for (int i = 3; i < 6; i++)
 	{
@@ -1160,9 +1158,8 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 		rem_here[i] = createObjectTest("content/Staff/Create elements/rem_here.png", (172.0f + 220.0f * (i - 3)) * scale, 480.0f * scale);
 		square_here[i] = createObjectTest("content/Student/course_here.png", (172.0f + 220.0f * (i - 3)) * scale, 480.0f * scale);
 		inf[i][0] = createInfoTest("content/Oswald-Medium.ttf", "demo_text", (243.0f + 220.0f * (i - 3)) * scale, 485.0f * scale, 25.0f * scale);
-		inf[i][1] = createInfoTest("content/Oswald-Medium.ttf", "demo_text", (185.0f + 220.0f * (i - 3)) * scale, 532.0f * scale, 12.5f * scale);
-		inf[i][2] = createInfoTest("content/Oswald-Medium.ttf", "demo_text", (185.0f + 220.0f * (i - 3)) * scale, 554.0f * scale, 12.5f * scale);
-		inf[i][3] = createInfoTest("content/Oswald-Medium.ttf", "demo_text", (185.0f + 220.0f * (i - 3)) * scale, 576.0f * scale, 12.5f * scale);
+		for (int j = 1; j < 4; j++)
+			inf[i][j] = createInfoTest("content/Oswald-Medium.ttf", "demo_text", (185.0f + 220.0f * (i - 3)) * scale, (518.0f + 22.0f * j) * scale, 12.5f * scale);
 	}
 	int count = 0, change = 0;
 	bool trigger_page = true, del = false, sure_check = false, success = false, tick = false;
@@ -1331,7 +1328,7 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 					inf[i][0]->text.setString(cur->course.course_id);
 					inf[i][1]->text.setString(cur->course.course_name);
 					inf[i][2]->text.setString(cur->course.teacher_name);
-					inf[i][3]->text.setString("Credit: " + to_string(cur->course.num_credit));
+					inf[i][3]->text.setString("Credit: " + to_string(cur->course.num_credit) + "    " + session_convert(cur->course.teaching_session[0]) + ", " + session_convert(cur->course.teaching_session[1]));
 					inf[i][0]->text.setPosition(Vector2f(square[i]->bound.left + (square[i]->bound.width - inf[i][0]->text.getGlobalBounds().width) / 2, square[i]->bound.top + 16.0f));
 					cur = cur->next;
 				}
@@ -1821,7 +1818,7 @@ void view_year(RenderWindow &window, int &page, const float &scale, YearNode *ye
 				{
 					switchPage(out.bound, mouse, 1, page);
 					switchPage(back.bound, mouse, (is_staff ? 4 : 3), page);
-					if (isHere(add_year.bound, mouse))
+					if (isHere(add_year.bound, mouse) && is_staff)
 					{
 						YearNode *cur = year;
 						string s;
@@ -2993,6 +2990,16 @@ void view_class_list(RenderWindow &window, int &page, const float &scale, ClassN
 
 void view_registration_staff(YearNode *school, RenderWindow &window, int &page, const float &scale, RegistrationSession &data, const bool &is_staff)
 {
+	YearNode *current_year = searchYearNode(school, data.year);
+	SemesterNode *current_semester = searchSemesterNode(current_year->school_year.list_sem, data.sem);
+	CourseNode *cur = data.list_of_courses;
+	while (cur)
+	{
+		string tmp = cur->course.course_id;
+		cur = cur->next;
+		if (!searchCourseNode(current_semester->sem.course_list, tmp))
+			removeCourseNode(&data.list_of_courses, tmp);
+	}
 	Event event;
 	Info class_name = createInfo("content/Oswald-Light.ttf", "Enter Course ID", 400.0f * scale, 415.0f * scale, 16.0f * scale);
 	Info teacher_name = createInfo("content/Oswald-Light.ttf", "Enter Teacher name", 400.0f * scale, 455.0f * scale, 16.0f * scale);
