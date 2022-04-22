@@ -613,6 +613,7 @@ void profile(RenderWindow &window, int &page, const float &scale, StudentNode *s
 		delete (inf[i]);
 }
 
+// student
 void view_class(RenderWindow &window, int &page, const float &scale, ClassNode *class_list, StudentNode *user, const bool &is_staff)
 {
 	Event event;
@@ -776,6 +777,7 @@ void view_class(RenderWindow &window, int &page, const float &scale, ClassNode *
 	}
 }
 
+// staff
 void view_class(string cur_class, string cur_teacher, RenderWindow &window, int &page, const float &scale, ClassNode *class_list, StudentNode *user, const bool &is_staff)
 {
 	Event event;
@@ -2645,6 +2647,7 @@ bool change_course_info(RenderWindow &window, int &page, const float &scale, Cou
 		delete (inf[i]);
 	return check;
 }
+
 void view_class_list(RenderWindow &window, int &page, const float &scale, ClassNode *&class_list, bool &is_staff)
 {
 	Event event;
@@ -2682,9 +2685,7 @@ void view_class_list(RenderWindow &window, int &page, const float &scale, ClassN
 	int count = 0, change = 0;
 	bool trigger_page = true, del = false, sure_check = false, success = false, add_new = false;
 	for (ClassNode *cur = class_list; cur; cur = cur->next)
-	{
 		count++;
-	}
 	Info *inf[5], *num[5];
 	Object *square[5], *square_here[5], *rem[5], *rem_here[5];
 	ClassNode *a_class[5], *tmp = nullptr;
@@ -2990,15 +2991,23 @@ void view_class_list(RenderWindow &window, int &page, const float &scale, ClassN
 		delete square[i], square_here[i], inf[i], rem[i], rem_here[i];
 }
 
-void view_registration_staff(RenderWindow &window, int &page, const float &scale, RegistrationSession &data, const bool &is_staff)
+void view_registration_staff(YearNode *school, RenderWindow &window, int &page, const float &scale, RegistrationSession &data, const bool &is_staff)
 {
 	Event event;
+	Info class_name = createInfo("content/Oswald-Light.ttf", "Enter Course ID", 400.0f * scale, 415.0f * scale, 16.0f * scale);
+	Info teacher_name = createInfo("content/Oswald-Light.ttf", "Enter Teacher name", 400.0f * scale, 455.0f * scale, 16.0f * scale);
 	Object screen = createObject("content/Registration/register_student.png");
 	Object out = createObject("content/logout.png", 866.0f * scale, 106.0f * scale);
 	Object out_here = createObject("content/logout1.png", 866.0f * scale, 106.0f * scale);
 	Object back = createObject("content/return.png", 80.0f * scale, 106.0f * scale);
 	Object back_here = createObject("content/return1.png", 80.0f * scale, 106.0f * scale);
 	Object *add_class, *add_class_here;
+	Object return2 = createObject("content/General/a7.png", 386.0f * scale, 484.0f * scale);
+	Object return2_here = createObject("content/General/b7.png", 386.0f * scale, 484.0f * scale);
+	Object ok = createObject("content/General/a1.png", 516.0f * scale, 484.0f * scale);
+	Object ok_here = createObject("content/General/b1.png", 516.0f * scale, 484.0f * scale);
+	Object enter = createObject("content/Staff/Create elements/enter.png", 316.0f * scale, 386.0f * scale);
+	Object invalid = createObject("content/Registration/invalid.png", 316.0f * scale, 386.0f * scale);
 	Info sub_header = createInfo("content/VNI-Vari.TTF", "Course Registration", 160.0f * scale, 158.0f * scale, 28.0f * scale);
 	sub_header.text.setFillColor(Color(101, 159, 235));
 	Info header = createInfo("content/VNI-Vari.TTF", data.year + " " + data.sem, 160.0f * scale, 200.0f * scale, 43.0f * scale);
@@ -3030,11 +3039,9 @@ void view_registration_staff(RenderWindow &window, int &page, const float &scale
 	Object ofcourse = createObject("content/General/a2.png", 506.0f * scale, 484.0f * scale);
 	Object ofcourse_here = createObject("content/General/b2.png", 506.0f * scale, 484.0f * scale);
 	int count = 0, change = 0;
-	bool trigger_page = true, del = false, sure_check = false, success = false;
+	bool trigger_page = true, del = false, sure_check = false, fail = false, success = false, add_new = false;
 	for (CourseNode *cur = data.list_of_courses; cur; cur = cur->next)
-	{
 		count++;
-	}
 	Info *inf[4], *num[4];
 	Info start_date = createInfo("content/Oswald-Regular.ttf", data.start_date, 216.0f * scale, 284.0f * scale, 18.0f * scale);
 	Info end_date = createInfo("content/Oswald-Regular.ttf", data.end_date, 568.0f * scale, 284.0f * scale, 18.0f * scale);
@@ -3073,37 +3080,98 @@ void view_registration_staff(RenderWindow &window, int &page, const float &scale
 					switchPage(back.bound, mouse, 4, page);
 					if (isHere(add_class->bound, mouse))
 					{
-						// window.close();
-						//  add new class
+						add_new = true;
+						class_name.s = "";
+						teacher_name.s = "";
+						class_name.text.setString(class_name.s);
+						teacher_name.text.setString(teacher_name.s);
 					}
-					if (isHere(right.bound, mouse) && change <= count - 4)
+					if (!add_new)
 					{
-						trigger_page = true;
-						change += 4;
-					}
-					if (isHere(left.bound, mouse) && change != 0)
-					{
-						trigger_page = true;
-						change -= 4;
-					}
-					for (int i = 0; i < 4; i++)
-					{
-						if (isHere(square[i]->bound, mouse))
+						if (isHere(right.bound, mouse) && change <= count - 4)
 						{
-							page = 10;
-							course_student(0, window, page, scale, a_class[i]);
-							page = 11;
+							trigger_page = true;
+							change += 4;
 						}
+						if (isHere(left.bound, mouse) && change != 0)
+						{
+							trigger_page = true;
+							change -= 4;
+						}
+						for (int i = 0; i < 4; i++)
+						{
+							if (isHere(square[i]->bound, mouse))
+							{
+								page = 10;
+								course_student(0, window, page, scale, a_class[i]);
+								page = 11;
+							}
+						}
+						teacher_name.check = false;
+						class_name.check = false;
+						start_date.check = isHere(start_date.bound, mouse);
+						end_date.check = isHere(end_date.bound, mouse);
 					}
-					if (isHere(start_date.bound, mouse))
+					else
 					{
-						start_date.check = true;
-						end_date.check = false;
-					}
-					else if (isHere(end_date.bound, mouse))
-					{
-						start_date.check = false;
-						end_date.check = true;
+						if (isHere(return1.bound, mouse) && (success || fail))
+						{
+							add_new = false;
+							success = false;
+							fail = false;
+						}
+						if (success || fail)
+						{
+							teacher_name.check = false;
+							class_name.check = false;
+						}
+						else
+						{
+							add_new = !isHere(return2.bound, mouse);
+							if (isHere(ok.bound, mouse))
+							{
+								YearNode *cur_year = searchYearNode(school, data.year);
+								if (!cur_year)
+									fail = true;
+								else
+								{
+									SemesterNode *cur_sem = searchSemesterNode(cur_year->school_year.list_sem, data.sem);
+									if (!cur_sem)
+										fail = true;
+									else
+									{
+										CourseNode *cur_course = searchCourseNode(cur_sem->sem.course_list, class_name.s);
+										if (!cur_course)
+											fail = true;
+										else
+										{
+											if (teacher_name.s == cur_course->course.teacher_name)
+											{
+												CourseNode *check_course = searchCourseNode(data.list_of_courses, class_name.s);
+												if (check_course)
+													fail = true;
+												else
+												{
+													success = true;
+													Course new_registration = cur_course->course;
+													appendNewCourseNode(&data.list_of_courses, new_registration);
+													trigger_page = true;
+												}
+											}
+											else
+												fail = true;
+										}
+									}
+								}
+							}
+							else
+							{
+								teacher_name.check = isHere(teacher_name.bound, mouse);
+								class_name.check = isHere(class_name.bound, mouse);
+							}
+							start_date.check = false;
+							end_date.check = false;
+						}
 					}
 				}
 				break;
@@ -3112,6 +3180,8 @@ void view_registration_staff(RenderWindow &window, int &page, const float &scale
 			{
 				texting(start_date, event.text.unicode, 11);
 				texting(end_date, event.text.unicode, 11);
+				texting(teacher_name, event.text.unicode, 40);
+				texting(class_name, event.text.unicode, 40);
 				data.start_date = start_date.s;
 				data.end_date = end_date.s;
 				break;
@@ -3126,25 +3196,97 @@ void view_registration_staff(RenderWindow &window, int &page, const float &scale
 		window.draw(header.text);
 		window.draw(sub_header.text);
 		drawWhich(window, add_class_here, add_class, mouse);
-		if (change == 0 && change >= count - 4)
+		if (add_new)
 		{
-			window.draw(right.draw);
-			window.draw(left.draw);
-		}
-		else if (change == 0)
-		{
-			window.draw(left.draw);
-			drawWhich(window, right_here, right_valid, mouse);
-		}
-		else if (change >= count - 4)
-		{
-			window.draw(right.draw);
-			drawWhich(window, left_here, left_valid, mouse);
+			if (change == 0 && change >= count - 4)
+			{
+				window.draw(right.draw);
+				window.draw(left.draw);
+			}
+			else if (change == 0)
+			{
+				window.draw(left.draw);
+				window.draw(right_valid.draw);
+			}
+			else if (change >= count - 4)
+			{
+				window.draw(right.draw);
+				window.draw(left_valid.draw);
+			}
+			else
+			{
+				window.draw(right_valid.draw);
+				window.draw(left_valid.draw);
+			}
+			for (int i = 0; i < 4; i++)
+			{
+				if (inf[i]->text.getString() == "")
+					break;
+				window.draw(border[i]->draw);
+				inf[i]->text.setFillColor(Color(46, 58, 112));
+				num[i]->text.setFillColor(Color(46, 58, 112));
+
+				window.draw(inf[i]->text);
+				window.draw(num[i]->text);
+			}
+			if (success)
+			{
+				window.draw(del_success.draw);
+				drawWhich(window, return1_here, return1, mouse);
+			}
+			else if (fail)
+			{
+				window.draw(invalid.draw);
+				drawWhich(window, return1_here, return1, mouse);
+			}
+			else
+			{
+				window.draw(enter.draw);
+				drawWhich(window, ok_here, ok, mouse);
+				drawWhich(window, return2_here, return2, mouse);
+				window.draw(teacher_name.text);
+				window.draw(class_name.text);
+			}
 		}
 		else
 		{
-			drawWhich(window, right_here, right_valid, mouse);
-			drawWhich(window, left_here, left_valid, mouse);
+			if (change == 0 && change >= count - 4)
+			{
+				window.draw(right.draw);
+				window.draw(left.draw);
+			}
+			else if (change == 0)
+			{
+				window.draw(left.draw);
+				drawWhich(window, right_here, right_valid, mouse);
+			}
+			else if (change >= count - 4)
+			{
+				window.draw(right.draw);
+				drawWhich(window, left_here, left_valid, mouse);
+			}
+			else
+			{
+				drawWhich(window, right_here, right_valid, mouse);
+				drawWhich(window, left_here, left_valid, mouse);
+			}
+			for (int i = 0; i < 4; i++)
+			{
+				if (inf[i]->text.getString() == "")
+					break;
+				if (drawWhich(window, border_here[i], border[i], mouse))
+				{
+					inf[i]->text.setFillColor(Color(118, 36, 2));
+					num[i]->text.setFillColor(Color(118, 36, 2));
+				}
+				else
+				{
+					inf[i]->text.setFillColor(Color(46, 58, 112));
+					num[i]->text.setFillColor(Color(46, 58, 112));
+				}
+				window.draw(inf[i]->text);
+				window.draw(num[i]->text);
+			}
 		}
 		if (trigger_page)
 		{
@@ -3180,55 +3322,6 @@ void view_registration_staff(RenderWindow &window, int &page, const float &scale
 		drawWhich(window, out_here, out, mouse);
 		drawWhich(window, back_here, back, mouse);
 		window.draw(count_class.text);
-		for (int i = 0; i < 4; i++)
-		{
-			if (inf[i]->text.getString() == "")
-				break;
-			if (success || sure_check)
-			{
-				window.draw(border[i]->draw);
-				inf[i]->text.setFillColor(Color(46, 58, 112));
-				num[i]->text.setFillColor(Color(46, 58, 112));
-			}
-			else
-			{
-				if (drawWhich(window, border_here[i], border[i], mouse))
-				{
-					inf[i]->text.setFillColor(Color(118, 36, 2));
-					num[i]->text.setFillColor(Color(118, 36, 2));
-				}
-				else
-				{
-					inf[i]->text.setFillColor(Color(46, 58, 112));
-					num[i]->text.setFillColor(Color(46, 58, 112));
-				}
-			}
-			window.draw(inf[i]->text);
-			window.draw(num[i]->text);
-		}
-		// if (del)
-		// {
-		// 	(border) = rem;
-		// 	(border_here) = rem_here;
-		// 	window.draw(del_course_here.draw);
-		// 	if (sure_check)
-		// 	{
-		// 		window.draw(sure.draw);
-		// 		drawWhich(window, nah_here, nah, mouse);
-		// 		drawWhich(window, ofcourse_here, ofcourse, mouse);
-		// 	}
-		// 	if (success)
-		// 	{
-		// 		window.draw(del_success.draw);
-		// 		drawWhich(window, return1_here, return1, mouse);
-		// 	}
-		// }
-		// else
-		// {
-		// 	(border) = square;
-		// 	(border_here) = square_here;
-		// 	drawWhich(window, del_course_here, del_course, mouse);
-		// }
 		window.draw(start_date.text);
 		window.draw(end_date.text);
 		window.display();

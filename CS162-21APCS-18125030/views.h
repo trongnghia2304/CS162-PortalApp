@@ -48,7 +48,7 @@ void view_class_list(RenderWindow &window, int &page, const float &scale, ClassN
 bool change_course_info(RenderWindow &window, int &page, const float &scale, CourseNode *&course, const string &year, const string &sem);
 bool add_new_course(RenderWindow &window, int &page, const float &scale, CourseNode *&course, const string &year, const string &sem);
 bool add_new_class(RenderWindow& window, int& page, const float& scale, ClassNode* class_list);
-void view_registration_staff(RenderWindow &window, int &page, const float &scale, RegistrationSession& data, const bool &is_staff);
+void view_registration_staff(YearNode *school, RenderWindow &window, int &page, const float &scale, RegistrationSession& data, const bool &is_staff);
 void view_registration_student(YearNode *school, RenderWindow &window, int &page, const float &scale, RegistrationSession data, const bool &is_staff, StudentNode *user);
 int student_profile(RenderWindow &window, int &page, const float &scale, StudentNode *&student, bool is_staff, bool is_new, string cur_class);
 //-----------------Other features--------------------------

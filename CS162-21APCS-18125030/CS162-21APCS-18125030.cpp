@@ -93,7 +93,7 @@ int main()
 		case 11:
 		{
 			if (is_staff)
-				view_registration_staff(window, page, scale, data, is_staff);
+				view_registration_staff(school, window, page, scale, data, is_staff);
 			else
 				view_registration_student(school, window, page, scale, data, is_staff, user);
 			break;
