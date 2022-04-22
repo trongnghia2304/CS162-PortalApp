@@ -2334,6 +2334,8 @@ void view_score2(RenderWindow &window, int &page, const float &scale, StudentNod
 		}
 		if (trigger_page)
 		{
+			gpa_count = 0.0f;
+			count_course = 0;
 			MyCourse *cur = user->student.my_course;
 			for (int i = 0; i < change - 1; i++)
 			{
@@ -2374,7 +2376,7 @@ void view_score2(RenderWindow &window, int &page, const float &scale, StudentNod
 				}
 			}
 			if (!count_course)
-				k = 0.0;
+				k = 0.0f;
 			else
 				k = gpa_count / (float)count_course;
 			stringstream gpa;
