@@ -12,9 +12,9 @@ int main()
 	string registration_input_path = "./csv/registration_day.csv";
 	string registration_output_path = "./csv/registration_day_output.csv";
 
-	YearNode* school = nullptr;
-	StudentNode* all_staffs = nullptr;
-	ClassNode* all_classes1 = nullptr;
+	YearNode *school = nullptr;
+	StudentNode *all_staffs = nullptr;
+	ClassNode *all_classes1 = nullptr;
 	RegistrationSession data;
 
 	readFromFileStudentNode(staff_input_path, &all_staffs);
@@ -32,8 +32,9 @@ int main()
 	window.create(VideoMode(1000.0f * scale, 750.0f * scale), "CS162-Project", Style::Close);
 	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 	int page = 1;
-	StudentNode* user = NULL;
+	StudentNode *user = NULL;
 	bool is_staff;
+	string year = "2021-2022", semester = "Semester 2";
 
 	while (page > 0 && window.isOpen())
 	{
@@ -87,7 +88,7 @@ int main()
 		}
 		case 9:
 		{
-			view_class_list(window, page, scale, all_classes1, is_staff);
+			view_class_list(year, semester, window, page, scale, all_classes1, is_staff);
 			break;
 		}
 		case 11:

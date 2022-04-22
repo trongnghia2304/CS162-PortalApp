@@ -34,7 +34,8 @@ void logIn(RenderWindow &window, int &page, bool role, const float &scale, Class
 void studentHome(RegistrationSession data, RenderWindow &window, int &page, const float &scale);
 void staffHome(RenderWindow &window, int &page, const float &scale);
 void profile(RenderWindow &window, int &page, const float &scale, StudentNode *student, bool is_staff);
-void view_class(string cur_class, string cur_teacher, RenderWindow &window, int &page, const float &scale, ClassNode *class_list, StudentNode *user, const bool &is_staff);
+void view_class(const string &year, const string &semester, string cur_class, string cur_teacher, RenderWindow &window, int &page, const float &scale, ClassNode *class_list, StudentNode *user, const bool &is_staff);
+void view_class_score(const string &year, const string &semester, string cur_class, string cur_teacher, RenderWindow &window, int &page, const float &scale, ClassNode *class_list, StudentNode *user, const bool &is_staff);
 void view_class(RenderWindow &window, int &page, const float &scale, ClassNode *class_list, StudentNode *user, const bool &is_staff);
 void course_student(int k, RenderWindow &window, int &page, const float &scale, CourseNode *course);
 void course_student2(RenderWindow &window, int &page, const float &scale, CourseNode *course, ClassNode *all_class);
@@ -44,11 +45,10 @@ void view_course(RenderWindow &window, int &page, const float &scale, CourseNode
 void view_course(RenderWindow &window, int &page, const float &scale, StudentNode *user, const bool &is_staff, const string &sem, const string &year);
 void view_score(RenderWindow &window, int &page, const float &scale, StudentNode *user, const bool &is_staff);
 void view_score2(RenderWindow &window, int &page, const float &scale, StudentNode *user, const bool &is_staff);
-void view_class_list(RenderWindow &window, int &page, const float &scale, ClassNode *&class_list, bool &is_staff);
+void view_class_list(const string& year, const string& semester, RenderWindow &window, int &page, const float &scale, ClassNode *&class_list, bool &is_staff);
 bool change_course_info(RenderWindow &window, int &page, const float &scale, CourseNode *&course, const string &year, const string &sem);
 bool add_new_course(RenderWindow &window, int &page, const float &scale, CourseNode *&course, const string &year, const string &sem);
-bool add_new_class(RenderWindow& window, int& page, const float& scale, ClassNode* class_list);
-void view_registration_staff(YearNode *school, RenderWindow &window, int &page, const float &scale, RegistrationSession& data, const bool &is_staff);
+void view_registration_staff(YearNode *school, RenderWindow &window, int &page, const float &scale, RegistrationSession &data, const bool &is_staff);
 void view_registration_student(YearNode *school, RenderWindow &window, int &page, const float &scale, RegistrationSession data, const bool &is_staff, StudentNode *user);
 int student_profile(RenderWindow &window, int &page, const float &scale, StudentNode *&student, bool is_staff, bool is_new, string cur_class);
 //-----------------Other features--------------------------

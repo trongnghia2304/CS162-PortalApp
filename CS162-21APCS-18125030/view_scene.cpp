@@ -778,9 +778,12 @@ void view_class(RenderWindow &window, int &page, const float &scale, ClassNode *
 }
 
 // staff
-void view_class(string cur_class, string cur_teacher, RenderWindow &window, int &page, const float &scale, ClassNode *class_list, StudentNode *user, const bool &is_staff)
+void view_class(const string &year, const string &semester, string cur_class, string cur_teacher, RenderWindow &window, int &page, const float &scale, ClassNode *class_list, StudentNode *user, const bool &is_staff)
 {
 	Event event;
+	Object export_success = createObject("content/Staff/Create elements/Asset 115.png", 316.0f * scale, 386.0f * scale);
+	Object return1 = createObject("content/Staff/Create elements/a7.png", 444.0f * scale, 484.0f * scale);
+	Object return1_here = createObject("content/Staff/Create elements/b7.png", 444.0f * scale, 484.0f * scale);
 	Object screen = createObject("content/Student/my_class.png");
 	Object out = createObject("content/logout.png", 866.0f * scale, 106.0f * scale);
 	Object out_here = createObject("content/logout1.png", 866.0f * scale, 106.0f * scale);
@@ -796,6 +799,8 @@ void view_class(string cur_class, string cur_teacher, RenderWindow &window, int 
 	Object right = createObject("content/Staff/Class/Asset 56.png", 510.0f * scale, 644.0f * scale);
 	Object right_here = createObject("content/Staff/Class/Asset 90.png", 510.0f * scale, 644.0f * scale);
 	Object right_valid = createObject("content/Staff/Class/Asset 54.png", 510.0f * scale, 644.0f * scale);
+	Object split_here = createObject("content/Student/split_here.png", 324.0f * scale, 272.0f * scale);
+	Object split = createObject("content/Student/split.png", 324.0f * scale, 272.0f * scale);
 	ClassNode *my_class = searchClassNode(class_list, cur_class);
 	Info sub_header = createInfo("content/VNI-Vari.TTF", "Class - " + cur_teacher, 160.0f * scale, 158.0f * scale, 28.0f * scale);
 	sub_header.text.setFillColor(Color(101, 159, 235));
@@ -813,7 +818,7 @@ void view_class(string cur_class, string cur_teacher, RenderWindow &window, int 
 			inf[i][j]->text.setFillColor(Color::Black);
 	}
 	int count = 0, change = 0;
-	bool trigger_page = true;
+	bool trigger_page = true, success = false;
 	for (StudentNode *cur = my_class->my_class.student_list; cur; cur = cur->next)
 	{
 		count++;
@@ -839,9 +844,26 @@ void view_class(string cur_class, string cur_teacher, RenderWindow &window, int 
 					switchPage(out.bound, mouse, 1, page);
 
 					if (!is_staff)
+					{
 						switchPage(back.bound, mouse, 5, page);
+					}
 					else
+					{
+						switchPage(split.bound, mouse, 22, page);
+						view_class_score(year, semester, cur_class, cur_teacher, window, page, scale, class_list, user, is_staff);
 						switchPage(back.bound, mouse, 9, page);
+						if (success && isHere(return1.bound, mouse))
+							success = false;
+						if (isHere(export_1.bound, mouse))
+						{
+							success = true;
+							string exported_student = "./csv/exported/" + my_class->my_class.class_id + "_" + my_class->my_class.head_teacher + ".csv";
+							ofstream fout;
+							fout.open(exported_student);
+							writeToFileStudentNode(fout, my_class->my_class.student_list);
+							fout.close();
+						}
+					}
 					if (isHere(add_student.bound, mouse) && is_staff)
 					{
 						page = 2;
@@ -849,7 +871,6 @@ void view_class(string cur_class, string cur_teacher, RenderWindow &window, int 
 						count += k;
 						count_student.text.setString("Total: " + to_string(count) + " Students");
 						trigger_page = true;
-						// add new student to the class
 					}
 					if (isHere(right.bound, mouse) && change <= count - 8)
 					{
@@ -872,11 +893,13 @@ void view_class(string cur_class, string cur_teacher, RenderWindow &window, int 
 		window.clear();
 		window.draw(screen.draw);
 		if (is_staff)
+		{
 			drawWhich(window, add_student_here, add_student, mouse);
+			drawWhich(window, export_here_1, export_1, mouse);
+			drawWhich(window, split_here, split, mouse);
+		}
 		drawWhich(window, out_here, out, mouse);
 		drawWhich(window, back_here, back, mouse);
-		if (is_staff)
-			drawWhich(window, export_here_1, export_1, mouse);
 		window.draw(header.text);
 		window.draw(sub_header.text);
 		window.draw(count_student.text);
@@ -931,6 +954,222 @@ void view_class(string cur_class, string cur_teacher, RenderWindow &window, int 
 		{
 			for (int j = 0; j < 6; j++)
 				window.draw(inf[i][j]->text);
+		}
+		if (success)
+		{
+			window.draw(export_success.draw);
+			drawWhich(window, return1_here, return1, mouse);
+		}
+		window.display();
+	}
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 6; j++)
+			delete inf[i][j];
+	}
+}
+
+void view_class_score(const string &year, const string &semester, string cur_class, string cur_teacher, RenderWindow &window, int &page, const float &scale, ClassNode *class_list, StudentNode *user, const bool &is_staff)
+{
+	Event event;
+	Object export_success = createObject("content/Staff/Create elements/Asset 115.png", 316.0f * scale, 386.0f * scale);
+	Object return1 = createObject("content/Staff/Create elements/a7.png", 444.0f * scale, 484.0f * scale);
+	Object return1_here = createObject("content/Staff/Create elements/b7.png", 444.0f * scale, 484.0f * scale);
+	Object screen = createObject("content/my_class_score.png");
+	Object out = createObject("content/logout.png", 866.0f * scale, 106.0f * scale);
+	Object out_here = createObject("content/logout1.png", 866.0f * scale, 106.0f * scale);
+	Object export_1 = createObject("content/Staff/Create elements/export.png", 600.0f * scale, 272.0f * scale);
+	Object export_here_1 = createObject("content/Staff/Create elements/export_here.png", 600.0f * scale, 272.0f * scale);
+	Object back = createObject("content/return.png", 80.0f * scale, 106.0f * scale);
+	Object back_here = createObject("content/return1.png", 80.0f * scale, 106.0f * scale);
+	Object add_student = createObject("content/Student/add.png", 682.0f * scale, 272.0f * scale);
+	Object add_student_here = createObject("content/Student/add1.png", 682.0f * scale, 272.0f * scale);
+	Object left = createObject("content/Staff/Class/Asset 57.png", 492.0f * scale, 644.0f * scale);
+	Object left_valid = createObject("content/Staff/Class/Asset 55.png", 492.0f * scale, 644.0f * scale);
+	Object left_here = createObject("content/Staff/Class/Asset 91.png", 492.0f * scale, 644.0f * scale);
+	Object right = createObject("content/Staff/Class/Asset 56.png", 510.0f * scale, 644.0f * scale);
+	Object right_here = createObject("content/Staff/Class/Asset 90.png", 510.0f * scale, 644.0f * scale);
+	Object right_valid = createObject("content/Staff/Class/Asset 54.png", 510.0f * scale, 644.0f * scale);
+	Object split_here = createObject("content/Student/total_here.png", 324.0f * scale, 272.0f * scale);
+	Object split = createObject("content/Student/total.png", 324.0f * scale, 272.0f * scale);
+	ClassNode *my_class = searchClassNode(class_list, cur_class);
+	Info sub_header = createInfo("content/VNI-Vari.TTF", "Class - " + cur_teacher, 160.0f * scale, 158.0f * scale, 28.0f * scale);
+	sub_header.text.setFillColor(Color(101, 159, 235));
+	Info header = createInfo("content/VNI-Vari.TTF", cur_class, 160.0f * scale, 200.0f * scale, 43.0f * scale);
+	Info *inf[8][6];
+	for (int i = 0; i < 8; i++)
+	{
+		inf[i][0] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 184.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		inf[i][1] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 232.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		inf[i][2] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 347.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		inf[i][3] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 602.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		inf[i][4] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 740.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		inf[i][5] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 715.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
+		for (int j = 0; j < 6; j++)
+			inf[i][j]->text.setFillColor(Color::Black);
+	}
+	int count = 0, change = 0;
+	float gpa1[8], gpa_tt[8];
+	bool trigger_page = true, success = false;
+	for (StudentNode *cur = my_class->my_class.student_list; cur; cur = cur->next)
+	{
+		count++;
+	}
+	Info count_student = createInfo("content/Oswald-Regular.ttf", "Total: " + to_string(count) + " Students", 181.0f * scale, 280.0f * scale, 15.0f * scale);
+	count_student.text.setFillColor(Color::White);
+	while (window.isOpen() && page == 22)
+	{
+		Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
+		while (window.pollEvent(event))
+		{
+			switch (event.type)
+			{
+			case Event::Closed:
+			{
+				window.close();
+				break;
+			}
+			case Event::MouseButtonReleased:
+			{
+				if (event.mouseButton.button == Mouse::Left)
+				{
+					switchPage(out.bound, mouse, 1, page);
+
+					if (!is_staff)
+					{
+						switchPage(back.bound, mouse, 5, page);
+					}
+					else
+					{
+						switchPage(back.bound, mouse, 9, page);
+						switchPage(split.bound, mouse, 6, page);
+						if (success && isHere(return1.bound, mouse))
+							success = false;
+						if (isHere(export_1.bound, mouse))
+						{
+							success = true;
+							string exported_student = "./csv/exported/" + my_class->my_class.class_id + "_" + my_class->my_class.head_teacher + ".csv";
+							ofstream fout;
+							fout.open(exported_student);
+							writeToFileStudentNode(fout, my_class->my_class.student_list);
+							fout.close();
+						}
+					}
+					if (isHere(add_student.bound, mouse) && is_staff)
+					{
+						page = 2;
+						int k = student_profile(window, page, scale, my_class->my_class.student_list, is_staff, true, my_class->my_class.class_id);
+						count += k;
+						count_student.text.setString("Total: " + to_string(count) + " Students");
+						trigger_page = true;
+					}
+					if (isHere(right.bound, mouse) && change <= count - 8)
+					{
+						trigger_page = true;
+						change += 8;
+					}
+					if (isHere(left.bound, mouse) && change != 0)
+					{
+						trigger_page = true;
+						change -= 8;
+					}
+				}
+				break;
+			}
+			default:
+				break;
+			}
+		}
+
+		window.clear();
+		window.draw(screen.draw);
+		if (is_staff)
+		{
+			drawWhich(window, add_student_here, add_student, mouse);
+			drawWhich(window, export_here_1, export_1, mouse);
+			drawWhich(window, split_here, split, mouse);
+		}
+		drawWhich(window, out_here, out, mouse);
+		drawWhich(window, back_here, back, mouse);
+		window.draw(header.text);
+		window.draw(sub_header.text);
+		window.draw(count_student.text);
+		if (change == 0 && change >= count - 8)
+		{
+			window.draw(right.draw);
+			window.draw(left.draw);
+		}
+		else if (change == 0)
+		{
+			window.draw(left.draw);
+			drawWhich(window, right_here, right_valid, mouse);
+		}
+		else if (count >= count - 8)
+		{
+			window.draw(right.draw);
+			drawWhich(window, left_here, left_valid, mouse);
+		}
+		else
+		{
+			drawWhich(window, right_here, right_valid, mouse);
+			drawWhich(window, left_here, left_valid, mouse);
+		}
+		if (trigger_page)
+		{
+			StudentNode *cur = my_class->my_class.student_list;
+			for (int i = 0; i < change; i++)
+			{
+				cur = cur->next;
+			}
+			for (int i = 0; i < 8; i++)
+			{
+				if (cur)
+				{
+					gpa1[i] = 0.0f;
+					gpa_tt[i] = 0.0f;
+					inf[i][0]->text.setString(to_string(cur->student.num));
+					inf[i][1]->text.setString(cur->student.student_id);
+					inf[i][2]->text.setString(cur->student.last_name + " " + cur->student.first_name);
+					inf[i][5]->text.setString(cur->student.social_id);
+					int num_course = 0, num_total = 0;
+					for (MyCourse *cur_course = cur->student.my_course; cur_course; cur_course = cur_course->next)
+					{
+						num_total++;
+						gpa_tt[i] += cur_course->score.overall;
+						if (cur_course->course->semester_id == semester && cur_course->course->year_id == year)
+						{
+							num_course++;
+							gpa1[i] += cur_course->score.overall;
+						}
+					}
+					if (num_total)
+						gpa_tt[i] = gpa_tt[i] / (float)num_total;
+					if (num_course)
+						gpa1[i] = gpa1[i] / (float)num_course;
+					stringstream a, b;
+					a << fixed << setprecision(1) << gpa_tt[i];
+					b << fixed << setprecision(1) << gpa1[i];
+					inf[i][4]->text.setString(a.str());
+					inf[i][3]->text.setString(b.str());
+					cur = cur->next;
+				}
+				else
+				{
+					for (int j = 0; j < 6; j++)
+						inf[i][j]->text.setString("");
+				}
+			}
+			trigger_page = false;
+		}
+		for (int i = 0; i < 8; i++)
+		{
+			for (int j = 0; j < 5; j++)
+				window.draw(inf[i][j]->text);
+		}
+		if (success)
+		{
+			window.draw(export_success.draw);
+			drawWhich(window, return1_here, return1, mouse);
 		}
 		window.display();
 	}
@@ -2647,7 +2886,7 @@ bool change_course_info(RenderWindow &window, int &page, const float &scale, Cou
 	return check;
 }
 
-void view_class_list(RenderWindow &window, int &page, const float &scale, ClassNode *&class_list, bool &is_staff)
+void view_class_list(const string &year, const string &semester, RenderWindow &window, int &page, const float &scale, ClassNode *&class_list, bool &is_staff)
 {
 	Event event;
 	Info class_name = createInfo("content/Oswald-Light.ttf", "Enter Class ID", 400.0f * scale, 415.0f * scale, 16.0f * scale);
@@ -2756,7 +2995,7 @@ void view_class_list(RenderWindow &window, int &page, const float &scale, ClassN
 								if (isHere(square[i]->bound, mouse) && a_class[i])
 								{
 									page = 6;
-									view_class(a_class[i]->my_class.class_id, a_class[i]->my_class.head_teacher, window, page, scale, a_class[i], a_class[i]->my_class.student_list, true);
+									view_class(year, semester, a_class[i]->my_class.class_id, a_class[i]->my_class.head_teacher, window, page, scale, a_class[i], a_class[i]->my_class.student_list, true);
 									trigger_page = true;
 								}
 							}
@@ -2998,7 +3237,7 @@ void view_registration_staff(YearNode *school, RenderWindow &window, int &page, 
 	while (cur)
 	{
 		string tmp = cur->course.course_id;
-		CourseNode* pre = cur;
+		CourseNode *pre = cur;
 		cur = cur->next;
 		CourseNode *temp = searchCourseNode(cur_sem->sem.course_list, tmp);
 		if (!temp)
@@ -3348,15 +3587,15 @@ void view_registration_staff(YearNode *school, RenderWindow &window, int &page, 
 }
 void view_registration_student(YearNode *school, RenderWindow &window, int &page, const float &scale, RegistrationSession data, const bool &is_staff, StudentNode *user)
 {
-	YearNode* cur_year = searchYearNode(school, data.year);
-	SemesterNode* cur_sem = searchSemesterNode(cur_year->school_year.list_sem, data.sem);
-	CourseNode* cur = data.list_of_courses;
+	YearNode *cur_year = searchYearNode(school, data.year);
+	SemesterNode *cur_sem = searchSemesterNode(cur_year->school_year.list_sem, data.sem);
+	CourseNode *cur = data.list_of_courses;
 	while (cur)
 	{
 		string tmp = cur->course.course_id;
-		CourseNode* pre = cur;
+		CourseNode *pre = cur;
 		cur = cur->next;
-		CourseNode* temp = searchCourseNode(cur_sem->sem.course_list, tmp);
+		CourseNode *temp = searchCourseNode(cur_sem->sem.course_list, tmp);
 		if (!temp)
 			removeCourseNode(&data.list_of_courses, tmp);
 		else
