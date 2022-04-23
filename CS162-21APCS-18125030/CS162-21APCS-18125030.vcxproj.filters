@@ -91,9 +91,7 @@
     <None Include="csv\student_sample_data.csv">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="csv\student_input.csv">
-      <Filter>Resource Files</Filter>
-    </None>
+    <None Include="csv\student_input copy.csv" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="content\Asset 27.png">

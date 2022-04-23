@@ -73,9 +73,9 @@ void pushNewStudentNode(StudentNode **p_head, Student p_new_student)
 	new_student_node->next = *p_head;
 	*p_head = new_student_node;
 }
-void removeStudentNode(StudentNode **p_head, string p_student_id)
+void removeStudentNode(StudentNode** p_head, string p_student_id)
 {
-	StudentNode *founded_student = searchStudentNode(*p_head, p_student_id);
+	StudentNode* founded_student = searchStudentNode(*p_head, p_student_id);
 	if (!(*p_head) || !founded_student)
 	{
 		cout << "Empty student list...";
@@ -85,13 +85,13 @@ void removeStudentNode(StudentNode **p_head, string p_student_id)
 	// If the required student is at the top of the list
 	if ((*p_head)->student.student_id == p_student_id)
 	{
-		StudentNode *temp = *p_head;
+		StudentNode* temp = *p_head;
 		*p_head = (*p_head)->next;
 		delete temp;
 		return;
 	}
 
-	StudentNode *temp = *p_head;
+	StudentNode* temp = *p_head;
 	while (temp->next != founded_student)
 	{
 		temp = temp->next;
@@ -435,6 +435,4 @@ MyCourse *createMyCourse(CourseNode *course)
 	me->subject_code = course->course.course_id;
 	return me;
 }
-
-
 //--------------------------------------------------------------------------------------------------
