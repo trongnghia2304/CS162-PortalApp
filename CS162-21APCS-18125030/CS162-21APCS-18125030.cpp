@@ -99,6 +99,11 @@ int main()
 				view_registration_student(school, window, page, scale, data, is_staff, user);
 			break;
 		}
+		case 13:
+		{
+			view_schedule(school, window, page, scale, data, user);
+			break;
+		}
 		default:
 		{
 			break;
