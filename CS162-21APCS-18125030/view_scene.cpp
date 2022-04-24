@@ -815,8 +815,8 @@ void view_class(const string& year, const string& semester, string cur_class, st
 	Object return2_here = createObject("content/General/b7.png", 386.0f * scale, 484.0f * scale);
 	Object ok = createObject("content/General/a1.png", 516.0f * scale, 484.0f * scale);
 	Object ok_here = createObject("content/General/b1.png", 516.0f * scale, 484.0f * scale);
-	Object enter = createObject("content/Staff/Create elements/enter.png", 316.0f * scale, 386.0f * scale);
-	Info student_id = createInfo("content/Oswald-Light.ttf", "Enter Student ID", 400.0f * scale, 415.0f * scale, 16.0f * scale);
+	Object enter = createObject("content/delete_student.png", 316.0f * scale, 386.0f * scale);
+	Info student_id = createInfo("content/Oswald-Light.ttf", "Enter Student ID", 400.0f * scale, 455.0f * scale, 16.0f * scale);
 	ClassNode* my_class = searchClassNode(class_list, cur_class);
 	Info sub_header = createInfo("content/VNI-Vari.TTF", "Class - " + cur_teacher, 160.0f * scale, 158.0f * scale, 28.0f * scale);
 	sub_header.text.setFillColor(Color(101, 159, 235));
