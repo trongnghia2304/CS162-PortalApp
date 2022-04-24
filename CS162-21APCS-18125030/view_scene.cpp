@@ -4342,7 +4342,7 @@ void view_schedule(YearNode* school, RenderWindow& window, int& page, const floa
 	bool in_here[4], first_check = true;
 	int current_students[4];
 	Object** border = square;
-	Info count_class = createInfo("content/Oswald-Regular.ttf", to_string(count_check) + "/5 Courses", 200.0f * scale, 346.0f * scale, 15.0f * scale);
+	Info count_class = createInfo("content/Oswald-Regular.ttf", to_string(count_check+1) + " Courses", 205.0f * scale, 346.0f * scale, 15.0f * scale);
 	count_class.text.setFillColor(Color::White);
 
 	while (window.isOpen() && page == 13)
@@ -4363,21 +4363,7 @@ void view_schedule(YearNode* school, RenderWindow& window, int& page, const floa
 				{
 					switchPage(out.bound, mouse, 1, page);
 					switchPage(back.bound, mouse, 3, page);
-					if (!add_new)
-					{
-						if (isHere(right.bound, mouse) && change <= count - 4)
-						{
-							trigger_page = true;
-							change += 4;
-						}
-						if (isHere(left.bound, mouse) && change != 0)
-						{
-							trigger_page = true;
-							change -= 4;
-						}
-						start_date.check = isHere(start_date.bound, mouse);
-						end_date.check = isHere(end_date.bound, mouse);
-					}
+					
 					if (isHere(right.bound, mouse) && change <= count - 4)
 					{
 						trigger_page = true;
@@ -4388,6 +4374,9 @@ void view_schedule(YearNode* school, RenderWindow& window, int& page, const floa
 						trigger_page = true;
 						change -= 4;
 					}
+					
+					start_date.check = isHere(start_date.bound, mouse);
+					end_date.check = isHere(end_date.bound, mouse);
 				}
 				break;
 			}
@@ -4422,15 +4411,19 @@ void view_schedule(YearNode* school, RenderWindow& window, int& page, const floa
 		if (trigger_page)
 		{
 			MyCourse *temp = me.my_course;
-			CourseNode* cur = temp->course;
+			CourseNode* cur;
 			for (int i = 0; i < change; i++)
+			if(temp->next)
 			{
 				temp = temp->next;
 			}
 			for (int i = 0; i < 4; i++)
 			{
-				cur = temp->course;
-				a_class[i] = cur;
+				if (temp)
+				{
+					cur = temp->course;
+					a_class[i] = cur;
+				}
 				if (temp)
 				{
 					inf[i]->text.setString(a_class[i]->course.course_id + " - " + a_class[i]->course.teacher_name + " (" + day_convert(a_class[i]->course.teaching_session[0]) + "-" + no_convert(a_class[i]->course.teaching_session[0]) + ", " + day_convert(a_class[i]->course.teaching_session[1]) + "-" + no_convert(a_class[i]->course.teaching_session[1]) + ")");
@@ -4449,6 +4442,8 @@ void view_schedule(YearNode* school, RenderWindow& window, int& page, const floa
 
 		drawWhich(window, out_here, out, mouse);
 		drawWhich(window, back_here, back, mouse);
+
+		window.draw(count_class.text);
 		// draw border
 		if (sub_check)
 		{
