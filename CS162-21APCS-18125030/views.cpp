@@ -332,27 +332,101 @@ StudentNode *copyForCourse(StudentNode *me, int k)
 	return new_stu;
 }
 
-void importCSVFile(ifstream open_file, StudentNode* student_list, string subject_code)
+bool importCSVFile(ClassNode *class_list, CourseNode *course)
 {
-	string line, word[9];
+	ifstream open_file("./csv/imported/" + course->course.course_id + "_" + course->course.teacher_name + ".csv");
+	if (!open_file) return false;
+	deleteStudentList(course->student_list);
+	string line, word[13];
 	while (getline(open_file, line))
 	{
 		stringstream ss(line);
-		for (int i = 0; i < 9; i++)
+		for (int i = 0; i < 13; i++)
 		{
 			getline(ss, word[i], ',');
 		}
-		StudentNode* temp = searchStudentNode(student_list, word[1]);
-		MyCourse* cur = temp->student.my_course;
-		
-		while (cur && cur->subject_code != subject_code)
+		int id, gender;
+		istringstream(word[0]) >> id;
+		istringstream(word[4]) >> gender;
+		Student new_student = createStudent(id, word[1], word[2], word[3], gender, word[5], word[6], word[7], word[8]);
+		appendNewStudentNode(&course->student_list, new_student);
+		ClassNode *cur_class = searchClassNode(class_list, word[8]);
+		StudentNode *temp = searchStudentNode(cur_class->my_class.student_list, word[1]);
+		MyCourse *cur = temp->student.my_course;
+
+		while (cur && cur->subject_code != course->course.course_id)
 			cur = cur->next;
-		
-		istringstream(word[3]) >> cur->score.process;
-		istringstream(word[4]) >> cur->score.mid;
-		istringstream(word[5]) >> cur->score.fin;
-		istringstream(word[6]) >> cur->score.overall;
+		istringstream(word[9]) >> cur->score.process;
+		istringstream(word[10]) >> cur->score.mid;
+		istringstream(word[11]) >> cur->score.fin;
+		istringstream(word[12]) >> cur->score.overall;
 	}
+	open_file.close();
+	return true;
+}
+
+void exportCSVFile(ClassNode *class_list, StudentNode *current, string teacher, string code)
+{
+	ofstream openFile("./csv/exported/" + code + "_" + teacher + ".csv");
+	StudentNode *temp = current;
+	while (temp)
+	{
+		openFile << temp->student.num << ",";
+		openFile << temp->student.student_id << ",";
+		openFile << temp->student.first_name << ",";
+		openFile << temp->student.last_name << ",";
+		openFile << temp->student.gender << ",";
+		openFile << temp->student.dob << ",";
+		openFile << temp->student.social_id << ",";
+		openFile << temp->student.password << ",";
+		openFile << temp->student.student_class << ",";
+		ClassNode *cur_class = searchClassNode(class_list, temp->student.student_class);
+		StudentNode *cur = searchStudentNode(cur_class->my_class.student_list, temp->student.student_id);
+		MyCourse *cur_course = searchMyCourse(cur, code);
+		openFile << cur_course->score.process << ",";
+		openFile << cur_course->score.mid << ",";
+		openFile << cur_course->score.fin << ",";
+		openFile << cur_course->score.overall << endl;
+		temp = temp->next;
+	}
+	openFile.close();
+}
+
+void exportCSVFile_class(ClassNode *class_list, string year, string sem)
+{
+	ofstream openFile("./csv/exported/" + class_list->my_class.class_id + "_" + class_list->my_class.head_teacher + ".csv");
+	StudentNode *temp = class_list->my_class.student_list;
+	while (temp)
+	{
+		openFile << temp->student.num << ",";
+		openFile << temp->student.student_id << ",";
+		openFile << temp->student.first_name << ",";
+		openFile << temp->student.last_name << ",";
+		openFile << temp->student.gender << ",";
+		openFile << temp->student.dob << ",";
+		openFile << temp->student.social_id << ",";
+		openFile << temp->student.password << ",";
+		openFile << temp->student.student_class << ",";
+		int count_tt = 0, count_this = 0;
+		float gpa_tt = 0.0f, gpa_this = 0.0f;
+		for (MyCourse *cur = temp->student.my_course; cur; cur = cur->next)
+		{
+			count_tt++;
+			gpa_tt += cur->score.overall;
+			if (cur->course->semester_id == sem && cur->course->year_id == year)
+			{
+				count_this++;
+				gpa_this += cur->score.overall;
+			}
+		}
+		if (count_tt)
+			gpa_tt = gpa_tt / (float)count_tt;
+		if (count_this)
+			gpa_this = gpa_this / (float)count_this;
+		openFile << fixed << setprecision(1) << gpa_this << "," << gpa_tt << endl;
+		temp = temp->next;
+	}
+	openFile.close();
 }
 
 string session_convert(Session a)
@@ -367,9 +441,12 @@ bool checkDOB(string s)
 	int day = 0, mon = 0, year = 0;
 	char c1, c2;
 	check >> day >> c1 >> mon >> c2 >> year;
-	if (!day || !mon || !year) return false;
-	if (day < 32 && day > 0 && mon > 0 && mon < 13) return true;
-	else return false;
+	if (!day || !mon || !year)
+		return false;
+	if (day < 32 && day > 0 && mon > 0 && mon < 13)
+		return true;
+	else
+		return false;
 }
 
 bool checkID(string s)
@@ -380,197 +457,10 @@ bool checkID(string s)
 	return to_string(id) == s;
 }
 
-// //--------------------------------------- Views ----------------------------------------------------
-// //--------------------------------------------------------------------------------------------------
-// void viewListOfClass(ClassNode *Class_head)
-// {
-//     ClassNode *pClass = Class_head;
-//     while (pClass != NULL)
-//     {
-//         cout << pClass->my_class.class_id << " " << pClass->my_class.head_teacher;
-//         pClass = pClass->next;
-//     }
-// }
-// void checkMyCourse(Student me)
-// {
-//     cout << "Pick a year: ";
-//     int year;
-//     cin >> year;
-//     cout << "Pick a semester: ";
-//     int sem;
-//     cin >> sem;
-//     cout << "id, course, teacher, credit, timetable";
-
-//     while (me.my_course->course->year != year && me.my_course->course->semester_id != sem)
-//         me.my_course = me.my_course->next;
-
-//     for (MyCourse *cur = me.my_course; cur && cur->course->semester_id == sem; cur = cur->next)
-//     {
-//         cout << cur->course->course.course_id << "  " << cur->course->course.course_name << "  " << cur->course->course.teacher_name << "  " << cur->course->course.num_credit << "  ";
-//         for (int i = 0; i < 2; i++)
-//         {
-//             switch (cur->course->course.teaching_session[i].day_of_the_week)
-//             {
-//             case 1:
-//                 cout << "Sun";
-//                 break;
-//             case 2:
-//                 cout << "Mon";
-//                 break;
-//             case 3:
-//                 cout << "Tue";
-//                 break;
-//             case 4:
-//                 cout << "Wed";
-//                 break;
-//             case 5:
-//                 cout << "Thu";
-//                 break;
-//             case 6:
-//                 cout << "Fri";
-//                 break;
-//             default:
-//                 cout << "Sat";
-//                 break;
-//             }
-//             cout << "-" << cur->course->course.teaching_session[i].session_no << "  ";
-//         }
-//         cout << endl;
-//     }
-// }
-// void subscribeCourse(Student &me, CourseNode &a)
-// {
-//     // subscribe in student's my_course
-//     MyCourse *cur = me.my_course, *pre = new MyCourse(a);
-//     if (cur)
-//     {
-//         while (cur->next)
-//             cur = cur->next;
-//         cur->next = pre;
-//     }
-//     else
-//     {
-//         me.my_course = pre;
-//     }
-//     // add student to the course's list
-//     appendNewStudentNode(&a.course.student_list, me);
-// }
-// void unsubscribeCourse(Student &me, CourseNode &a)
-// {
-//     // unsubscribe in student's my_course
-//     if (me.my_course->course == &a)
-//         me.my_course->course = me.my_course->course->next;
-//     else
-//     {
-//         MyCourse *cur = me.my_course;
-//         while (cur->next->course != &a)
-//             cur = cur->next;
-//         MyCourse *a = cur->next;
-//         cur = cur->next->next;
-//         delete a;
-//     }
-//     // delete the student from the course list
-//     removeStudentNode(&a.course.student_list, me.student_id);
-// }
-// void timeTable(Student me)
-// {
-
-//     cout << "id, course, teacher, credit, timetable \n";
-//     Student you = me;
-//     while (you.my_course->course->next != nullptr)
-//         you.my_course = you.my_course->next;
-//     int sem = you.my_course->course->semester_id;
-//     int year = you.my_course->course->year;
-
-//     while (me.my_course->course->year != year && me.my_course->course->semester_id != sem)
-//         me.my_course = me.my_course->next;
-//     for (MyCourse *cur = me.my_course; cur && cur->course->semester_id == sem; cur = cur->next)
-//     {
-//         cout << cur->course->course.course_id << "  " << cur->course->course.course_name << "  " << cur->course->course.teacher_name << "  " << cur->course->course.num_credit << "  ";
-//         for (int i = 0; i < 2; i++)
-//         {
-//             switch (cur->course->course.teaching_session[i].day_of_the_week)
-//             {
-//             case 1:
-//                 cout << "Sun";
-//                 break;
-//             case 2:
-//                 cout << "Mon";
-//                 break;
-//             case 3:
-//                 cout << "Tue";
-//                 break;
-//             case 4:
-//                 cout << "Wed";
-//                 break;
-//             case 5:
-//                 cout << "Thu";
-//                 break;
-//             case 6:
-//                 cout << "Fri";
-//                 break;
-//             default:
-//                 cout << "Sat";
-//                 break;
-//             }
-//             cout << "-" << cur->course->course.teaching_session[i].session_no << "  ";
-//         }
-//         cout << endl;
-//     }
-// }
-// int tuitionFee(Student me)
-// {
-//     cout << "Pick a year: ";
-//     int year;
-//     cin >> year;
-//     cout << "Pick a semester: ";
-//     int sem;
-//     cin >> sem;
-
-//     int sum = 0;
-//     while (me.my_course->course->year != year && me.my_course->course->semester_id != sem)
-//         me.my_course = me.my_course->next;
-//     for (MyCourse *cur = me.my_course; cur && cur->course->semester_id == sem; cur = cur->next)
-//     {
-//         sum += cur->course->course.num_credit;
-//     }
-
-//     sum = sum * 500000;
-
-//     return sum;
-// }
-// void viewScore(Student me)
-// {
-//     cout << "Pick a year: ";
-//     int year;
-//     cin >> year;
-//     cout << "Pick a semester: ";
-//     int sem;
-//     cin >> sem;
-//     cout << "id, course, process score, midterm score, final score: \n";
-//     while (me.my_course->course->year != year && me.my_course->course->semester_id != sem)
-//         me.my_course = me.my_course->next;
-//     for (MyCourse *cur = me.my_course; cur && cur->course->semester_id == sem; cur = cur->next)
-//     {
-//         cout << cur->course->course.course_id << "  " << cur->course->course.course_name << "  " << cur->course->course.score.process << "  " << cur->course->course.score.mid << "  " << cur->course->course.score.fin;
-//     }
-//     cout << endl;
-// }
-
-// bool checkLogin(StudentNode *p_head, string username, string password)
-// {
-//     StudentNode *founded_student = searchStudentNode(pHead, username);
-//     if(founded_student == nullptr)
-//     {
-//         cout << "Wrong username";
-//         return false;
-//     }
-//     if(founded_student.student.password != password)
-//     {
-//         cout << "Wrong password";
-//         return false;
-//     }
-//     return true;
-
-// }
-// //--------------------------------------------------------------------------------------------------
+MyCourse *searchMyCourse(StudentNode *p_student, string code)
+{
+	MyCourse *cur = p_student->student.my_course;
+	while (cur && cur->course->course.course_id != code)
+		cur = cur->next;
+	return cur;
+}

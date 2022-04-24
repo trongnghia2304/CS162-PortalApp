@@ -90,11 +90,12 @@ void deleteStudentList(StudentNode *&p_head);
 void printStudent(Student p_student);
 void printStudentNode(StudentNode *p_head);
 MyCourse *searchMyCourse(StudentNode *p_student, CourseNode *course);
+MyCourse *searchMyCourse(StudentNode *p_student, string code);
 void setupMyCourses(ClassNode *p_class, YearNode *year);
 void findMyCourses(StudentNode **p_student, YearNode *year);
 void removeMyCourses(StudentNode *p_head, CourseNode *course);
 void deleteMyCourse(MyCourse *&p_head);
-void appendNewMyCourse(StudentNode *me, MyCourse* new_course);
+void appendNewMyCourse(StudentNode *me, MyCourse *new_course);
 MyCourse *createMyCourse(CourseNode *course);
 //--------------------------------------------------------------------------------------------------
 
@@ -104,18 +105,12 @@ bool changePassword(Student &me, const string &oldPw, const string &newPw);
 float calculateOverallScore(MyCourse *course, float midterm_percent, float final_percent);
 float calculateGPA(Student me, string year, string sem);
 float calculateGPA(Student me);
-StudentNode* copyForCourse(StudentNode* me, int k);
-void importCSVFile(ifstream open_file, StudentNode* student_list, string subject_code);
+StudentNode *copyForCourse(StudentNode *me, int k);
+bool importCSVFile(ClassNode* class_list, CourseNode* course);
+void exportCSVFile(ClassNode* class_list, StudentNode* current, string teacher, string code);
+void exportCSVFile_class(ClassNode *class_list, string year, string sem);
 void view_schedule(YearNode* school, RenderWindow& window, int& page, const float& scale, RegistrationSession& data, StudentNode* user);
-// void changeStudent(Student& me);
-// void checkMyCourse(Student me);
-// void subscribeCourse(Student& me, CourseNode& a);
-// void unsubscribeCourse(Student& me, CourseNode& a);
-// void timeTable(Student me);
-// int tuitionFee(Student me);
-// void viewScore(Student me);
-// void viewListOfClass(ClassNode* Class_head);
-// bool checkLogin(StudentNode* p_head, string username, string password);
+
 //--------------------------------------------------------------------------------------------------
 
 //----------------------Registration---------------------------
