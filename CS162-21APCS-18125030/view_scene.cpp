@@ -4275,6 +4275,22 @@ void view_schedule(YearNode* school, RenderWindow& window, int& page, const floa
 			pre->course = temp->course;
 		}
 	}
+	Student me = user->student;
+	Student you = me;
+	
+	int dem = 0;
+	while (you.my_course->next != nullptr)
+	{
+		you.my_course = you.my_course->next;
+		dem++;
+	}
+	string sem = you.my_course->sem;
+	string year = you.my_course->year;
+	
+	int dem1 = 0;
+	while (me.my_course->year != year || me.my_course->sem != sem)
+		me.my_course = me.my_course->next, dem1++;
+
 	Event event;
 	Object screen = createObject("content/Registration/register_student.png");
 	Object out = createObject("content/logout.png", 866.0f * scale, 106.0f * scale);
@@ -4283,7 +4299,7 @@ void view_schedule(YearNode* school, RenderWindow& window, int& page, const floa
 	Object back_here = createObject("content/return1.png", 80.0f * scale, 106.0f * scale);
 	Info sub_header = createInfo("content/VNI-Vari.TTF", "Course Schedule", 160.0f * scale, 158.0f * scale, 28.0f * scale);
 	sub_header.text.setFillColor(Color(101, 159, 235));
-	Info header = createInfo("content/VNI-Vari.TTF", data.year + " " + data.sem, 160.0f * scale, 200.0f * scale, 43.0f * scale);
+	Info header = createInfo("content/VNI-Vari.TTF", year + " " + sem, 160.0f * scale, 200.0f * scale, 43.0f * scale);
 	Object *sub, *sub_here;
 	sub = createObjectTest("content/Registration/sub.png", 686.0f * scale, 340.0f * scale);
 	sub_here = createObjectTest("content/Registration/sub_here.png", 686.0f * scale, 340.0f * scale);
@@ -4313,25 +4329,8 @@ void view_schedule(YearNode* school, RenderWindow& window, int& page, const floa
 	start_date.s = data.start_date;
 	end_date.s = data.end_date;
 	CourseNode* a_class[4], * tmp = nullptr;
-	int count_check = 0;
-	Student me = user->student;
-	Student you = me;
-    
-	while (you.my_course->course->next != nullptr)
-        you.my_course = you.my_course->next;
-    string sem = you.my_course->sem;
-    string year = you.my_course->year;
+	int count_check = dem - dem1;
 
-    while (me.my_course->year != year && me.my_course->sem != sem)
-        me.my_course = me.my_course->next;
-
-	for (MyCourse* cur = user->student.my_course; cur; cur = cur->next)
-	{
-		if (cur->year == data.year && cur->sem == data.sem)
-		{
-			count_check++;
-		}
-	}
 	for (int i = 0; i < 4; i++)
 	{
 		a_class[i] = nullptr;
@@ -4379,6 +4378,16 @@ void view_schedule(YearNode* school, RenderWindow& window, int& page, const floa
 						start_date.check = isHere(start_date.bound, mouse);
 						end_date.check = isHere(end_date.bound, mouse);
 					}
+					if (isHere(right.bound, mouse) && change <= count - 4)
+					{
+						trigger_page = true;
+						change += 4;
+					}
+					if (isHere(left.bound, mouse) && change != 0)
+					{
+						trigger_page = true;
+						change -= 4;
+					}
 				}
 				break;
 			}
@@ -4414,10 +4423,10 @@ void view_schedule(YearNode* school, RenderWindow& window, int& page, const floa
 		{
 			MyCourse *temp = me.my_course;
 			CourseNode* cur = temp->course;
-			/*for (int i = 0; i < change; i++)
+			for (int i = 0; i < change; i++)
 			{
-				cur = cur->next;
-			}*/
+				temp = temp->next;
+			}
 			for (int i = 0; i < 4; i++)
 			{
 				cur = temp->course;
