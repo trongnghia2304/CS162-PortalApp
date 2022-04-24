@@ -4320,8 +4320,8 @@ void view_schedule(YearNode* school, RenderWindow& window, int& page, const floa
 
 	int count = 0, change = 0;
 	bool trigger_page = true, del = false, sure_check = false, fail = false, success = false, add_new = false, sub_check = true, stop = false;
-	for (CourseNode* cur = data.list_of_courses; cur; cur = cur->next)
-		count++;
+	/*for (CourseNode* cur = data.list_of_courses; cur; cur = cur->next)
+		count++;*/
 	Info* inf[4], * num[4];
 	Info start_date = createInfo("content/Oswald-Regular.ttf", data.start_date, 216.0f * scale, 284.0f * scale, 18.0f * scale);
 	Info end_date = createInfo("content/Oswald-Regular.ttf", data.end_date, 568.0f * scale, 284.0f * scale, 18.0f * scale);
@@ -4330,6 +4330,7 @@ void view_schedule(YearNode* school, RenderWindow& window, int& page, const floa
 	end_date.s = data.end_date;
 	CourseNode* a_class[4], * tmp = nullptr;
 	int count_check = dem - dem1;
+	count = count_check;
 
 	for (int i = 0; i < 4; i++)
 	{
