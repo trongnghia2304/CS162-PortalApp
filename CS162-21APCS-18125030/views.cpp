@@ -468,7 +468,7 @@ MyCourse *searchMyCourse(StudentNode *p_student, string code)
 
 void checkPos(float &x, float &y, int day, int no, const float &scale)
 {
-	x = scale * ((float)(day - 2) * 110.0f + 236.0f);
-	y = scale * ((float)no * 70.0f + 390.0f);
+	x = scale * ((float)(day - 2) * 108.0f + 220.0f);
+	y = scale * ((float)(no - 1) * 70.0f + 388.0f);
 	return;
 }

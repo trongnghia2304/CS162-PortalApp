@@ -3,14 +3,14 @@
 int main()
 {
 	//------------------ demo data-----------------------------
-	string staff_input_path = "./csv/staff_input.csv";
-	string staff_output_path = "./csv/staff_output.csv";
-	string school_input_path = "./csv/schoolyear_input.csv";
-	string school_output_path = "./csv/schoolyear_output.csv";
-	string student_input_path = "./csv/student_input.csv";
-	string student_output_path = "./csv/student_output.csv";
+	string staff_input_path = "./csv/staff_list.csv";
+	string staff_output_path = "./csv/staff_list.csv";
+	string school_input_path = "./csv/school.csv";
+	string school_output_path = "./csv/school.csv";
+	string student_input_path = "./csv/class_list.csv";
+	string student_output_path = "./csv/class_list.csv";
 	string registration_input_path = "./csv/registration_day.csv";
-	string registration_output_path = "./csv/registration_day_output.csv";
+	string registration_output_path = "./csv/registration_day.csv";
 
 	YearNode *school = nullptr;
 	StudentNode *all_staffs = nullptr;
@@ -23,6 +23,7 @@ int main()
 	readFromFileRegSess(registration_input_path, data);
 
 	setupMyCourses(all_classes1, school);
+	string year = "2021-2022", semester = "Semester 2";
 	// ----------------------------------------------------------
 
 	RenderWindow window;
@@ -34,7 +35,6 @@ int main()
 	int page = 1;
 	StudentNode *user = NULL;
 	bool is_staff;
-	string year = "2021-2022", semester = "Semester 2";
 
 	while (page > 0 && window.isOpen())
 	{

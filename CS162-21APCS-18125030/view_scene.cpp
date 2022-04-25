@@ -4312,8 +4312,10 @@ void view_schedule(YearNode *school, RenderWindow &window, int &page, const floa
 		float x, y;
 		checkPos(x, y, me.my_course->course->course.teaching_session[0].day_of_the_week, me.my_course->course->course.teaching_session[0].session_no, scale);
 		first[i] = createInfoTest("content/Oswald-Regular.ttf", me.my_course->course->course.course_id, x, y, 19.0f * scale);
+		changePos(first[i], x + 54.0f - first[i]->text.getGlobalBounds().width / 2, y);
 		checkPos(x, y, me.my_course->course->course.teaching_session[1].day_of_the_week, me.my_course->course->course.teaching_session[1].session_no, scale);
 		second[i] = createInfoTest("content/Oswald-Regular.ttf", me.my_course->course->course.course_id, x, y, 19.0f * scale);
+		changePos(second[i], x + 54.0f - second[i]->text.getGlobalBounds().width / 2, y);
 		me.my_course = me.my_course->next;
 	}
 	while (window.isOpen() && page == 13)
