@@ -748,7 +748,7 @@ void view_class(RenderWindow &window, int &page, const float &scale, ClassNode *
 			{
 				if (cur)
 				{
-					inf[i][0]->text.setString(to_string(cur->student.num));
+					inf[i][0]->text.setString(to_string(change + i + 1));
 					inf[i][1]->text.setString(cur->student.student_id);
 					inf[i][2]->text.setString(cur->student.last_name + " " + cur->student.first_name);
 					inf[i][4]->text.setString(cur->student.gender ? "F" : "M");
@@ -1009,7 +1009,7 @@ void view_class(const string &year, const string &semester, string cur_class, st
 			{
 				if (cur)
 				{
-					inf[i][0]->text.setString(to_string(cur->student.num));
+					inf[i][0]->text.setString(to_string(change + i + 1));
 					inf[i][1]->text.setString(cur->student.student_id);
 					inf[i][2]->text.setString(cur->student.last_name + " " + cur->student.first_name);
 					inf[i][4]->text.setString(cur->student.gender ? "F" : "M");
@@ -1224,7 +1224,7 @@ void view_class_score(const string &year, const string &semester, string cur_cla
 				{
 					gpa1[i] = 0.0f;
 					gpa_tt[i] = 0.0f;
-					inf[i][0]->text.setString(to_string(cur->student.num));
+					inf[i][0]->text.setString(to_string(change + i + 1));
 					inf[i][1]->text.setString(cur->student.student_id);
 					inf[i][2]->text.setString(cur->student.last_name + " " + cur->student.first_name);
 					inf[i][5]->text.setString(cur->student.social_id);
