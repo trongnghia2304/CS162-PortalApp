@@ -71,5 +71,4 @@ void deleteEvent_student(StudentNode *&list_student, StudentNode *me);
 void deleteEvent_class(ClassNode *&list_class, ClassNode *my_class);
 bool checkDOB(string s);
 bool checkID(string s);
-// bool empty(sf::String s);
-// bool pop_back(sf::String s);
+void checkPos(float& x, float& y, int day, int no, const float& scale);

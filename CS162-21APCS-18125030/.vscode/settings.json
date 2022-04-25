@@ -18,6 +18,7 @@
         "algorithm": "cpp",
         "string": "cpp",
         "ostream": "cpp",
-        "istream": "cpp"
+        "istream": "cpp",
+        "utility": "cpp"
     }
 }

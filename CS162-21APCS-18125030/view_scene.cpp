@@ -779,8 +779,10 @@ void view_class(RenderWindow &window, int &page, const float &scale, ClassNode *
 }
 
 // staff
-void view_class(const string& year, const string& semester, string cur_class, string cur_teacher, RenderWindow& window, int& page, const float& scale, ClassNode* class_list, StudentNode* user, const bool& is_staff)
-{	Event event;
+void view_class(const string &year, const string &semester, string cur_class, string cur_teacher, RenderWindow &window, int &page, const float &scale, ClassNode *class_list, StudentNode *user, const bool &is_staff)
+{
+	Event event;
+	Object fail = createObject("content/Registration/invalid.png", 316.0f * scale, 386.0f * scale);
 	Object export_success = createObject("content/Staff/Create elements/Asset 115.png", 316.0f * scale, 386.0f * scale);
 	Object return1 = createObject("content/Staff/Create elements/a7.png", 440.0f * scale, 484.0f * scale);
 	Object return1_here = createObject("content/Staff/Create elements/b7.png", 440.0f * scale, 484.0f * scale);
@@ -817,12 +819,12 @@ void view_class(const string& year, const string& semester, string cur_class, st
 	Object ok_here = createObject("content/General/b1.png", 516.0f * scale, 484.0f * scale);
 	Object enter = createObject("content/delete_student.png", 316.0f * scale, 386.0f * scale);
 	Info student_id = createInfo("content/Oswald-Light.ttf", "Enter Student ID", 400.0f * scale, 455.0f * scale, 16.0f * scale);
-	ClassNode* my_class = searchClassNode(class_list, cur_class);
+	ClassNode *my_class = searchClassNode(class_list, cur_class);
 	Info sub_header = createInfo("content/VNI-Vari.TTF", "Class - " + cur_teacher, 160.0f * scale, 158.0f * scale, 28.0f * scale);
 	sub_header.text.setFillColor(Color(101, 159, 235));
 	Info header = createInfo("content/VNI-Vari.TTF", cur_class, 160.0f * scale, 200.0f * scale, 43.0f * scale);
-	Info* inf[8][6];
-	StudentNode* tmp = NULL;
+	Info *inf[8][6];
+	StudentNode *tmp = NULL;
 	for (int i = 0; i < 8; i++)
 	{
 		inf[i][0] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 184.0f * scale, (370.0f + 30.0f * i) * scale, 17.5f * scale);
@@ -835,8 +837,8 @@ void view_class(const string& year, const string& semester, string cur_class, st
 			inf[i][j]->text.setFillColor(Color::Black);
 	}
 	int count = 0, change = 0;
-	bool trigger_page = true, success = false, is_del = false, sure_check = false, success2 = false, sure_check2 = false;
-	for (StudentNode* cur = my_class->my_class.student_list; cur; cur = cur->next)
+	bool trigger_page = true, success = false, is_del = false, sure_check = false, success2 = false, sure_check2 = false, fail_here = false;
+	for (StudentNode *cur = my_class->my_class.student_list; cur; cur = cur->next)
 	{
 		count++;
 	}
@@ -857,84 +859,101 @@ void view_class(const string& year, const string& semester, string cur_class, st
 			case Event::MouseButtonReleased:
 			{
 				if (event.mouseButton.button == Mouse::Left)
-				{		
-					if (is_del)
-					{
-						if (sure_check2)
-						{
-							if (isHere(ofcourse.bound, mouse))
-							{
-								tmp = searchStudentNode(class_list->my_class.student_list, student_id.s);
-								deleteEvent_student(class_list->my_class.student_list, tmp);
-								success2 = true;
-								sure_check2 = false;
-								trigger_page = true;
-								count--;
-								count_student.text.setString("Total: " + to_string(count) + " Students");
-							}
-							if (isHere(nah.bound, mouse))
-							{
-								sure_check2 = false;
-							}
-						}
-						
-						if (isHere(return2.bound, mouse)) {
-							is_del = false;
-							success2 = false;
-						}
-				
-						if (isHere(student_id.bound, mouse))
-						{
-							student_id.check = true;
-						}
-						if (isHere(ok.bound, mouse))sure_check2 = true;
-					}
-					if (isHere(return3.bound, mouse))success2 = false;
-						switchPage(out.bound, mouse, 1, page);
+				{
 
-						if (!is_staff)
+					switchPage(out.bound, mouse, 1, page);
+
+					if (!is_staff)
+					{
+						switchPage(back.bound, mouse, 5, page);
+					}
+					else
+					{
+						if (is_del)
 						{
-							switchPage(back.bound, mouse, 5, page);
-						}
-						else
-						{
-							switchPage(split.bound, mouse, 22, page);
-							view_class_score(year, semester, cur_class, cur_teacher, window, page, scale, class_list, user, is_staff);
-							switchPage(back.bound, mouse, 9, page);
-							if (success && isHere(return1.bound, mouse))
-								success = false;
-							if (isHere(export_1.bound, mouse))
+							if (sure_check2)
 							{
-								success = true;
-								string exported_student = "./csv/exported/" + my_class->my_class.class_id + "_" + my_class->my_class.head_teacher + ".csv";
-								ofstream fout;
-								fout.open(exported_student);
-								writeToFileStudentNode(fout, my_class->my_class.student_list);
-								fout.close();
+								if (isHere(ofcourse.bound, mouse))
+								{
+									tmp = searchStudentNode(class_list->my_class.student_list, student_id.s);
+									if (tmp)
+									{
+										deleteEvent_student(class_list->my_class.student_list, tmp);
+										success2 = true;
+										sure_check2 = false;
+										trigger_page = true;
+										count--;
+										count_student.text.setString("Total: " + to_string(count) + " Students");
+									}
+									else
+									{
+										fail_here = true;
+										sure_check2 = false;
+									}
+								}
+								if (isHere(nah.bound, mouse))
+								{
+									sure_check2 = false;
+								}
+							}
+							else
+							{
+
+								if (isHere(return2.bound, mouse) && !success2 && !fail_here)
+									is_del = false;
+								if (isHere(return1.bound, mouse) && (success2 || fail_here))
+								{
+									success2 = false;
+									fail_here = false;
+									is_del = false;
+								}
+								if (isHere(student_id.bound, mouse))
+									student_id.check = true;
+								if (isHere(ok.bound, mouse))
+									sure_check2 = true;
 							}
 						}
-						if (isHere(add_student.bound, mouse) && is_staff)
+						if (isHere(return3.bound, mouse))
+							success2 = false;
+						switchPage(split.bound, mouse, 22, page);
+						view_class_score(year, semester, cur_class, cur_teacher, window, page, scale, class_list, user, is_staff);
+						switchPage(back.bound, mouse, 9, page);
+						if (success && isHere(return1.bound, mouse))
+							success = false;
+						if (isHere(export_1.bound, mouse))
 						{
-							page = 2;
-							int k = student_profile(window, page, scale, my_class->my_class.student_list, is_staff, true, my_class->my_class.class_id);
-							count += k;
-							count_student.text.setString("Total: " + to_string(count) + " Students");
-							trigger_page = true;
+							success = true;
+							string exported_student = "./csv/exported/" + my_class->my_class.class_id + "_" + my_class->my_class.head_teacher + ".csv";
+							ofstream fout;
+							fout.open(exported_student);
+							writeToFileStudentNode(fout, my_class->my_class.student_list);
+							fout.close();
 						}
-						if (isHere(right.bound, mouse) && change <= count - 8)
-						{
-							trigger_page = true;
-							change += 8;
-						}
-						if (isHere(left.bound, mouse) && change != 0)
-						{
-							trigger_page = true;
-							change -= 8;
-						}if (isHere(del.bound, mouse))is_del = true;
 					}
-				
-					break;
+					if (isHere(add_student.bound, mouse) && is_staff)
+					{
+						page = 2;
+						int k = student_profile(window, page, scale, my_class->my_class.student_list, is_staff, true, my_class->my_class.class_id);
+						count += k;
+						count_student.text.setString("Total: " + to_string(count) + " Students");
+						trigger_page = true;
+					}
+					if (isHere(right.bound, mouse) && change <= count - 8)
+					{
+						trigger_page = true;
+						change += 8;
+					}
+					if (isHere(left.bound, mouse) && change != 0)
+					{
+						trigger_page = true;
+						change -= 8;
+					}
+					if (isHere(del.bound, mouse))
+						is_del = true;
 				}
+
+				break;
+			}
 			case Event::TextEntered:
 			{
 				texting(student_id, event.text.unicode, 10);
@@ -943,111 +962,113 @@ void view_class(const string& year, const string& semester, string cur_class, st
 			default:
 				break;
 			}
-			}
+		}
 
-			window.clear();
-			window.draw(screen.draw);
-			if (is_staff)
+		window.clear();
+		window.draw(screen.draw);
+		if (is_staff)
+		{
+			drawWhich(window, add_student_here, add_student, mouse);
+			drawWhich(window, export_here_1, export_1, mouse);
+			drawWhich(window, split_here, split, mouse);
+		}
+		drawWhich(window, del_here, del, mouse);
+		drawWhich(window, out_here, out, mouse);
+		drawWhich(window, back_here, back, mouse);
+		window.draw(header.text);
+		window.draw(sub_header.text);
+		window.draw(count_student.text);
+		if (change == 0 && change >= count - 8)
+		{
+			window.draw(right.draw);
+			window.draw(left.draw);
+		}
+		else if (change == 0)
+		{
+			window.draw(left.draw);
+			drawWhich(window, right_here, right_valid, mouse);
+		}
+		else if (count >= count - 8)
+		{
+			window.draw(right.draw);
+			drawWhich(window, left_here, left_valid, mouse);
+		}
+		else
+		{
+			drawWhich(window, right_here, right_valid, mouse);
+			drawWhich(window, left_here, left_valid, mouse);
+		}
+		if (trigger_page)
+		{
+			StudentNode *cur = my_class->my_class.student_list;
+			for (int i = 0; i < change; i++)
 			{
-				drawWhich(window, add_student_here, add_student, mouse);
-				drawWhich(window, export_here_1, export_1, mouse);
-				drawWhich(window, split_here, split, mouse);
-			}
-			drawWhich(window, del_here, del, mouse);
-			drawWhich(window, out_here, out, mouse);
-			drawWhich(window, back_here, back, mouse);
-			window.draw(header.text);
-			window.draw(sub_header.text);
-			window.draw(count_student.text);
-			if (change == 0 && change >= count - 8)
-			{
-				window.draw(right.draw);
-				window.draw(left.draw);
-			}
-			else if (change == 0)
-			{
-				window.draw(left.draw);
-				drawWhich(window, right_here, right_valid, mouse);
-			}
-			else if (count >= count - 8)
-			{
-				window.draw(right.draw);
-				drawWhich(window, left_here, left_valid, mouse);
-			}
-			else
-			{
-				drawWhich(window, right_here, right_valid, mouse);
-				drawWhich(window, left_here, left_valid, mouse);
-			}
-			if (trigger_page)
-			{
-				StudentNode* cur = my_class->my_class.student_list;
-				for (int i = 0; i < change; i++)
-				{
-					cur = cur->next;
-				}
-				for (int i = 0; i < 8; i++)
-				{
-					if (cur)
-					{
-						inf[i][0]->text.setString(to_string(cur->student.num));
-						inf[i][1]->text.setString(cur->student.student_id);
-						inf[i][2]->text.setString(cur->student.last_name + " " + cur->student.first_name);
-						inf[i][4]->text.setString(cur->student.gender ? "F" : "M");
-						inf[i][3]->text.setString(cur->student.dob);
-						inf[i][5]->text.setString(cur->student.social_id);
-						cur = cur->next;
-					}
-					else
-					{
-						for (int j = 0; j < 6; j++)
-							inf[i][j]->text.setString("");
-					}
-				}
-				trigger_page = false;
+				cur = cur->next;
 			}
 			for (int i = 0; i < 8; i++)
 			{
-				for (int j = 0; j < 6; j++)
-					window.draw(inf[i][j]->text);
+				if (cur)
+				{
+					inf[i][0]->text.setString(to_string(cur->student.num));
+					inf[i][1]->text.setString(cur->student.student_id);
+					inf[i][2]->text.setString(cur->student.last_name + " " + cur->student.first_name);
+					inf[i][4]->text.setString(cur->student.gender ? "F" : "M");
+					inf[i][3]->text.setString(cur->student.dob);
+					inf[i][5]->text.setString(cur->student.social_id);
+					cur = cur->next;
+				}
+				else
+				{
+					for (int j = 0; j < 6; j++)
+						inf[i][j]->text.setString("");
+				}
 			}
-			if (success)
-			{
-				window.draw(export_success.draw);
-				drawWhich(window, return1_here, return1, mouse);
-			}
-		
-			if (is_staff && is_del) {
-				window.draw(enter.draw);
-				window.draw(student_id.text);
-				
-				drawWhich(window, return2_here, return2, mouse);
-				drawWhich(window, ok_here, ok, mouse);
-				
-			}	if (sure_check2)
-			{
-				window.draw(sure.draw);
-				drawWhich(window, nah_here, nah, mouse);
-				drawWhich(window, ofcourse_here, ofcourse, mouse);
-			}
-if (success2)
-			{			
-				window.draw(del_success.draw);
-				drawWhich(window, return3_here, return3, mouse);
-				sure_check2 = false;
-				is_del = false;
-				
-			}
-			
-			window.display();
+			trigger_page = false;
 		}
 		for (int i = 0; i < 8; i++)
 		{
 			for (int j = 0; j < 6; j++)
-				delete inf[i][j];
+				window.draw(inf[i][j]->text);
 		}
-	}
+		if (success)
+		{
+			window.draw(export_success.draw);
+			drawWhich(window, return1_here, return1, mouse);
+		}
 
+		if (is_staff && is_del)
+		{
+			window.draw(enter.draw);
+			window.draw(student_id.text);
+
+			drawWhich(window, return2_here, return2, mouse);
+			drawWhich(window, ok_here, ok, mouse);
+		}
+		if (sure_check2)
+		{
+			window.draw(sure.draw);
+			drawWhich(window, nah_here, nah, mouse);
+			drawWhich(window, ofcourse_here, ofcourse, mouse);
+		}
+		if (success2)
+		{
+			window.draw(export_success.draw);
+			drawWhich(window, return1_here, return1, mouse);
+		}
+		else if (fail_here)
+		{
+			window.draw(fail.draw);
+			drawWhich(window, return1_here, return1, mouse);
+		}
+
+		window.display();
+	}
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 6; j++)
+			delete inf[i][j];
+	}
+}
 
 void view_class_score(const string &year, const string &semester, string cur_class, string cur_teacher, RenderWindow &window, int &page, const float &scale, ClassNode *class_list, StudentNode *user, const bool &is_staff)
 {
@@ -1965,12 +1986,13 @@ void course_student2(RenderWindow &window, int &page, const float &scale, Course
 					if (isHere(import.bound, mouse))
 					{
 						if (importCSVFile(all_class, course))
-						export_done = true;
-						else 
+							export_done = true;
+						else
 							fail_check = true;
 						trigger_page = true;
 					}
-					if (isHere(return1.bound, mouse)){
+					if (isHere(return1.bound, mouse))
+					{
 						export_done = false;
 						fail_check = false;
 					}
@@ -2059,7 +2081,8 @@ void course_student2(RenderWindow &window, int &page, const float &scale, Course
 			window.draw(export_success.draw);
 			drawWhich(window, return1_here, return1, mouse);
 		}
-		if (fail_check){
+		if (fail_check)
+		{
 			window.draw(fail.draw);
 			drawWhich(window, return1_here, return1, mouse);
 		}
@@ -4257,42 +4280,25 @@ int student_profile(RenderWindow &window, int &page, const float &scale, Student
 	delete header, sub_header;
 	return res;
 }
-void view_schedule(YearNode* school, RenderWindow& window, int& page, const float& scale, RegistrationSession& data, StudentNode* user)
+
+void view_schedule(YearNode *school, RenderWindow &window, int &page, const float &scale, RegistrationSession &data, StudentNode *user)
 {
-	YearNode* cur_year = searchYearNode(school, data.year);
-	SemesterNode* cur_sem = searchSemesterNode(cur_year->school_year.list_sem, data.sem);
-	CourseNode* cur = data.list_of_courses;
-	while (cur)
-	{
-		string tmp = cur->course.course_id;
-		CourseNode* pre = cur;
-		cur = cur->next;
-		CourseNode* temp = searchCourseNode(cur_sem->sem.course_list, tmp);
-		if (!temp)
-			removeCourseNode(&data.list_of_courses, tmp);
-		else
-		{
-			pre->course = temp->course;
-		}
-	}
 	Student me = user->student;
 	Student you = me;
-	
-	int dem = 0;
-	while (you.my_course->next != nullptr)
+	string sem = data.sem;
+	string year = data.year;
+	int count = 0;
+	while (you.my_course)
 	{
+		if (you.my_course->year == year && you.my_course->sem == sem)
+			count++;
 		you.my_course = you.my_course->next;
-		dem++;
 	}
-	string sem = you.my_course->sem;
-	string year = you.my_course->year;
-	
-	int dem1 = 0;
-	while (me.my_course->year != year || me.my_course->sem != sem)
-		me.my_course = me.my_course->next, dem1++;
-
+	if (count > 0)
+		while (me.my_course->year != year && me.my_course->sem != sem)
+			me.my_course = me.my_course->next;
 	Event event;
-	Object screen = createObject("content/Registration/register_student.png");
+	Object screen = createObject("content/schedule.png");
 	Object out = createObject("content/logout.png", 866.0f * scale, 106.0f * scale);
 	Object out_here = createObject("content/logout1.png", 866.0f * scale, 106.0f * scale);
 	Object back = createObject("content/return.png", 80.0f * scale, 106.0f * scale);
@@ -4300,52 +4306,16 @@ void view_schedule(YearNode* school, RenderWindow& window, int& page, const floa
 	Info sub_header = createInfo("content/VNI-Vari.TTF", "Course Schedule", 160.0f * scale, 158.0f * scale, 28.0f * scale);
 	sub_header.text.setFillColor(Color(101, 159, 235));
 	Info header = createInfo("content/VNI-Vari.TTF", year + " " + sem, 160.0f * scale, 200.0f * scale, 43.0f * scale);
-	Object *sub, *sub_here;
-	sub = createObjectTest("content/Registration/sub.png", 686.0f * scale, 340.0f * scale);
-	sub_here = createObjectTest("content/Registration/sub_here.png", 686.0f * scale, 340.0f * scale);
-
-	Object unsub = createObject("content/Registration/unsub.png", 500.0f * scale, 340.0f * scale);
-	Object unsub_here = createObject("content/Registration/unsub_here.png", 500.0f * scale, 340.0f * scale);
-	Object total_class = createObject("content/Staff/Class/Asset 53.png", 160.0f * scale, 274.0f * scale);
-	Object left = createObject("content/Staff/Class/Asset 57.png", 492.0f * scale, 644.0f * scale);
-	Object left_valid = createObject("content/Staff/Class/Asset 55.png", 492.0f * scale, 644.0f * scale);
-	Object left_here = createObject("content/Staff/Class/Asset 91.png", 492.0f * scale, 644.0f * scale);
-	Object right = createObject("content/Staff/Class/Asset 56.png", 510.0f * scale, 644.0f * scale);
-	Object right_here = createObject("content/Staff/Class/Asset 90.png", 510.0f * scale, 644.0f * scale);
-	Object right_valid = createObject("content/Staff/Class/Asset 54.png", 510.0f * scale, 644.0f * scale);
-	Object del_success = createObject("content/Staff/Create elements/Asset 115.png", 316.0f * scale, 386.0f * scale);
-	Object invalid = createObject("content/Registration/invalid.png", 316.0f * scale, 386.0f * scale);
-	Object return1 = createObject("content/Staff/Create elements/a7.png", 444.0f * scale, 484.0f * scale);
-	Object return1_here = createObject("content/Staff/Create elements/b7.png", 444.0f * scale, 484.0f * scale);
-
-	int count = 0, change = 0;
-	bool trigger_page = true, del = false, sure_check = false, fail = false, success = false, add_new = false, sub_check = true, stop = false;
-	/*for (CourseNode* cur = data.list_of_courses; cur; cur = cur->next)
-		count++;*/
-	Info* inf[4], * num[4];
-	Info start_date = createInfo("content/Oswald-Regular.ttf", data.start_date, 216.0f * scale, 284.0f * scale, 18.0f * scale);
-	Info end_date = createInfo("content/Oswald-Regular.ttf", data.end_date, 568.0f * scale, 284.0f * scale, 18.0f * scale);
-	Object* square[4], * square_here[4], * square_del[4];
-	start_date.s = data.start_date;
-	end_date.s = data.end_date;
-	CourseNode* a_class[4], * tmp = nullptr;
-	int count_check = dem - dem1;
-	count = count_check;
-
-	for (int i = 0; i < 4; i++)
+	Info **first = new Info *[count], **second = new Info *[count];
+	for (int i = 0; i < count; i++)
 	{
-		a_class[i] = nullptr;
-		square[i] = createObjectTest("content/Registration/Asset 118.png", 174.0f * scale, (388.0f + 60.0f * i) * scale);
-		
-		num[i] = createInfoTest("content/Oswald-Regular.ttf", "", 198.0f * scale, (396.0f + 60.0f * i) * scale, 25.0f * scale);
-		inf[i] = createInfoTest("content/Oswald-Regular.ttf", "demo_text", 198.0f * scale, (396.0f + 60.0f * i) * scale, 25.0f * scale);
+		float x, y;
+		checkPos(x, y, me.my_course->course->course.teaching_session[0].day_of_the_week, me.my_course->course->course.teaching_session[0].session_no, scale);
+		first[i] = createInfoTest("content/Oswald-Regular.ttf", me.my_course->course->course.course_id, x, y, 19.0f * scale);
+		checkPos(x, y, me.my_course->course->course.teaching_session[1].day_of_the_week, me.my_course->course->course.teaching_session[1].session_no, scale);
+		second[i] = createInfoTest("content/Oswald-Regular.ttf", me.my_course->course->course.course_id, x, y, 19.0f * scale);
+		me.my_course = me.my_course->next;
 	}
-	bool in_here[4], first_check = true;
-	int current_students[4];
-	Object** border = square;
-	Info count_class = createInfo("content/Oswald-Regular.ttf", to_string(count_check+1) + " Courses", 205.0f * scale, 346.0f * scale, 15.0f * scale);
-	count_class.text.setFillColor(Color::White);
-
 	while (window.isOpen() && page == 13)
 	{
 		Vector2f mouse = window.mapPixelToCoords(Mouse::getPosition(window));
@@ -4364,20 +4334,6 @@ void view_schedule(YearNode* school, RenderWindow& window, int& page, const floa
 				{
 					switchPage(out.bound, mouse, 1, page);
 					switchPage(back.bound, mouse, 3, page);
-					
-					if (isHere(right.bound, mouse) && change <= count - 4)
-					{
-						trigger_page = true;
-						change += 4;
-					}
-					if (isHere(left.bound, mouse) && change != 0)
-					{
-						trigger_page = true;
-						change -= 4;
-					}
-					
-					start_date.check = isHere(start_date.bound, mouse);
-					end_date.check = isHere(end_date.bound, mouse);
 				}
 				break;
 			}
@@ -4389,129 +4345,16 @@ void view_schedule(YearNode* school, RenderWindow& window, int& page, const floa
 		window.draw(screen.draw);
 		window.draw(header.text);
 		window.draw(sub_header.text);
-		if (change == 0 && change >= count - 4)
-		{
-			window.draw(right.draw);
-			window.draw(left.draw);
-		}
-		else if (change == 0)
-		{
-			window.draw(left.draw);
-			drawWhich(window, right_here, right_valid, mouse);
-		}
-		else if (change >= count - 4)
-		{
-			window.draw(right.draw);
-			drawWhich(window, left_here, left_valid, mouse);
-		}
-		else
-		{
-			drawWhich(window, right_here, right_valid, mouse);
-			drawWhich(window, left_here, left_valid, mouse);
-		}
-		if (trigger_page)
-		{
-			MyCourse *temp = me.my_course;
-			CourseNode* cur;
-			for (int i = 0; i < change; i++)
-			if(temp->next)
-			{
-				temp = temp->next;
-			}
-			for (int i = 0; i < 4; i++)
-			{
-				if (temp)
-				{
-					cur = temp->course;
-					a_class[i] = cur;
-				}
-				if (temp)
-				{
-					inf[i]->text.setString(a_class[i]->course.course_id + " - " + a_class[i]->course.teacher_name + " (" + day_convert(a_class[i]->course.teaching_session[0]) + "-" + no_convert(a_class[i]->course.teaching_session[0]) + ", " + day_convert(a_class[i]->course.teaching_session[1]) + "-" + no_convert(a_class[i]->course.teaching_session[1]) + ")");
-					
-					num[i]->text.setPosition(square[i]->bound.left + square[i]->bound.width - num[i]->text.getGlobalBounds().width - 30.0f, (396.0f + 60.0f * i) * scale);
-					temp = temp->next;
-				}
-				else
-				{
-					inf[i]->text.setString("");
-					num[i]->text.setString("");
-				}
-			}
-			trigger_page = false;
-		}
 
 		drawWhich(window, out_here, out, mouse);
 		drawWhich(window, back_here, back, mouse);
-
-		window.draw(count_class.text);
-		// draw border
-		if (sub_check)
+		for (int i = 0; i < count; i++)
 		{
-			for (int i = 0; i < 4; i++)
-			{
-				if (inf[i]->text.getString() == "")
-					break;
-				
-				if (stop)
-				{
-					window.draw(border[i]->draw);
-					inf[i]->text.setFillColor(Color(46, 58, 112));
-					num[i]->text.setFillColor(Color(46, 58, 112));
-				}
-				else
-				{				
-					{
-						inf[i]->text.setFillColor(Color(46, 58, 112));
-						num[i]->text.setFillColor(Color(46, 58, 112));
-					}
-				}
-				window.draw(inf[i]->text);
-				window.draw(num[i]->text);
-			}
+			window.draw(first[i]->text);
+			window.draw(second[i]->text);
 		}
-		else
-		{
-			for (int i = 0; i < 4; i++)
-			{
-				if (inf[i]->text.getString() == "")
-					break;
-				if (in_here[i])
-				{
-					{
-						{
-							inf[i]->text.setFillColor(Color(118, 36, 2));
-							num[i]->text.setFillColor(Color(118, 36, 2));
-						}
-					}
-				}
-				else
-				{
-					window.draw(border[i]->draw);
-					inf[i]->text.setFillColor(Color(46, 58, 112));
-					num[i]->text.setFillColor(Color(46, 58, 112));
-				}
-				window.draw(inf[i]->text);
-				window.draw(num[i]->text);
-			}
-		}
-		if (stop)
-		{
-			if (success)
-			{
-				window.draw(del_success.draw);
-				drawWhich(window, return1_here, return1, mouse);
-			}
-			if (fail)
-			{
-				window.draw(invalid.draw);
-				drawWhich(window, return1_here, return1, mouse);
-			}
-		}
-		window.draw(start_date.text);
-		window.draw(end_date.text);
 		window.display();
 	}
-	for (int i = 0; i < 4; i++)
-		delete square[i], square_here[i], inf[i], num[i];
+	for (int i = 0; i < count; i++)
+		delete second[i], first[i];
 }

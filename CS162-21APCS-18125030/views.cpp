@@ -335,7 +335,8 @@ StudentNode *copyForCourse(StudentNode *me, int k)
 bool importCSVFile(ClassNode *class_list, CourseNode *course)
 {
 	ifstream open_file("./csv/imported/" + course->course.course_id + "_" + course->course.teacher_name + ".csv");
-	if (!open_file) return false;
+	if (!open_file)
+		return false;
 	deleteStudentList(course->student_list);
 	string line, word[13];
 	while (getline(open_file, line))
@@ -463,4 +464,11 @@ MyCourse *searchMyCourse(StudentNode *p_student, string code)
 	while (cur && cur->course->course.course_id != code)
 		cur = cur->next;
 	return cur;
+}
+
+void checkPos(float &x, float &y, int day, int no, const float &scale)
+{
+	x = scale * ((float)(day - 2) * 110.0f + 236.0f);
+	y = scale * ((float)no * 70.0f + 390.0f);
+	return;
 }
