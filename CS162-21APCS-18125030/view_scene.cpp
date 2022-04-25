@@ -4295,8 +4295,10 @@ void view_schedule(YearNode *school, RenderWindow &window, int &page, const floa
 		you.my_course = you.my_course->next;
 	}
 	if (count > 0)
-		while (me.my_course->year != year && me.my_course->sem != sem)
+	{
+		while (me.my_course->year != year || me.my_course->sem != sem)
 			me.my_course = me.my_course->next;
+	}
 	Event event;
 	Object screen = createObject("content/schedule.png");
 	Object out = createObject("content/logout.png", 866.0f * scale, 106.0f * scale);
